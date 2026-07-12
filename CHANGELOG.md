@@ -4,6 +4,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-12
+
 ### Added
 
 - Defined the target user, problem, value proposition, transparent scoring model, MVP requirements, success targets, risks, and release acceptance criteria.
@@ -16,12 +18,18 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 - Added a responsive visual system, semantic dialogs, focus handling, live status messages, and reduced-motion support.
 - Added zero-dependency static checks, local development server, and automated model, scoring, storage, and export tests.
 - Completed the M5 release test report with 24 tests, 111 assertions, responsive browser evidence, security review, and documented limitations.
-- Fixed desktop and mobile layout regressions, Escape focus recovery, imported theme restoration, dialog landmark semantics, and Blob download cleanup timing.
+- Added pinned-SHA quality and GitHub Pages workflows plus Dependabot configuration.
 
 ### Changed
 
+- Prepared the complete repository, demo, documentation, and governance surface for public release.
+
 ### Fixed
 
+- Fixed desktop and mobile layout regressions, Escape focus recovery, imported theme restoration, dialog landmark semantics, and Blob download cleanup timing.
+
 ### Security
+
+- Enforced a restrictive Content Security Policy, safe text rendering, bounded imports, versioned validation, minimum Actions permissions, and immutable action references.
 
 <!-- Move Unreleased entries into a dated version and maintain comparison links when publishing. -->

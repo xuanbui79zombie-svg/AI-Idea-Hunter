@@ -1,6 +1,6 @@
 {
   "name": "ai-idea-hunter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "A local-first opportunity workspace for evidence-backed AI software ideas.",

@@ -13,6 +13,10 @@ const required = [
   "CONTRIBUTING.md",
   "CHANGELOG.md",
   "TASKS.md",
+  ".github/CODEOWNERS",
+  ".github/dependabot.yml",
+  ".github/workflows/quality.yml",
+  ".github/workflows/pages.yml",
   "docs/PRODUCT.md",
   "docs/ARCHITECTURE.md",
   "docs/DATABASE.md",
@@ -55,6 +59,17 @@ for (const file of required) {
 const packageJson = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"));
 if (Object.keys(packageJson.dependencies ?? {}).length) errors.push("Production dependencies must remain empty for v1.0.0.");
 if (Object.keys(packageJson.devDependencies ?? {}).length) errors.push("Development dependencies must remain empty for v1.0.0.");
+
+const workflowFiles = [".github/workflows/quality.yml", ".github/workflows/pages.yml"];
+for (const workflowFile of workflowFiles) {
+  const workflow = await readFile(path.join(root, workflowFile), "utf8");
+  for (const match of workflow.matchAll(/^\s*uses:\s*([^\s]+)$/gm)) {
+    if (!/@[0-9a-f]{40}(?:\s*#.*)?$/i.test(match[1])) {
+      errors.push(`${workflowFile} does not pin an action to a full commit SHA: ${match[1]}`);
+    }
+  }
+  if (!workflow.includes("permissions:")) errors.push(`${workflowFile} must declare explicit permissions.`);
+}
 
 const sourceFiles = await walk(sourceRoot);
 let totalBytes = 0;

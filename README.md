@@ -1,8 +1,14 @@
 # AI Idea Hunter
 
+[![Quality](https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/actions/workflows/quality.yml/badge.svg)](https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/actions/workflows/quality.yml)
+[![Deploy GitHub Pages](https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/actions/workflows/pages.yml/badge.svg)](https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status: M5 quality gate passed. GitHub publication and `v1.0.0` packaging are in progress.
+> Status: `v1.0.0` release candidate. Local quality gates passed; remote CI and Pages verification are in progress.
+
+**[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
 ![AI Idea Hunter interface](docs/assets/ai-idea-hunter-hero.png)
 
@@ -95,6 +101,7 @@ docs/                # product, architecture, schema, contracts, ADRs
 - [Delivery tasks](TASKS.md)
 - [Technology choices](TECH_STACK.md)
 - [Release test report](docs/TEST_REPORT.md)
+- [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Security policy](SECURITY.md)
 
 ## Contributing
