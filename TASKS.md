@@ -16,19 +16,13 @@
 | M2 Architecture | Stable components, schema, contracts, security, and deployment | DONE | architecture docs, ADR-0001, commit `a339e7e` |
 | M3 Plan | Executable, dependency-aware tasks mapped to requirements | DONE | this task register |
 | M4 Build | Complete P0/P1 application behavior | DONE | native web application, 24 automated tests, browser smoke test |
-| M5 Quality | Independent release evidence with no P0/P1 defects | TODO | `docs/TEST_REPORT.md` and CI |
+| M5 Quality | Independent release evidence with no P0/P1 defects | DONE | `docs/TEST_REPORT.md`, 24 tests, 111 assertions, browser review |
 | M6 Release | Public demo, repository governance, and `v1.0.0` | TODO | GitHub Pages and Release |
 
 ## TODO
 
 | ID | Priority | Milestone | Task | Requirements | Depends on | Acceptance evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| Q-001 | P0 | M5 | Build static repository and security checks | NFR Security, Maintainability | B-001 | Checks reject unsafe HTML APIs, external runtime URLs, placeholders, and oversized assets |
-| Q-002 | P0 | M5 | Complete automated domain and adapter tests | All P0 | B-002..B-010 | At least 30 assertions and all requirement-critical branches pass |
-| Q-003 | P0 | M5 | Execute browser functional regression | All P0 | B-011, Q-002 | Clean-profile create, edit, score, filter, export, import, delete flow passes |
-| Q-004 | P0 | M5 | Execute accessibility and responsive review | Accessibility NFR | B-011 | Keyboard, focus, labels, landmarks, contrast, reduced motion, and 360 px checks pass |
-| Q-005 | P1 | M5 | Verify performance and privacy budgets | Performance, Privacy NFR | Q-001 | Assets under 250 KB; no external runtime requests or trackers |
-| Q-006 | P0 | M5 | Publish release test report and resolve blockers | Release acceptance | Q-001..Q-005 | Test matrix documents environment, results, limitations, and release recommendation |
 | R-001 | P0 | M6 | Add pinned-SHA CI and GitHub Pages workflows | Release acceptance | Q-001, Q-002 | PR CI and main deployment workflows validate successfully |
 | R-002 | P0 | M6 | Create and secure the public GitHub repository | Open-source standard | R-001 | Topics, security features, private reporting, labels, and protected main configured |
 | R-003 | P0 | M6 | Publish reproducible GitHub Pages demo | Release acceptance | R-001, R-002, Q-006 | Public URL loads current release and core flow works |
@@ -39,7 +33,7 @@
 
 ## DOING
 
-No task is active at the M4 checkpoint. M5 begins with `Q-001` and `Q-002`.
+No task is active at the M5 checkpoint. M6 begins with `R-001` and `R-002`.
 
 ## DONE
 
@@ -60,6 +54,12 @@ No task is active at the M4 checkpoint. M5 begins with `Q-001` and `Q-002`.
 | B-009 | P1 | M4 | Implement explicit fictional example workspace | Deterministic example tests and visible fictional-data notice |
 | B-010 | P1 | M4 | Implement system, light, and dark theme preference | Persisted preference and system listener |
 | B-011 | P1 | M4 | Implement keyboard, dialog focus, form error, and live-region behavior | Native dialog, focus return, labelled controls, status regions |
+| Q-001 | P0 | M5 | Build static repository and security checks | `npm run check`, secret and unsafe API scans |
+| Q-002 | P0 | M5 | Complete automated domain and adapter tests | 24 tests, 111 assertions, 0 failures/skips/todos |
+| Q-003 | P0 | M5 | Execute browser functional regression | Create, persist, score, filter, export feedback, and delete-cancel evidence |
+| Q-004 | P0 | M5 | Execute accessibility and responsive review | Landmarks, labels, focus return, 390 × 844 no-overflow check |
+| Q-005 | P1 | M5 | Verify performance and privacy budgets | 84,187 bytes; CSP `connect-src 'none'`; no runtime network API |
+| Q-006 | P0 | M5 | Publish release test report and resolve blockers | `docs/TEST_REPORT.md`; no known P0/P1 blocker |
 
 ## BLOCKED
 

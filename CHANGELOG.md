@@ -15,6 +15,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 - Added versioned local persistence, safe recovery, JSON backup and restore, and Markdown opportunity brief export.
 - Added a responsive visual system, semantic dialogs, focus handling, live status messages, and reduced-motion support.
 - Added zero-dependency static checks, local development server, and automated model, scoring, storage, and export tests.
+- Completed the M5 release test report with 24 tests, 111 assertions, responsive browser evidence, security review, and documented limitations.
+- Fixed desktop and mobile layout regressions, Escape focus recovery, imported theme restoration, dialog landmark semantics, and Blob download cleanup timing.
 
 ### Changed
 

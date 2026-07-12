@@ -106,5 +106,5 @@ export function downloadText(filename, text, type = "text/plain;charset=utf-8") 
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 0);
 }

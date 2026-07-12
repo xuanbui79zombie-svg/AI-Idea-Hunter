@@ -86,7 +86,7 @@ async function importFile(file) {
       danger: workspace.ideas.length > 0,
     });
     if (!confirmed) return;
-    persist({ ...imported, preferences: workspace.preferences });
+    persist(imported);
     showToast("Workspace restored from JSON.");
   } catch (error) {
     showToast(error?.message ?? "The selected file could not be imported.");

@@ -432,4 +432,10 @@ export function initUI(handlers) {
     event.preventDefault();
     closeIdeaDialog();
   });
+  elements.ideaDialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeIdeaDialog();
+    }
+  });
 }
