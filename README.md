@@ -2,7 +2,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace that helps independent developers turn scattered AI software ideas into evidence-backed, comparable project candidates.
 
-> Status: product and architecture milestones complete; implementation planning in progress.
+> Status: product, architecture, and delivery-plan milestones complete; implementation is starting.
 
 ## Product Direction
 
