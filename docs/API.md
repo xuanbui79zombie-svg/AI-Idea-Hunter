@@ -1,98 +1,58 @@
-# API
+# Module Contracts
 
-## 状态
+AI Idea Hunter has no HTTP API in `v1.0.0`. This document defines stable internal ES module contracts so domain behavior remains testable without a browser DOM.
 
-`Planned` | `In Use` | `Not Applicable`
+## `model.js`
 
-当前状态：`<API_STATUS>`
+| Export | Input | Output | Failure |
+| --- | --- | --- | --- |
+| `createEmptyWorkspace()` | none | valid schema v1 workspace | none |
+| `createIdea(input, now?)` | form-shaped object | normalized `Idea` | throws `ValidationError` |
+| `updateIdea(existing, patch, now?)` | idea and allowed fields | normalized updated `Idea` | throws `ValidationError` |
+| `validateWorkspace(value)` | unknown | normalized workspace | throws `ValidationError` with field issues |
+| `createExampleWorkspace()` | none | deterministic demonstration workspace | none |
 
-## 基本信息
+Validation errors contain safe field identifiers and human-readable messages. They never include full imported content.
 
-- **Base URL**：`<BASE_URL>`
-- **版本策略**：`<VERSIONING_STRATEGY>`
-- **数据格式**：`application/json`
-- **字符编码**：`UTF-8`
+## `scoring.js`
 
-## API 设计规则
+| Export | Input | Output |
+| --- | --- | --- |
+| `calculateScore(scores)` | seven validated 1–5 integers | integer from 20 to 100 |
+| `getScoreBreakdown(scores)` | score object | factor labels, values, weights, and contributions |
+| `getScoreBand(score)` | 20–100 integer | `explore`, `promising`, or `priority` descriptor |
+| `getEvidenceGap(idea)` | valid idea | plain-language next evidence recommendation |
 
-- 资源、动作、状态码和错误语义保持一致。
-- 请求和响应必须有明确 Schema，并验证所有外部输入。
-- 分页、过滤、排序和幂等性规则必须文档化。
-- 破坏性变更必须升级版本或提供兼容迁移期。
-- 日志不得记录令牌、密码或敏感请求内容。
+Scoring functions are pure and must not read storage, time, locale, or the DOM.
 
-## 认证与授权
+## `storage.js`
 
-- **认证方式**：`<AUTHENTICATION_METHOD>`
-- **授权模型**：`<AUTHORIZATION_MODEL>`
-- **令牌有效期**：`<TOKEN_LIFETIME>`
-- **权限范围**：`<SCOPES_OR_ROLES>`
+| Export | Behavior |
+| --- | --- |
+| `loadWorkspace(storage?)` | returns `{ workspace, warning }`; quarantines malformed stored JSON when possible |
+| `saveWorkspace(workspace, storage?)` | validates then writes; returns `{ saved, warning }` without hiding storage failure |
+| `clearWorkspace(storage?)` | removes only the application workspace key |
 
-## 通用响应
+The optional storage argument enables deterministic tests with an in-memory adapter.
 
-### 成功响应
+## `export.js`
 
-```json
-{
-  "data": {},
-  "meta": {}
-}
-```
+| Export | Behavior |
+| --- | --- |
+| `serializeWorkspace(workspace)` | returns formatted, versioned JSON from validated data |
+| `parseWorkspaceFile(text)` | enforces text and schema bounds before returning normalized data |
+| `buildResearchBrief(idea)` | returns Markdown with score breakdown, evidence, assumptions, and next step |
+| `safeFilename(value)` | returns a lowercase portable filename segment |
+| `downloadText(name, text, type)` | browser adapter that downloads a Blob and revokes the object URL |
 
-### 错误响应
+## `ui.js`
 
-```json
-{
-  "error": {
-    "code": "ERROR_CODE",
-    "message": "Human-readable message",
-    "requestId": "request-id"
-  }
-}
-```
+`ui.js` owns DOM queries, view rendering, dialogs, focus management, form serialization, errors, and live-region announcements. It accepts state and callbacks from `app.js`; it does not access localStorage.
 
-## 端点
+## `app.js`
 
-### `<METHOD> <PATH>`
+`app.js` is the composition root. It owns in-memory state, routes user intents to pure modules or adapters, persists successful changes, and asks `ui.js` to render. No business rule should exist only inside an event handler.
 
-**用途**：`<PURPOSE>`
+## Compatibility
 
-**权限**：`<REQUIRED_PERMISSION>`
-
-**请求参数**：
-
-| 参数 | 位置 | 类型 | 必填 | 说明 |
-| --- | --- | --- | --- | --- |
-| `<PARAMETER>` | path/query/body/header | `<TYPE>` | Yes/No | `<DESCRIPTION>` |
-
-**成功响应**：`<STATUS_CODE>`
-
-```json
-{
-  "data": {}
-}
-```
-
-**错误情况**：
-
-| 状态码 | 错误代码 | 条件 |
-| ---: | --- | --- |
-| 400 | `VALIDATION_ERROR` | 请求数据无效。 |
-| 401 | `UNAUTHENTICATED` | 缺少或使用了无效凭据。 |
-| 403 | `FORBIDDEN` | 当前身份没有操作权限。 |
-| 404 | `NOT_FOUND` | 资源不存在。 |
-| 409 | `CONFLICT` | 当前状态与操作冲突。 |
-| 500 | `INTERNAL_ERROR` | 未预期的服务错误。 |
-
-## 限流与重试
-
-- **限流策略**：`<RATE_LIMIT_POLICY>`
-- **重试条件**：`<RETRY_CONDITIONS>`
-- **退避策略**：`<BACKOFF_STRATEGY>`
-
-## API 测试要求
-
-- 覆盖成功、验证失败、未认证、无权限、资源不存在和冲突场景。
-- 验证响应 Schema、状态码、错误代码和权限边界。
-- 对幂等接口验证重复请求行为。
-- 对外部集成使用可控的测试替身，不依赖生产服务。
+Internal exports are not a public package API, but tests and documentation treat them as stable within a minor release. Breaking changes require updated tests, docs, and changelog entries.

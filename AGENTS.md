@@ -1,67 +1,58 @@
 # AGENTS.md
 
-本文件定义 Codex 或其他自动化开发代理在本项目中的工作边界。开始工作前，必须同时阅读 `README.md`、`PROJECT_RULES.md`、`TASKS.md` 和相关 `docs/` 文档。
+This file defines the working contract for Codex and other automated development agents in AI Idea Hunter. Read `README.md`, `PROJECT_RULES.md`, `TASKS.md`, `docs/PRODUCT.md`, and `docs/ARCHITECTURE.md` before changing code.
 
-## 项目目标
+## Project Goal
 
-- **项目名称**：`<PROJECT_NAME>`
-- **目标用户**：`<TARGET_USERS>`
-- **核心问题**：`<PROBLEM_STATEMENT>`
-- **预期价值**：`<EXPECTED_VALUE>`
-- **成功指标**：`<SUCCESS_METRICS>`
+Help an independent developer turn observed problems into evidence-backed, comparable AI software opportunities through transparent scoring and exportable research briefs.
 
-所有实现必须服务于已确认的项目目标。无法说明用户价值或验收方式的功能，不应进入开发。
+The product must remain local-first, explainable, static-hostable, and free of default external data transfer in `v1.0.0`.
 
-## Codex 工作规则
+## Codex Working Rules
 
-1. 先理解任务、现有实现和适用文档，再修改文件。
-2. 只处理当前任务范围；发现无关问题时记录，不顺带扩大修改。
-3. 优先复用现有架构、组件和约定，避免重复实现。
-4. 不猜测关键需求；会影响产品行为、数据、安全或架构的歧义必须先澄清。
-5. 不读取、提交或输出密钥、令牌、个人数据和生产环境敏感信息。
-6. 修改前检查工作区状态，保留用户已有且无关的更改。
-7. 交付时说明修改内容、验证方式、已知限制和后续事项。
+1. Map every implementation task to an accepted requirement and task ID.
+2. Preserve the product non-goals and ADR-0001 unless the user approves a major architecture change.
+3. Prefer pure domain functions and existing browser standards over new dependencies.
+4. Treat imported files, stored values, and all user strings as untrusted data.
+5. Never use `innerHTML` with user content or add credentials, analytics, remote fonts, or third-party scripts.
+6. Keep the working tree scoped; do not overwrite unrelated user changes.
+7. Report product, data-loss, security, accessibility, deployment, and maintenance risks as soon as they are found.
 
-## 开发流程
+## Development Flow
 
-1. 从 `TASKS.md` 选择已确认的任务，核对优先级和验收标准。
-2. 将任务移动到 `DOING`，一次只推进少量明确任务。
-3. 阅读相关产品、架构、数据库和 API 文档。
-4. 设计最小可行改动，确认影响范围和回滚方式。
-5. 实现代码，同时补充或更新测试。
-6. 运行与改动风险相匹配的检查。
-7. 更新相关文档、`CHANGELOG.md` 和任务状态。
-8. 检查差异，确保没有无关文件或敏感信息。
-9. 创建清晰、单一目的的提交，并通过 Pull Request 完成评审。
+1. Move one accepted task from `TODO` to `DOING`.
+2. Read its requirement, architecture contract, and acceptance criteria.
+3. Implement the smallest complete vertical slice.
+4. Add or update tests before calling the task complete.
+5. Run `npm run check` and `npm test`.
+6. Manually verify the affected browser flow when DOM behavior changes.
+7. Update relevant docs, `CHANGELOG.md`, and task status.
+8. Review the diff for secrets, unsafe rendering, unrelated changes, and broken links.
+9. Use a focused commit and a pull request once the remote repository exists.
 
-## 测试要求
+## Test Requirements
 
-- 新功能必须包含覆盖核心成功路径的测试。
-- Bug 修复必须包含能够复现问题并防止回归的测试。
-- 关键业务规则、权限、数据边界和错误路径必须验证。
-- 测试应稳定、可重复、彼此隔离，不依赖未声明的本地状态。
-- 提交前运行格式检查、静态检查、单元测试和适用的集成测试。
-- 不得通过删除、跳过或弱化测试来掩盖失败。
-- 若检查无法运行，必须明确说明原因、风险和人工验证结果。
+- Scoring, validation, normalization, import, export, and persistence behavior require automated tests.
+- Bug fixes require a failing regression test before or with the fix.
+- Import failure, storage failure, deletion, empty state, keyboard interaction, and narrow viewport behavior require explicit coverage.
+- Never delete, skip, or weaken a test to hide a failure.
+- If a check cannot run, document the exact reason and remaining risk.
 
-## 文档要求
+## Documentation Requirements
 
-- 用户可见行为、安装方式或配置变化必须更新 `README.md`。
-- 产品范围和验收标准变化必须更新 `docs/PRODUCT.md`。
-- 架构、组件边界或关键技术决策变化必须更新 `docs/ARCHITECTURE.md`。
-- 跨模块、难以逆转或影响后续项目的决策必须新增或更新 `docs/adr/` 中的 ADR。
-- 数据模型、迁移或索引变化必须更新 `docs/DATABASE.md`。
-- API 契约、认证或错误格式变化必须更新 `docs/API.md`。
-- 技术栈和版本策略变化必须更新 `TECH_STACK.md`。
-- 对用户或维护者有影响的变化必须记录到 `CHANGELOG.md`。
-- 贡献、安全或支持流程变化必须同步更新 `CONTRIBUTING.md`、`SECURITY.md` 或 `SUPPORT.md`。
+- User behavior or setup changes: update `README.md`.
+- Scope or acceptance changes: update `docs/PRODUCT.md`.
+- boundaries or deployment changes: update `docs/ARCHITECTURE.md` and an ADR when durable.
+- schema changes: update `docs/DATABASE.md` and migration tests.
+- module contract changes: update `docs/API.md`.
+- tooling changes: update `TECH_STACK.md`.
+- maintainer- or user-visible changes: update `CHANGELOG.md`.
+- every completed milestone: update `TASKS.md` and the README status.
 
-## Git 规范
+## Git Rules
 
-- 默认分支为 `main`，避免直接提交未经验证的变更。
-- 分支名使用清晰前缀，例如 `feature/`、`fix/`、`docs/`、`refactor/`。
-- 每个提交只表达一个逻辑目的，提交信息使用祈使句并说明结果。
-- 提交前检查 `git diff`，只暂存当前任务涉及的文件。
-- 禁止提交密钥、`.env`、生成物、依赖目录或大型临时文件。
-- Pull Request 必须说明变更、原因、影响、验证结果和风险。
-- 不重写共享分支历史，不在未授权情况下强制推送或删除分支。
+- `main` must remain releasable and protected after publication.
+- Use short-lived `agent/`, `feature/`, `fix/`, `docs/`, or `chore/` branches.
+- Each commit represents one logical outcome and uses an imperative subject.
+- Pull requests state scope, evidence, risks, and rollback.
+- Do not force-push shared history, commit secrets, or bypass required checks.

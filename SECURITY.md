@@ -4,13 +4,17 @@
 
 | Version | Supported |
 | --- | --- |
-| `<LATEST_VERSION>` | Yes |
-| Older versions | `<SUPPORT_POLICY>` |
-
-发布前必须用实际版本和支持周期替换占位符。
+| Latest release | Yes |
+| Earlier releases | No |
 
 ## Report a Vulnerability
 
-不要公开创建 Issue。请使用 `<PRIVATE_VULNERABILITY_REPORTING_URL>` 私密报告，并提供影响、复现步骤、受影响版本和建议缓解措施。不要发送真实凭据、个人数据或破坏性载荷。
+Do not open a public issue. Use [GitHub private vulnerability reporting](https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/security/advisories/new).
 
-维护者应在此定义确认、评估、修复和协调披露的目标时间：`<RESPONSE_TARGETS>`。
+Include the affected version, impact, reproduction steps, and a suggested mitigation when available. Never send real credentials, private workspace data, or destructive payloads.
+
+The maintainer aims to acknowledge a complete report within 7 days and provide an initial assessment within 14 days. These are best-effort targets, not guarantees.
+
+## Security Boundary
+
+The application is a static local-first tool. Workspace content stays in the browser unless the user exports it. Browser extensions, a compromised device, GitHub availability, and files shared by the user remain outside the application's control.

@@ -1,51 +1,55 @@
 # Tech Stack
 
-只记录已确认且实际使用的技术。每项选择应能说明用途、版本、替代方案和维护风险。
+## Selection Principles
 
-## 选择原则
+- Use the smallest stack that satisfies the accepted MVP.
+- Prefer browser standards and long-term-supported tooling.
+- Keep production free of dependencies, credentials, and build infrastructure.
+- Separate pure business logic from browser APIs for testability.
+- Add a dependency only when its value exceeds its security and maintenance cost.
 
-- 优先满足产品需求、团队能力和可维护性。
-- 优先采用稳定、活跃维护且有明确升级路径的版本。
-- 避免为了展示技术而引入不必要的复杂度。
-- 关键依赖必须评估许可证、安全记录、生态和部署成本。
+## Stack
 
-## 技术栈清单
-
-| 类别 | 技术 | 版本 | 用途 | 选择理由 |
+| Category | Technology | Version | Purpose | Rationale |
 | --- | --- | --- | --- | --- |
-| Language | `<LANGUAGE>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Frontend | `<FRONTEND>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Backend | `<BACKEND>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Database | `<DATABASE>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| AI / ML | `<AI_STACK>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Testing | `<TEST_STACK>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Deployment | `<DEPLOYMENT>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
-| Observability | `<OBSERVABILITY>` | `<VERSION>` | `<PURPOSE>` | `<RATIONALE>` |
+| Markup | HTML | Living Standard | Semantic application shell | Native accessibility and no build step |
+| Styling | CSS | Modern browser baseline | Responsive UI, tokens, themes | Small, portable, and framework-independent |
+| Application | JavaScript ES modules | ES2022+ | Domain and UI behavior | Native browser and Node support |
+| Persistence | Web Storage | Browser API | Single-user local workspace | Fits bounded local-first MVP |
+| Test runtime | Node.js | 24 LTS | Built-in test runner and static checks | Supported LTS without test dependencies |
+| Package manager | npm | Bundled with Node 24 | Reproducible commands | No production or development packages required |
+| CI/CD | GitHub Actions | Pinned SHAs | Checks and Pages deployment | Native repository integration |
+| Hosting | GitHub Pages | Managed | Static public demo | Free, reproducible, and appropriate for portfolio use |
 
 ## Runtime and Tooling
 
-- Runtime：`<RUNTIME>`
-- Package manager：`<PACKAGE_MANAGER>`
-- Formatter：`<FORMATTER>`
-- Linter：`<LINTER>`
-- Type checker：`<TYPE_CHECKER>`
-- Test runner：`<TEST_RUNNER>`
-- CI/CD：`<CI_CD>`
+- Production runtime: current stable Chrome, Edge, Firefox, or Safari
+- Development runtime: Node.js 24 LTS
+- Formatter: repository conventions and deterministic whitespace checks
+- Linter/static checker: custom zero-dependency repository checks
+- Test runner: `node --test`
+- CI/CD: GitHub Actions
+
+## Dependency Budget
+
+Production dependencies: **0**
+
+Development dependencies: **0**
+
+A proposed dependency requires an ADR when it changes production payload, data handling, deployment, or core architecture.
 
 ## External Services
 
-| 服务 | 用途 | 数据类型 | 成本限制 | 失败策略 |
-| --- | --- | --- | --- | --- |
-| `<SERVICE>` | `<PURPOSE>` | `<DATA>` | `<LIMIT>` | `<FALLBACK>` |
+| Service | Data sent | Purpose | Failure behavior |
+| --- | --- | --- | --- |
+| GitHub Pages | Static application assets only | Public demo hosting | Last successful deployment remains available |
+| GitHub Actions | Repository source and test output | CI and deployment | Merge or release is blocked until fixed |
 
-## Technology Decisions
-
-| 日期 | 决策 | 选择 | 替代方案 | 原因 | 复评条件 |
-| --- | --- | --- | --- | --- | --- |
-| `<YYYY-MM-DD>` | `<DECISION>` | `<CHOICE>` | `<ALTERNATIVES>` | `<RATIONALE>` | `<REVIEW_TRIGGER>` |
+Workspace content is not sent to either service by application code.
 
 ## Upgrade Policy
 
-- 安全更新优先处理。
-- 常规依赖升级必须通过自动化测试和兼容性检查。
-- 大版本升级必须记录迁移计划、风险和回滚方式。
+- Track a supported Node LTS line and review it at least twice yearly.
+- Pin GitHub Actions to full commit SHAs and let Dependabot propose updates.
+- Test current stable browsers before a release.
+- Record compatibility or data migration impact before changing browser APIs or schema.

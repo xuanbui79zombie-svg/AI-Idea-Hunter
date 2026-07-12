@@ -1,63 +1,97 @@
-# Database
+# Data Model and Persistence
 
-## 状态
+## Storage Decision
 
-`Planned` | `In Use` | `Not Applicable`
+`v1.0.0` stores one versioned workspace document in browser `localStorage` under:
 
-当前状态：`<DATABASE_STATUS>`
+`ai-idea-hunter.workspace.v1`
 
-## 数据存储概览
+This is not a relational database. It is appropriate for a single user, a bounded dataset, and static hosting. JSON export is the portability and backup mechanism.
 
-- **数据库类型**：`<DATABASE_TYPE>`
-- **版本**：`<VERSION>`
-- **托管方式**：`<HOSTING>`
-- **主要用途**：`<PURPOSE>`
+## Workspace Schema
 
-## 数据建模规则
-
-- 表和字段使用一致、明确的命名规范。
-- 主键、外键、唯一约束和空值语义必须显式定义。
-- 时间统一使用 UTC 存储，并在展示层转换时区。
-- 敏感字段必须分类，按需加密或脱敏。
-- 数据保留和删除策略必须与产品及合规要求一致。
-
-## 实体关系
-
-```text
-<ENTITY_RELATIONSHIP_DIAGRAM>
+```js
+{
+  schemaVersion: 1,
+  ideas: Idea[],
+  preferences: {
+    theme: "system" | "light" | "dark"
+  }
+}
 ```
 
-## 数据字典
+## Idea Schema
 
-| 实体 | 字段 | 类型 | 必填 | 约束 | 说明 |
-| --- | --- | --- | --- | --- | --- |
-| `<ENTITY>` | `<FIELD>` | `<TYPE>` | Yes/No | `<CONSTRAINT>` | `<DESCRIPTION>` |
+```js
+{
+  id: string,                 // UUID
+  title: string,              // 1..80 characters
+  audience: string,           // 1..120 characters
+  problem: string,            // 1..600 characters
+  context: string,            // 0..400 characters
+  outcome: string,            // 1..400 characters
+  status: "inbox" | "researching" | "validated" | "selected" | "archived",
+  nextStep: string,           // 0..240 characters
+  scores: {
+    pain: number,
+    frequency: number,
+    willingnessToPay: number,
+    reach: number,
+    feasibility: number,
+    differentiation: number,
+    evidenceConfidence: number
+  },                          // every value is an integer from 1 to 5
+  evidence: Evidence[],       // maximum 50
+  createdAt: string,          // ISO 8601
+  updatedAt: string           // ISO 8601
+}
+```
 
-## 索引策略
+## Evidence Schema
 
-| 索引 | 字段 | 类型 | 查询场景 | 成本 |
-| --- | --- | --- | --- | --- |
-| `<INDEX>` | `<FIELDS>` | `<TYPE>` | `<QUERY>` | `<TRADE_OFF>` |
+```js
+{
+  id: string,                 // UUID
+  source: string,             // 1..120 characters
+  observation: string,        // 1..500 characters
+  strength: "weak" | "moderate" | "strong",
+  observedAt: string          // YYYY-MM-DD
+}
+```
 
-## 迁移流程
+## Invariants
 
-1. 创建可审查、可重复的迁移脚本。
-2. 在隔离环境验证前向迁移和回滚。
-3. 评估锁表、数据量、兼容窗口和停机风险。
-4. 备份关键数据并记录恢复步骤。
-5. 部署后验证数据完整性和核心查询。
+- Maximum workspace size: 500 ideas.
+- IDs must be unique within their collection.
+- Timestamps must be valid ISO strings; `updatedAt` cannot precede `createdAt`.
+- An idea score is derived and never persisted as authoritative data.
+- Unknown object keys are ignored during normalization; required keys must validate.
+- User strings are trimmed and stored as plain text.
+- Import does not accept functions, prototypes, HTML, or executable values; JSON parsing produces data only.
 
-## 安全与隐私
+## Versioning and Migration
 
-- `<ACCESS_CONTROL>`
-- `<ENCRYPTION_POLICY>`
-- `<RETENTION_POLICY>`
-- `<AUDIT_REQUIREMENTS>`
+The root `schemaVersion` is mandatory. The reader accepts version 1 only for the first release. Future versions must add a migration function from every supported prior version and preserve a backup before writing migrated data.
 
-## 备份与恢复
+An unsupported future version is rejected with a clear message; it is never downgraded silently.
 
-- **备份频率**：`<BACKUP_FREQUENCY>`
-- **保留周期**：`<RETENTION>`
-- **RPO**：`<RPO>`
-- **RTO**：`<RTO>`
-- **恢复演练**：`<RESTORE_TEST_PLAN>`
+## Persistence Semantics
+
+1. Normalize and validate the complete workspace.
+2. Serialize to JSON.
+3. Write one key with `localStorage.setItem`.
+4. Read back only on the next explicit load or page start.
+
+JavaScript is single-threaded per tab, but two tabs can overwrite each other. Multi-tab coordination is a documented limitation of `v1.0.0`; adding it is not required for release.
+
+## Backup and Recovery
+
+- Exported files use `ai-idea-hunter-YYYY-MM-DD.json`.
+- Export includes `schemaVersion` and the complete normalized workspace.
+- Import validates before confirmation and replacement.
+- Corrupted stored data is copied to a quarantine key when possible before the active key is cleared.
+- The UI explains that browser clearing and private browsing can remove data.
+
+## Privacy
+
+The application sends no workspace data to a server. Users remain responsible for removing confidential information before sharing exported JSON or Markdown files.

@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security policy
-    url: <SECURITY_POLICY_URL>
+    url: https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/security/advisories/new
     about: Report suspected vulnerabilities privately using the configured security channel.
   - name: Support guide
-    url: <SUPPORT_GUIDE_URL>
+    url: https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter/blob/main/SUPPORT.md
     about: Review support scope before opening an issue.

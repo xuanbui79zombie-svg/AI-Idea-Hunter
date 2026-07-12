@@ -1,18 +1,11 @@
 # Code of Conduct
 
-本项目致力于建立尊重、包容和专注技术协作的社区。
+AI Idea Hunter is committed to respectful, inclusive, and technically constructive collaboration.
 
-## 期望行为
+Expected behavior includes respecting different backgrounds and experience levels, giving specific feedback about work, protecting privacy, crediting others, acknowledging mistakes, and resolving disagreement without personal attacks.
 
-- 尊重不同背景和经验的人。
-- 针对工作给出具体、可执行的反馈，不攻击个人。
-- 尊重隐私、同意、署名和知识产权。
-- 承认错误并以建设性方式解决分歧。
+Harassment, discrimination, threats, unwanted sexual attention, doxxing, retaliation, or sustained disruption are unacceptable.
 
-骚扰、歧视、威胁、公开他人隐私、持续扰乱协作或报复举报者均不可接受。
+This policy applies in issues, pull requests, reviews, discussions, and public interactions representing the project. Maintainers may remove content, reject contributions, restrict participation, or ban participants when necessary.
 
-## 举报与执行
-
-不要在公开 Issue 中举报行为事件。发布项目前，维护者必须在此处提供私密联系渠道：`<PRIVATE_CONDUCT_CONTACT>`。
-
-维护者可根据严重程度删除内容、拒绝贡献、限制参与或禁止参与者，并应在实际可行范围内保护报告人的隐私。
+Do not report conduct incidents publicly. Contact the maintainer through a private method listed on the owner's [GitHub profile](https://github.com/xuanbui79zombie-svg).

@@ -2,7 +2,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace that helps independent developers turn scattered AI software ideas into evidence-backed, comparable project candidates.
 
-> Status: product design complete; architecture and implementation in progress.
+> Status: product and architecture milestones complete; implementation planning in progress.
 
 ## Product Direction
 
@@ -27,6 +27,7 @@ The MVP is private by default, requires no account, and will not send workspace 
 - [API and module contracts](docs/API.md)
 - [Architecture decisions](docs/adr/)
 - [Delivery tasks](TASKS.md)
+- [Technology choices](TECH_STACK.md)
 
 ## Evidence Boundary
 

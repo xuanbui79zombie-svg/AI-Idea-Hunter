@@ -1,0 +1,16 @@
+{
+  "name": "ai-idea-hunter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first opportunity workspace for evidence-backed AI software ideas.",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test",
+    "test:all": "npm run check && npm test"
+  },
+  "license": "MIT"
+}

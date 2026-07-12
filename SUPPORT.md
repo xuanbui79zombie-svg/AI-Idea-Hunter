@@ -1,11 +1,9 @@
 # Support
 
-- 可复现缺陷：使用 Bug report Issue 表单。
-- 已确认的改进：使用 Feature request Issue 表单。
-- 安全漏洞：按照 `SECURITY.md` 私密报告。
+- Reproducible defect: use the Bug report issue form.
+- Scoped improvement: use the Feature request issue form.
+- Suspected vulnerability: follow [SECURITY.md](SECURITY.md) and report privately.
 
-提问前请先阅读文档、搜索已有 Issue，并提供目标、预期与实际行为、复现步骤、环境和已脱敏的验证输出。
+Before opening an issue, read the documentation, search existing issues, and include the goal, expected and actual behavior, reproduction steps, browser/version, and sanitized evidence.
 
-## Support Boundaries
-
-维护者在发布前必须说明支持范围、响应方式和不支持事项：`<SUPPORT_BOUNDARIES>`。
+Support is best effort. The project does not promise private consulting, data recovery, cloud sync, browser-extension compatibility, or support for modified downstream copies.
