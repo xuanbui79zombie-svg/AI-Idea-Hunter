@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Turn observed problems into evidence-backed, comparable AI software opportunities.">
+    <meta name="theme-color" content="#111a17">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'"
+    >
+    <title>AI Idea Hunter — Find the signal worth building</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to workspace</a>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="AI Idea Hunter home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>AI Idea Hunter</span>
+      </a>
+      <nav class="top-actions" aria-label="Workspace actions">
+        <button class="button button-quiet" id="theme-toggle" type="button" aria-label="Change color theme">
+          <span aria-hidden="true">◐</span>
+          <span class="hide-small" id="theme-label">System</span>
+        </button>
+        <button class="button button-quiet" id="import-button" type="button">Import</button>
+        <button class="button button-quiet" id="export-all-button" type="button">Back up</button>
+        <button class="button button-primary" id="add-idea-button" type="button">
+          <span aria-hidden="true">＋</span> New idea
+        </button>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> A decision workspace for independent builders</p>
+          <h1 id="hero-title">Find the signal<br>worth building.</h1>
+          <p class="hero-lede">
+            Turn scattered pain points into evidence-backed opportunities. Score the assumptions,
+            compare the signal, and leave with a research brief—not another idea graveyard.
+          </p>
+          <div class="hero-actions">
+            <button class="button button-primary button-large" id="hero-add-button" type="button">Capture an opportunity</button>
+            <button class="button button-secondary button-large" id="example-button" type="button">Explore fictional examples</button>
+          </div>
+          <p class="privacy-note"><span aria-hidden="true">●</span> Local by default. No account, analytics, or external AI call.</p>
+        </div>
+        <div class="signal-visual" aria-label="A visual model showing evidence becoming a prioritized signal">
+          <div class="radar-ring ring-one"></div>
+          <div class="radar-ring ring-two"></div>
+          <div class="radar-ring ring-three"></div>
+          <div class="radar-axis axis-one"></div>
+          <div class="radar-axis axis-two"></div>
+          <span class="signal-dot dot-a"><i>Problem</i></span>
+          <span class="signal-dot dot-b"><i>Evidence</i></span>
+          <span class="signal-dot dot-c"><i>Budget</i></span>
+          <span class="signal-core"><strong>76</strong><small>signal</small></span>
+          <p>Transparent inputs.<br>One comparable score.</p>
+        </div>
+      </section>
+
+      <aside class="warning-banner" id="storage-warning" role="status" hidden>
+        <strong>Storage warning</strong>
+        <span id="storage-warning-text"></span>
+      </aside>
+
+      <section class="dashboard" aria-labelledby="dashboard-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Workspace pulse</p>
+            <h2 id="dashboard-title">Your opportunity signal</h2>
+          </div>
+          <p id="dashboard-summary">Start with an observed problem, not a feature.</p>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card metric-featured">
+            <span class="metric-label">Top candidate</span>
+            <strong class="metric-value metric-title" id="metric-top">No signal yet</strong>
+            <span class="metric-detail" id="metric-top-detail">Capture the first opportunity</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Active ideas</span>
+            <strong class="metric-value" id="metric-active">0</strong>
+            <span class="metric-detail">excluding archived</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Average score</span>
+            <strong class="metric-value" id="metric-average">—</strong>
+            <span class="metric-detail">weighted and explainable</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Evidence gaps</span>
+            <strong class="metric-value" id="metric-gaps">0</strong>
+            <span class="metric-detail">ideas with no strong evidence</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-labelledby="workspace-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Opportunity portfolio</p>
+            <h2 id="workspace-title">Compare the work before you build it.</h2>
+          </div>
+          <p>Scores organize attention. Evidence decides what happens next.</p>
+        </div>
+
+        <div class="toolbar" aria-label="Portfolio filters">
+          <label class="search-field">
+            <span class="visually-hidden">Search ideas</span>
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="Search problem, audience, outcome…" autocomplete="off">
+          </label>
+          <label class="select-field">
+            <span>Status</span>
+            <select id="status-filter">
+              <option value="all">All stages</option>
+              <option value="inbox">Inbox</option>
+              <option value="researching">Researching</option>
+              <option value="validated">Validated</option>
+              <option value="selected">Selected</option>
+              <option value="archived">Archived</option>
+            </select>
+          </label>
+          <label class="select-field">
+            <span>Sort</span>
+            <select id="sort-select">
+              <option value="score">Highest signal</option>
+              <option value="updated">Recently updated</option>
+              <option value="title">Title A–Z</option>
+            </select>
+          </label>
+          <span class="result-count" id="result-count" aria-live="polite">0 ideas</span>
+        </div>
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-orbit" aria-hidden="true"><span></span></div>
+          <p class="eyebrow">Clean slate</p>
+          <h3>Start with the friction you noticed.</h3>
+          <p>Capture one real workflow problem. You can add evidence and refine the score as you learn.</p>
+          <div class="empty-actions">
+            <button class="button button-primary" id="empty-add-button" type="button">Capture your first idea</button>
+            <button class="button button-secondary" id="empty-example-button" type="button">Load fictional examples</button>
+          </div>
+        </div>
+
+        <div class="idea-grid" id="idea-grid"></div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">No black-box ranking</p>
+            <h2 id="method-title">Seven signals. Every weight visible.</h2>
+          </div>
+          <p>A score is a prioritization aid—not proof of demand, revenue, or product-market fit.</p>
+        </div>
+        <ol class="factor-list">
+          <li><span>01</span><strong>Pain</strong><small>20%</small></li>
+          <li><span>02</span><strong>Frequency</strong><small>15%</small></li>
+          <li><span>03</span><strong>Budget</strong><small>15%</small></li>
+          <li><span>04</span><strong>Reach</strong><small>10%</small></li>
+          <li><span>05</span><strong>Feasibility</strong><small>15%</small></li>
+          <li><span>06</span><strong>Difference</strong><small>10%</small></li>
+          <li><span>07</span><strong>Evidence</strong><small>15%</small></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><span></span></span><span>AI Idea Hunter</span></a>
+      <p>Built for deliberate bets. Your workspace stays in this browser.</p>
+      <a href="https://github.com/xuanbui79zombie-svg/AI-Idea-Hunter">Source on GitHub</a>
+    </footer>
+
+    <dialog class="idea-dialog" id="idea-dialog" aria-labelledby="idea-dialog-title">
+      <form id="idea-form" novalidate>
+        <header class="dialog-header">
+          <div>
+            <p class="eyebrow" id="idea-dialog-kicker">New opportunity</p>
+            <h2 id="idea-dialog-title">Capture the problem signal</h2>
+          </div>
+          <button class="icon-button" id="close-idea-dialog" type="button" aria-label="Close dialog">×</button>
+        </header>
+
+        <div class="dialog-body">
+          <input id="idea-id" name="id" type="hidden">
+          <section class="form-section" aria-labelledby="problem-fields-title">
+            <div class="form-section-heading">
+              <span>01</span>
+              <div><h3 id="problem-fields-title">Frame the opportunity</h3><p>Describe the observed problem before the proposed solution.</p></div>
+            </div>
+            <div class="field-grid two-columns">
+              <label class="field"><span>Idea title <b>*</b></span><input id="idea-title" name="title" maxlength="80" required><small data-count-for="idea-title">0 / 80</small></label>
+              <label class="field"><span>Lifecycle</span><select id="idea-status" name="status"><option value="inbox">Inbox</option><option value="researching">Researching</option><option value="validated">Validated</option><option value="selected">Selected</option><option value="archived">Archived</option></select></label>
+            </div>
+            <label class="field"><span>Target audience <b>*</b></span><input id="idea-audience" name="audience" maxlength="120" required placeholder="Who experiences this problem?"><small data-count-for="idea-audience">0 / 120</small></label>
+            <label class="field"><span>Observed problem <b>*</b></span><textarea id="idea-problem" name="problem" maxlength="600" rows="4" required placeholder="What happens today, and why does it matter?"></textarea><small data-count-for="idea-problem">0 / 600</small></label>
+            <div class="field-grid two-columns">
+              <label class="field"><span>Context</span><textarea id="idea-context" name="context" maxlength="400" rows="3" placeholder="Where or when does it happen?"></textarea><small data-count-for="idea-context">0 / 400</small></label>
+              <label class="field"><span>Proposed outcome <b>*</b></span><textarea id="idea-outcome" name="outcome" maxlength="400" rows="3" required placeholder="What becomes better—not which feature exists?"></textarea><small data-count-for="idea-outcome">0 / 400</small></label>
+            </div>
+            <label class="field"><span>Next validation step</span><input id="idea-next-step" name="nextStep" maxlength="240" placeholder="The smallest action that reduces uncertainty"><small data-count-for="idea-next-step">0 / 240</small></label>
+          </section>
+
+          <section class="form-section" aria-labelledby="score-fields-title">
+            <div class="form-section-heading">
+              <span>02</span>
+              <div><h3 id="score-fields-title">Score the assumptions</h3><p>Use what you know now. Low-confidence honesty is useful evidence.</p></div>
+            </div>
+            <div class="score-editor" id="score-editor"></div>
+            <div class="score-preview" aria-live="polite"><span>Opportunity score</span><strong id="score-preview-value">54</strong><small id="score-preview-band">Promising</small></div>
+          </section>
+
+          <section class="form-section" aria-labelledby="evidence-fields-title">
+            <div class="form-section-heading">
+              <span>03</span>
+              <div><h3 id="evidence-fields-title">Attach the evidence</h3><p>Record what you observed and how directly it supports the claim.</p></div>
+            </div>
+            <div class="evidence-list" id="evidence-list"></div>
+            <div class="evidence-composer">
+              <label class="field"><span>Source or context</span><input id="evidence-source" maxlength="120" placeholder="Interview, workflow observation, support note…"></label>
+              <label class="field field-wide"><span>Observation</span><input id="evidence-observation" maxlength="500" placeholder="What happened? Avoid interpretation when possible."></label>
+              <label class="field"><span>Strength</span><select id="evidence-strength"><option value="weak">Weak signal</option><option value="moderate">Moderate</option><option value="strong">Strong</option></select></label>
+              <label class="field"><span>Observed</span><input id="evidence-date" type="date"></label>
+              <button class="button button-secondary" id="add-evidence-button" type="button">Add evidence</button>
+            </div>
+            <p class="field-error" id="evidence-error" role="alert"></p>
+          </section>
+        </div>
+
+        <footer class="dialog-footer">
+          <p><span aria-hidden="true">●</span> Saved locally in this browser</p>
+          <div><button class="button button-secondary" id="cancel-idea-dialog" type="button">Cancel</button><button class="button button-primary" type="submit">Save opportunity</button></div>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+      <form method="dialog">
+        <span class="confirm-icon" aria-hidden="true">!</span>
+        <h2 id="confirm-title">Confirm action</h2>
+        <p id="confirm-message"></p>
+        <div class="confirm-actions">
+          <button class="button button-secondary" value="cancel">Cancel</button>
+          <button class="button button-danger" id="confirm-action-button" value="confirm">Confirm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <input id="import-file" type="file" accept="application/json,.json" hidden>
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+    <noscript><p class="noscript">AI Idea Hunter needs JavaScript to manage a local workspace. No data is sent to a server.</p></noscript>
+  </body>
+</html>

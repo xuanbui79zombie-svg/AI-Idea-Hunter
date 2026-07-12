@@ -1,37 +1,102 @@
 # AI Idea Hunter
 
-AI Idea Hunter is a local-first opportunity workspace that helps independent developers turn scattered AI software ideas into evidence-backed, comparable project candidates.
+AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status: product, architecture, and delivery-plan milestones complete; implementation is starting.
+> Status: M4 build complete. Quality verification and public release packaging are in progress.
 
-## Product Direction
+## Why It Exists
 
-The product focuses on decision quality rather than idea generation. Users capture an observed problem, record supporting evidence, score the opportunity with a transparent model, and export an actionable research brief.
+Idea backlogs often mix assumed problems with proposed features and rank them by excitement. AI Idea Hunter asks for the problem, audience, evidence, uncertainty, and next validation step before a project earns attention.
 
-The MVP is private by default, requires no account, and will not send workspace data to an external service.
+The resulting score organizes work; it does not claim market demand, revenue, or product-market fit.
 
-## Planned MVP
+## Features
 
-- Structured idea and evidence capture
-- Transparent seven-factor opportunity scoring
-- Search, lifecycle filters, sorting, and dashboard signals
-- Local persistence with versioned JSON backup and restore
-- Markdown research brief export
-- Responsive, accessible interface with light and dark themes
+- Create, edit, archive, and safely delete structured opportunities.
+- Attach dated evidence notes with explicit signal strength.
+- Score seven visible factors with a documented weighted formula.
+- Search, filter, sort, and inspect dashboard signals.
+- Export a single idea as a Markdown research brief.
+- Back up and restore the full workspace as versioned JSON.
+- Load clearly labelled fictional examples on demand.
+- Use system, light, or dark themes on desktop and mobile.
+- Work without an account, server, analytics tracker, or model API key.
+
+## Quick Start
+
+Requirements: [Node.js 24 LTS](https://nodejs.org/en/about/previous-releases).
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://127.0.0.1:4173`.
+
+There are no production or development packages; `npm install` verifies metadata and the lockfile. Any static HTTP server can serve `src/`.
+
+## Quality Commands
+
+```bash
+npm run check
+npm test
+npm run test:all
+```
+
+The current suite covers model validation, weighted scoring, evidence guidance, storage failure and recovery, JSON round-trip, import rejection, portable filenames, and Markdown output.
+
+## How the Score Works
+
+| Factor | Weight |
+| --- | ---: |
+| Pain severity | 20% |
+| Frequency | 15% |
+| Willingness to pay | 15% |
+| Reach | 10% |
+| Feasibility | 15% |
+| Differentiation | 10% |
+| Evidence confidence | 15% |
+
+Each input uses a 1–5 scale. The normalized score is `round(sum(value × weight) / 5 × 100)`, producing a result from 20 to 100. Every input and contribution remains visible.
+
+## Privacy and Recovery
+
+Workspace content stays in browser localStorage unless the user explicitly downloads a JSON or Markdown file. The application makes no runtime network request, loads no third-party script or font, and contains no analytics.
+
+Browser clearing or private-browsing behavior can remove data. Export JSON backups regularly. Invalid imports do not mutate the active workspace, and malformed stored data opens a safe empty workspace with a visible warning.
+
+## Project Structure
+
+```text
+src/
+├── index.html       # semantic application shell
+├── styles.css       # responsive design system and themes
+└── js/
+    ├── app.js       # composition and user-intent orchestration
+    ├── ui.js        # safe DOM rendering and interaction
+    ├── model.js     # entities, validation, limits, examples
+    ├── scoring.js   # pure transparent scoring
+    ├── storage.js   # localStorage adapter and recovery
+    └── export.js    # JSON and Markdown boundaries
+tests/               # Node built-in test suite
+scripts/             # static checks and local server
+docs/                # product, architecture, schema, contracts, ADRs
+```
 
 ## Documentation
 
 - [Product requirements](docs/PRODUCT.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data model](docs/DATABASE.md)
-- [API and module contracts](docs/API.md)
-- [Architecture decisions](docs/adr/)
+- [Module contracts](docs/API.md)
+- [ADR-0001: local-first native web](docs/adr/0001-local-first-native-web.md)
 - [Delivery tasks](TASKS.md)
 - [Technology choices](TECH_STACK.md)
+- [Security policy](SECURITY.md)
 
-## Evidence Boundary
+## Contributing
 
-The scoring model prioritizes ideas; it does not prove market demand. User adoption, time savings, and business value will only be reported after they are measured.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [PROJECT_RULES.md](PROJECT_RULES.md), and [AGENTS.md](AGENTS.md). Report vulnerabilities privately according to [SECURITY.md](SECURITY.md).
 
 ## License
 

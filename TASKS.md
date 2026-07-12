@@ -15,7 +15,7 @@
 | M1 Product | Stable users, problem, scope, requirements, and release criteria | DONE | `docs/PRODUCT.md`, commit `d8589bd` |
 | M2 Architecture | Stable components, schema, contracts, security, and deployment | DONE | architecture docs, ADR-0001, commit `a339e7e` |
 | M3 Plan | Executable, dependency-aware tasks mapped to requirements | DONE | this task register |
-| M4 Build | Complete P0/P1 application behavior | TODO | implementation commits and tests |
+| M4 Build | Complete P0/P1 application behavior | DONE | native web application, 24 automated tests, browser smoke test |
 | M5 Quality | Independent release evidence with no P0/P1 defects | TODO | `docs/TEST_REPORT.md` and CI |
 | M6 Release | Public demo, repository governance, and `v1.0.0` | TODO | GitHub Pages and Release |
 
@@ -23,17 +23,6 @@
 
 | ID | Priority | Milestone | Task | Requirements | Depends on | Acceptance evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| B-001 | P0 | M4 | Build semantic application shell and responsive design system | FR-010, FR-013 | M3 | Landmarks, navigation, empty state, dialog shell, 360 px reflow, visible focus |
-| B-002 | P0 | M4 | Implement workspace model, normalization, limits, and validation | FR-001, FR-002, FR-007, FR-008 | B-001 | Pure tests cover valid, invalid, boundary, duplicate ID, and timestamp cases |
-| B-003 | P0 | M4 | Implement transparent scoring and evidence-gap guidance | FR-003, FR-010 | B-002 | Formula, bands, breakdown, and boundary tests pass |
-| B-004 | P0 | M4 | Implement storage adapter and recovery behavior | FR-007 | B-002 | Save/load, unavailable storage, corrupted data, and quarantine tests pass |
-| B-005 | P0 | M4 | Implement idea create, edit, delete, and lifecycle flows | FR-001, FR-002 | B-002, B-003, B-004 | Full CRUD persists; validation and delete confirmation are visible |
-| B-006 | P0 | M4 | Implement evidence note management | FR-004 | B-005 | Add/remove evidence with source, observation, strength, and date |
-| B-007 | P0 | M4 | Implement dashboard, portfolio cards, search, filters, and sorting | FR-005, FR-006 | B-005 | Counts and ranking react to state; empty/no-result states work |
-| B-008 | P0 | M4 | Implement JSON backup/restore and Markdown brief export | FR-008, FR-009 | B-002, B-003, B-004 | Round-trip, invalid import atomicity, size limit, filename, and brief tests pass |
-| B-009 | P1 | M4 | Implement example workspace and first-run guidance | FR-011 | B-005, B-007 | Example is explicit, removable, deterministic, and labelled as fictional |
-| B-010 | P1 | M4 | Implement system/light/dark theme preference | FR-012 | B-001, B-004 | System default and persisted override work without flash-sensitive animation |
-| B-011 | P1 | M4 | Complete keyboard, dialog focus, form error, and live-region behavior | FR-013 | B-005, B-006, B-008 | Complete core flow works without pointer and returns focus correctly |
 | Q-001 | P0 | M5 | Build static repository and security checks | NFR Security, Maintainability | B-001 | Checks reject unsafe HTML APIs, external runtime URLs, placeholders, and oversized assets |
 | Q-002 | P0 | M5 | Complete automated domain and adapter tests | All P0 | B-002..B-010 | At least 30 assertions and all requirement-critical branches pass |
 | Q-003 | P0 | M5 | Execute browser functional regression | All P0 | B-011, Q-002 | Clean-profile create, edit, score, filter, export, import, delete flow passes |
@@ -50,7 +39,7 @@
 
 ## DOING
 
-No task is active at the M3 checkpoint. M4 begins with `B-001` and `B-002`.
+No task is active at the M4 checkpoint. M5 begins with `Q-001` and `Q-002`.
 
 ## DONE
 
@@ -60,6 +49,17 @@ No task is active at the M3 checkpoint. M4 begins with `B-001` and `B-002`.
 | A-001 | P0 | M2 | Define local-first native web architecture and data trust boundary | `docs/ARCHITECTURE.md`, ADR-0001, `a339e7e` |
 | A-002 | P0 | M2 | Define schema, module contracts, tooling, security, and deployment | `docs/DATABASE.md`, `docs/API.md`, `TECH_STACK.md` |
 | T-001 | P0 | M3 | Create requirement-linked implementation, quality, and release plan | This document |
+| B-001 | P0 | M4 | Build semantic application shell and responsive design system | Desktop and 390 px browser layouts; no horizontal overflow |
+| B-002 | P0 | M4 | Implement workspace model, normalization, limits, and validation | `tests/model.test.js` |
+| B-003 | P0 | M4 | Implement transparent scoring and evidence-gap guidance | `tests/scoring.test.js` |
+| B-004 | P0 | M4 | Implement storage adapter and recovery behavior | `tests/storage.test.js` |
+| B-005 | P0 | M4 | Implement idea create, edit, delete, and lifecycle flows | Browser create/persist/delete-cancel smoke test |
+| B-006 | P0 | M4 | Implement evidence note management | Browser evidence composer test and model coverage |
+| B-007 | P0 | M4 | Implement dashboard, search, lifecycle filters, and sorting | Browser dashboard and filter smoke test |
+| B-008 | P0 | M4 | Implement JSON backup/restore and Markdown brief export | `tests/export.test.js` |
+| B-009 | P1 | M4 | Implement explicit fictional example workspace | Deterministic example tests and visible fictional-data notice |
+| B-010 | P1 | M4 | Implement system, light, and dark theme preference | Persisted preference and system listener |
+| B-011 | P1 | M4 | Implement keyboard, dialog focus, form error, and live-region behavior | Native dialog, focus return, labelled controls, status regions |
 
 ## BLOCKED
 

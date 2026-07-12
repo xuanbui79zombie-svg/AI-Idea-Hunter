@@ -11,6 +11,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 - Defined the local-first native web architecture, versioned data model, module contracts, security boundaries, and deployment topology.
 - Recorded ADR-0001 and selected Node.js 24 LTS with zero production and development dependencies.
 - Added the requirement-linked M4 build, M5 quality, and M6 release task plan with P0-P3 priorities and acceptance evidence.
+- Implemented the complete local-first opportunity workspace with CRUD, evidence notes, transparent scoring, dashboard, search, lifecycle filters, sorting, themes, and fictional examples.
+- Added versioned local persistence, safe recovery, JSON backup and restore, and Markdown opportunity brief export.
+- Added a responsive visual system, semantic dialogs, focus handling, live status messages, and reduced-motion support.
+- Added zero-dependency static checks, local development server, and automated model, scoring, storage, and export tests.
 
 ### Changed
 

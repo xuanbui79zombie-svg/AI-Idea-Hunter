@@ -9,6 +9,7 @@
   },
   "scripts": {
     "check": "node scripts/check.mjs",
+    "dev": "node scripts/dev-server.mjs",
     "test": "node --test",
     "test:all": "npm run check && npm test"
   },
