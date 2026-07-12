@@ -17,23 +17,18 @@
 | M3 Plan | Executable, dependency-aware tasks mapped to requirements | DONE | this task register |
 | M4 Build | Complete P0/P1 application behavior | DONE | native web application, 24 automated tests, browser smoke test |
 | M5 Quality | Independent release evidence with no P0/P1 defects | DONE | `docs/TEST_REPORT.md`, 24 tests, 111 assertions, browser review |
-| M6 Release | Public demo, repository governance, and `v1.0.0` | TODO | GitHub Pages and Release |
+| M6 Release | Public demo, repository governance, and `v1.0.0` | DONE | GitHub Pages, protected main, quality checks, and GitHub Release |
 
 ## TODO
 
 | ID | Priority | Milestone | Task | Requirements | Depends on | Acceptance evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| R-001 | P0 | M6 | Add pinned-SHA CI and GitHub Pages workflows | Release acceptance | Q-001, Q-002 | PR CI and main deployment workflows validate successfully |
-| R-002 | P0 | M6 | Create and secure the public GitHub repository | Open-source standard | R-001 | Topics, security features, private reporting, labels, and protected main configured |
-| R-003 | P0 | M6 | Publish reproducible GitHub Pages demo | Release acceptance | R-001, R-002, Q-006 | Public URL loads current release and core flow works |
-| R-004 | P0 | M6 | Complete README, screenshot, contributing, security, support, and changelog packaging | Portfolio standard | Q-006, R-003 | All commands and links verified; claims match evidence |
-| R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Release acceptance | R-004 | Annotated tag, release notes, source archive, and final checks available |
 | F-001 | P2 | Future | Compare selected ideas side by side | FR-014 | Post-release validation | Reassess after usability evidence |
 | F-002 | P3 | Future | Evaluate secure server-side model critique | FR-015 | Explicit architecture approval | New PRD scope, threat model, cost analysis, and ADR required |
 
 ## DOING
 
-No task is active at the M5 checkpoint. M6 begins with `R-001` and `R-002`.
+No `v1.0.0` task is active. Future work requires post-release evidence and a new accepted milestone.
 
 ## DONE
 
@@ -60,6 +55,11 @@ No task is active at the M5 checkpoint. M6 begins with `R-001` and `R-002`.
 | Q-004 | P0 | M5 | Execute accessibility and responsive review | Landmarks, labels, focus return, 390 × 844 no-overflow check |
 | Q-005 | P1 | M5 | Verify performance and privacy budgets | 84,187 bytes; CSP `connect-src 'none'`; no runtime network API |
 | Q-006 | P0 | M5 | Publish release test report and resolve blockers | `docs/TEST_REPORT.md`; no known P0/P1 blocker |
+| R-001 | P0 | M6 | Add pinned-SHA CI and GitHub Pages workflows | Remote Quality and Pages runs passed |
+| R-002 | P0 | M6 | Create and secure the public GitHub repository | Topics, labels, security features, private reporting, and ruleset configured |
+| R-003 | P0 | M6 | Publish reproducible GitHub Pages demo | HTTPS 200; 9 deployed assets matched verified source byte-for-byte |
+| R-004 | P0 | M6 | Complete open-source and portfolio packaging | README, screenshot, governance, test report, and interview review |
+| R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Annotated tag and GitHub Release on the verified final commit |
 
 ## BLOCKED
 

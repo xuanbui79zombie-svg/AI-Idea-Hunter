@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status: `v1.0.0` release candidate. Local quality gates passed; remote CI and Pages verification are in progress.
+> Status: `v1.0.0` released. Quality gates and GitHub Pages deployment are passing.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -102,6 +102,7 @@ docs/                # product, architecture, schema, contracts, ADRs
 - [Technology choices](TECH_STACK.md)
 - [Release test report](docs/TEST_REPORT.md)
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
+- [Portfolio and interview review](docs/PORTFOLIO_REVIEW.md)
 - [Security policy](SECURITY.md)
 
 ## Contributing

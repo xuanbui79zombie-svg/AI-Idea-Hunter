@@ -84,4 +84,14 @@ All P0 functional requirements have deterministic domain coverage and/or browser
 
 ## Release Recommendation
 
-Proceed to M6 GitHub packaging, CI, Pages deployment, and live-demo verification. Block release if remote checks fail, Pages loads external runtime resources, private vulnerability reporting cannot be enabled, or `main` cannot be protected.
+M6 release evidence passed:
+
+- GitHub Quality completed successfully with `Test and validate` passing.
+- GitHub Pages completed `Verify and package` and `Publish site` successfully.
+- The production URL returned HTTPS 200.
+- All nine deployed application assets matched the locally tested source byte-for-byte.
+- Dependabot checks completed successfully.
+- Private vulnerability reporting, secret scanning, push protection, Dependabot alerts, and security updates are enabled.
+- `main` requires pull requests and the `Test and validate` status check and blocks force pushes and deletion.
+
+The project is approved for `v1.0.0` with the cross-browser and native-file-picker limitations already documented above.
