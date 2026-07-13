@@ -1,6 +1,7 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { translationKeys } from "../src/js/i18n.js";
 
 const root = process.cwd();
 const sourceRoot = path.join(root, "src");
@@ -34,6 +35,7 @@ const required = [
   "src/js/scoring.js",
   "src/js/storage.js",
   "src/js/export.js",
+  "src/js/i18n.js",
 ];
 
 async function exists(file) {
@@ -116,6 +118,10 @@ if (!html.includes("connect-src 'none'")) errors.push("Content Security Policy m
 if (!html.includes("<main")) errors.push("Application shell requires a main landmark.");
 if (!html.includes("aria-live")) errors.push("Application shell requires an ARIA live region.");
 if (/<(?:script|link|img)[^>]+(?:src|href)=["']https?:/i.test(html)) errors.push("Runtime assets must not load from external origins.");
+const knownTranslationKeys = new Set(translationKeys("en"));
+for (const match of html.matchAll(/data-i18n(?:-placeholder|-aria)?="([^"]+)"/g)) {
+  if (!knownTranslationKeys.has(match[1])) errors.push(`index.html references an unknown translation key: ${match[1]}`);
+}
 
 const markdownFiles = (await walk(root)).filter((file) => file.endsWith(".md") && !file.includes(`${path.sep}.git${path.sep}`));
 const linkPattern = /!?\[[^\]]*\]\(([^)]+)\)/g;

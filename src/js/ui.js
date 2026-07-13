@@ -1,5 +1,6 @@
 import { EVIDENCE_STRENGTHS, STATUSES } from "./model.js";
-import { calculateScore, getEvidenceGap, getScoreBand, getScoreBreakdown, SCORE_FACTORS, SCORE_GUIDANCE } from "./scoring.js";
+import { getLanguage, setLanguage, t } from "./i18n.js";
+import { calculateScore, getEvidenceGapKey, getScoreBand, getScoreBreakdown, SCORE_FACTORS } from "./scoring.js";
 
 const elements = {};
 let callbacks = {};
@@ -24,12 +25,12 @@ function element(tag, { className, text, attributes } = {}) {
 }
 
 function statusLabel(status) {
-  return status.charAt(0).toUpperCase() + status.slice(1);
+  return t(`status.${status}`);
 }
 
 function formatDate(value) {
   const date = new Date(value);
-  return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" }).format(date);
+  return new Intl.DateTimeFormat(getLanguage(), { month: "short", day: "numeric", year: "numeric" }).format(date);
 }
 
 function todayInputValue() {
@@ -38,11 +39,18 @@ function todayInputValue() {
   return new Date(date.getTime() - offset).toISOString().slice(0, 10);
 }
 
-function button(label, action, ideaId, symbol, title = label) {
+function button(labelKey, action, ideaId, symbol, title) {
+  const label = t(labelKey);
   const node = element("button", {
     className: "card-action",
     text: symbol,
-    attributes: { type: "button", "data-action": action, "data-idea-id": ideaId, title, "aria-label": `${label}: ${title === label ? "idea" : title}` },
+    attributes: {
+      type: "button",
+      "data-action": action,
+      "data-idea-id": ideaId,
+      title: label,
+      "aria-label": t("action.aria", { action: label, title }),
+    },
   });
   return node;
 }
@@ -52,7 +60,10 @@ function buildScoreEditor() {
   for (const factor of SCORE_FACTORS) {
     const wrapper = element("div", { className: "score-field" });
     const header = element("div", { className: "score-field-header" });
-    const label = element("label", { text: factor.label, attributes: { for: `score-${factor.key}` } });
+    const label = element("label", {
+      text: t(`factor.${factor.key}.label`),
+      attributes: { for: `score-${factor.key}`, id: `label-${factor.key}` },
+    });
     const output = element("output", { text: factor.key === "evidenceConfidence" ? "1" : "3", attributes: { for: `score-${factor.key}`, id: `output-${factor.key}` } });
     const input = element("input", {
       attributes: {
@@ -65,7 +76,10 @@ function buildScoreEditor() {
         value: factor.key === "evidenceConfidence" ? "1" : "3",
       },
     });
-    const guidance = element("small", { text: SCORE_GUIDANCE[factor.key][Number(input.value) - 1], attributes: { id: `guidance-${factor.key}` } });
+    const guidance = element("small", {
+      text: t(`guidance.${factor.key}.${Number(input.value) - 1}`),
+      attributes: { id: `guidance-${factor.key}` },
+    });
     header.append(label, output);
     wrapper.append(header, input, guidance);
     fragment.append(wrapper);
@@ -82,24 +96,28 @@ function updateScorePreview() {
   const score = calculateScore(scores);
   const band = getScoreBand(score);
   elements.scorePreviewValue.textContent = String(score);
-  elements.scorePreviewBand.textContent = band.label;
+  elements.scorePreviewBand.textContent = t(`band.${band.key}.label`);
   for (const factor of SCORE_FACTORS) {
+    byId(`label-${factor.key}`).textContent = t(`factor.${factor.key}.label`);
     byId(`output-${factor.key}`).textContent = String(scores[factor.key]);
-    byId(`guidance-${factor.key}`).textContent = SCORE_GUIDANCE[factor.key][scores[factor.key] - 1];
+    byId(`guidance-${factor.key}`).textContent = t(`guidance.${factor.key}.${scores[factor.key] - 1}`);
   }
 }
 
 function renderEvidenceDraft() {
   elements.evidenceList.replaceChildren();
   if (evidenceDraft.length === 0) {
-    elements.evidenceList.append(element("p", { className: "eyebrow", text: "No evidence attached yet" }));
+    elements.evidenceList.append(element("p", { className: "eyebrow", text: t("evidence.none") }));
     return;
   }
 
   const fragment = document.createDocumentFragment();
   evidenceDraft.forEach((item, index) => {
     const row = element("article", { className: "evidence-item" });
-    const strength = element("span", { className: "evidence-strength", attributes: { "data-strength": item.strength, title: `${item.strength} evidence` } });
+    const strength = element("span", {
+      className: "evidence-strength",
+      attributes: { "data-strength": item.strength, title: t("evidence.strengthTitle", { strength: t(`strength.${item.strength}`) }) },
+    });
     const copy = element("div");
     copy.append(
       element("strong", { text: `${item.source} · ${item.observedAt}` }),
@@ -108,7 +126,7 @@ function renderEvidenceDraft() {
     const remove = element("button", {
       className: "card-action",
       text: "×",
-      attributes: { type: "button", "data-evidence-index": index, "aria-label": `Remove evidence from ${item.source}` },
+      attributes: { type: "button", "data-evidence-index": index, "aria-label": t("evidence.remove", { source: item.source }) },
     });
     row.append(strength, copy, remove);
     fragment.append(row);
@@ -138,16 +156,23 @@ function createIdeaCard(idea) {
   const top = element("div", { className: "card-topline" });
   top.append(
     element("span", { className: "status-pill", text: statusLabel(idea.status) }),
-    element("span", { className: "score-badge", text: String(score), attributes: { title: `${score} out of 100, ${band.label}` } }),
+    element("span", {
+      className: "score-badge",
+      text: String(score),
+      attributes: { title: t("card.scoreTitle", { score, band: t(`band.${band.key}.label`) }) },
+    }),
   );
 
   const title = element("h3", { text: idea.title });
   const audience = element("p", { className: "audience", text: idea.audience });
   const problem = element("p", { className: "problem-excerpt", text: idea.problem });
 
-  const scoreLine = element("div", { className: "score-line", attributes: { "aria-label": "Factor score profile" } });
+  const scoreLine = element("div", { className: "score-line", attributes: { "aria-label": t("card.factorProfile") } });
   for (const factor of breakdown) {
-    const segment = element("span", { className: "score-segment", attributes: { title: `${factor.label}: ${factor.value} of 5` } });
+    const segment = element("span", {
+      className: "score-segment",
+      attributes: { title: t("card.factorTitle", { factor: t(`factor.${factor.key}.label`), value: factor.value }) },
+    });
     const fill = element("span");
     fill.style.width = `${factor.value * 20}%`;
     segment.append(fill);
@@ -156,17 +181,18 @@ function createIdeaCard(idea) {
 
   const meta = element("div", { className: "card-meta" });
   meta.append(
-    element("span", { text: `${idea.evidence.length} evidence note${idea.evidence.length === 1 ? "" : "s"}` }),
-    element("span", { text: `Updated ${formatDate(idea.updatedAt)}` }),
+    element("span", { text: t(idea.evidence.length === 1 ? "card.evidence.one" : "card.evidence.many", { count: idea.evidence.length }) }),
+    element("span", { text: t("card.updated", { date: formatDate(idea.updatedAt) }) }),
   );
 
   const footer = element("div", { className: "card-footer" });
-  footer.append(element("span", { className: "evidence-gap", text: getEvidenceGap(idea), attributes: { title: getEvidenceGap(idea) } }));
+  const gap = t(`gap.${getEvidenceGapKey(idea)}`);
+  footer.append(element("span", { className: "evidence-gap", text: gap, attributes: { title: gap } }));
   const actions = element("div", { className: "card-actions" });
   actions.append(
-    button("Edit", "edit", idea.id, "✎", idea.title),
-    button("Export brief", "export", idea.id, "⇩", idea.title),
-    button("Delete", "delete", idea.id, "×", idea.title),
+    button("action.edit", "edit", idea.id, "✎", idea.title),
+    button("action.export", "export", idea.id, "⇩", idea.title),
+    button("action.delete", "delete", idea.id, "×", idea.title),
   );
   footer.append(actions);
   card.append(top, title, audience, problem, scoreLine, meta, footer);
@@ -200,20 +226,22 @@ export function renderApp(workspace, view, warning = "") {
   elements.metricActive.textContent = String(active.length);
   elements.metricAverage.textContent = average === null ? "—" : String(average);
   elements.metricGaps.textContent = String(gaps);
-  elements.metricTop.textContent = top?.title ?? "No signal yet";
-  elements.metricTopDetail.textContent = top ? `${calculateScore(top.scores)}/100 · ${getScoreBand(calculateScore(top.scores)).label}` : "Capture the first opportunity";
+  elements.metricTop.textContent = top?.title ?? t("metric.noSignal");
+  elements.metricTopDetail.textContent = top
+    ? `${calculateScore(top.scores)}/100 · ${t(`band.${getScoreBand(calculateScore(top.scores)).key}.label`)}`
+    : t("metric.captureFirst");
   elements.dashboardSummary.textContent = active.length
-    ? `${active.length} active idea${active.length === 1 ? "" : "s"}; ${gaps} still need strong evidence.`
-    : "Start with an observed problem, not a feature.";
+    ? t(active.length === 1 ? "dashboard.summary.one" : "dashboard.summary.many", { count: active.length, gaps })
+    : t("dashboard.empty");
 
   const ideas = filteredIdeas(workspace, view);
   elements.ideaGrid.replaceChildren(...ideas.map(createIdeaCard));
   elements.emptyState.hidden = workspace.ideas.length > 0 || Boolean(view.search) || view.status !== "all";
   elements.ideaGrid.hidden = ideas.length === 0;
-  elements.resultCount.textContent = `${ideas.length} idea${ideas.length === 1 ? "" : "s"}`;
+  elements.resultCount.textContent = t(ideas.length === 1 ? "result.one" : "result.many", { count: ideas.length });
   if (workspace.ideas.length > 0 && ideas.length === 0) {
     elements.ideaGrid.hidden = false;
-    elements.ideaGrid.append(element("p", { className: "empty-state", text: "No ideas match these filters. Change the search or lifecycle filter." }));
+    elements.ideaGrid.append(element("p", { className: "empty-state", text: t("result.none") }));
   }
 
   elements.storageWarning.hidden = !warning;
@@ -237,8 +265,8 @@ export function openIdeaDialog(idea) {
   }
   elements.evidenceDate.value = todayInputValue();
   elements.evidenceError.textContent = "";
-  elements.ideaDialogKicker.textContent = idea ? "Edit opportunity" : "New opportunity";
-  elements.ideaDialogTitle.textContent = idea ? "Refine the opportunity" : "Capture the problem signal";
+  elements.ideaDialogKicker.textContent = t(idea ? "dialog.editKicker" : "dialog.newKicker");
+  elements.ideaDialogTitle.textContent = t(idea ? "dialog.editTitle" : "dialog.newTitle");
   renderEvidenceDraft();
   updateScorePreview();
   setCharacterCounts();
@@ -283,7 +311,7 @@ export function showFormError(error) {
   const target = byId(map[issue?.field] ?? "idea-title");
   target?.setAttribute("aria-invalid", "true");
   target?.focus();
-  showToast(issue?.message ?? error?.message ?? "Review the form and try again.");
+  showToast(getLanguage() === "en" ? (issue?.message ?? error?.message ?? t("form.review")) : t("form.review"));
 }
 
 export function showToast(message) {
@@ -297,8 +325,33 @@ export function showToast(message) {
 
 export function setTheme(theme, resolvedTheme) {
   document.documentElement.dataset.theme = resolvedTheme;
-  elements.themeLabel.textContent = statusLabel(theme);
-  elements.themeToggle.setAttribute("aria-label", `Color theme: ${theme}. Activate to change.`);
+  const label = t(`theme.${theme}`);
+  elements.themeLabel.textContent = label;
+  elements.themeToggle.setAttribute("aria-label", t("theme.aria", { theme: label }));
+}
+
+function applyStaticTranslations() {
+  document.documentElement.lang = getLanguage();
+  document.title = t("page.title");
+  document.querySelector('meta[name="description"]')?.setAttribute("content", t("meta.description"));
+  for (const node of document.querySelectorAll("[data-i18n]")) {
+    node.textContent = t(node.dataset.i18n);
+  }
+  for (const node of document.querySelectorAll("[data-i18n-placeholder]")) {
+    node.setAttribute("placeholder", t(node.dataset.i18nPlaceholder));
+  }
+  for (const node of document.querySelectorAll("[data-i18n-aria]")) {
+    node.setAttribute("aria-label", t(node.dataset.i18nAria));
+  }
+  elements.languageLabel.textContent = t(`language.label.${getLanguage()}`);
+  elements.languageToggle.setAttribute("aria-label", t(`language.aria.${getLanguage()}`));
+}
+
+export function setInterfaceLanguage(language) {
+  setLanguage(language);
+  applyStaticTranslations();
+  updateScorePreview();
+  renderEvidenceDraft();
 }
 
 export function confirmAction({ title, message, confirmLabel = "Confirm", danger = false }) {
@@ -318,7 +371,7 @@ function addEvidenceFromComposer() {
   const strength = elements.evidenceStrength.value;
   const observedAt = elements.evidenceDate.value;
   if (!source || !observation || !observedAt || !EVIDENCE_STRENGTHS.includes(strength)) {
-    elements.evidenceError.textContent = "Add a source, observation, strength, and date.";
+    elements.evidenceError.textContent = t("evidence.incomplete");
     (!source ? elements.evidenceSource : !observation ? elements.evidenceObservation : elements.evidenceDate).focus();
     return;
   }
@@ -335,6 +388,8 @@ function addEvidenceFromComposer() {
 export function initUI(handlers) {
   callbacks = handlers;
   Object.assign(elements, {
+    languageToggle: byId("language-toggle"),
+    languageLabel: byId("language-label"),
     themeToggle: byId("theme-toggle"),
     themeLabel: byId("theme-label"),
     searchInput: byId("search-input"),
@@ -382,6 +437,7 @@ export function initUI(handlers) {
 
   buildScoreEditor();
   elements.evidenceDate.value = todayInputValue();
+  applyStaticTranslations();
 
   for (const id of ["add-idea-button", "hero-add-button", "empty-add-button"]) {
     byId(id).addEventListener("click", () => openIdeaDialog());
@@ -393,6 +449,7 @@ export function initUI(handlers) {
   byId("cancel-idea-dialog").addEventListener("click", closeIdeaDialog);
   byId("add-evidence-button").addEventListener("click", addEvidenceFromComposer);
   elements.themeToggle.addEventListener("click", () => callbacks.onThemeToggle());
+  elements.languageToggle.addEventListener("click", () => callbacks.onLanguageToggle());
   byId("import-button").addEventListener("click", () => elements.importFile.click());
   byId("export-all-button").addEventListener("click", () => callbacks.onExportAll());
 

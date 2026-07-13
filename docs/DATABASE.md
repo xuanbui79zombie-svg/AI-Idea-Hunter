@@ -8,6 +8,12 @@
 
 This is not a relational database. It is appropriate for a single user, a bounded dataset, and static hosting. JSON export is the portability and backup mechanism.
 
+The interface language is stored separately under:
+
+`ai-idea-hunter.language`
+
+Its value is `en` or `zh-CN`. It is intentionally excluded from workspace JSON so changing or importing a workspace does not overwrite the user's interface preference.
+
 ## Workspace Schema
 
 ```js
@@ -91,6 +97,7 @@ JavaScript is single-threaded per tab, but two tabs can overwrite each other. Mu
 - Import validates before confirmation and replacement.
 - Corrupted stored data is copied to a quarantine key when possible before the active key is cleared.
 - The UI explains that browser clearing and private browsing can remove data.
+- Language preference failure never blocks the workspace; the interface falls back to the browser language or English.
 
 ## Privacy
 

@@ -114,6 +114,7 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | FR-013 | P1 | Provide keyboard-efficient interaction | Dialogs, forms, controls, and navigation work without a pointer |
 | FR-014 | P2 | Compare selected ideas side by side | Deferred until ranking behavior is validated |
 | FR-015 | P3 | Optional model-assisted brief critique | Deferred; requires a secure server-side integration and explicit architecture approval |
+| FR-016 | P1 | Switch between English and Simplified Chinese | Every application control, system message, scoring explanation, fictional example, and research-brief export uses the selected language; the preference persists locally and updates the document language without translating user-entered content |
 
 ## Non-Functional Requirements
 
