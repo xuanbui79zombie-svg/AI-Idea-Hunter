@@ -4,6 +4,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-13
+
 ### Added
 
 - Added scheduled, bounded collection from the official Hacker News API and public GitHub Issues search.
