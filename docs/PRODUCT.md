@@ -8,8 +8,8 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: MVP definition complete
-- Target release: `v1.0.0`
+- Product stage: `v1.0.0` released; M7 external usability validation in progress
+- Current release: `v1.0.0`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
 - Unknown: whether external users will adopt the scoring model without customization.
@@ -173,3 +173,4 @@ These are release and validation targets, not measured outcomes.
 | M4 Build | Complete local vertical slices | P0 features implemented and documented |
 | M5 Quality | Release evidence and resolved blockers | Automated checks and browser review pass |
 | M6 Release | Public, reproducible portfolio project | GitHub Pages, `v1.0.0`, release notes, and repository packaging complete |
+| M7 User validation | Evidence about independent task completion and score comprehension | Three eligible sessions synthesized; critical findings resolved or explicitly accepted |

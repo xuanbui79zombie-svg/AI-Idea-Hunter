@@ -18,6 +18,7 @@
 | M4 Build | Complete P0/P1 application behavior | DONE | native web application, 24 automated tests, browser smoke test |
 | M5 Quality | Independent release evidence with no P0/P1 defects | DONE | `docs/TEST_REPORT.md`, 24 tests, 111 assertions, browser review |
 | M6 Release | Public demo, repository governance, and `v1.0.0` | DONE | GitHub Pages, protected main, quality checks, and GitHub Release |
+| M7 User validation | Three consent-based sessions and evidence-backed product decisions | DOING | Protocol ready; external sessions pending |
 
 ## TODO
 
@@ -25,10 +26,16 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | F-001 | P2 | Future | Compare selected ideas side by side | FR-014 | Post-release validation | Reassess after usability evidence |
 | F-002 | P3 | Future | Evaluate secure server-side model critique | FR-015 | Explicit architecture approval | New PRD scope, threat model, cost analysis, and ADR required |
+| UV-002 | P0 | M7 | Recruit three eligible usability participants | UV-001 | Recruitment brief and eligibility record for P01-P03 |
+| UV-003 | P0 | M7 | Run P01-P03 moderated usability sessions | UV-002 | Three sanitized session records with task outcomes and consent confirmed |
+| UV-004 | P0 | M7 | Synthesize findings and prioritize responses | UV-003 | Task-level counts, finding severities, limitations, and linked decisions |
+| UV-005 | P0 | M7 | Close or continue the milestone from evidence | UV-004 | Threshold decision, required fixes verified, and docs updated |
 
 ## DOING
 
-No `v1.0.0` task is active. Future work requires post-release evidence and a new accepted milestone.
+| ID | Priority | Milestone | Task | Current evidence |
+| --- | --- | --- | --- | --- |
+| UV-002 | P0 | M7 | Recruit three eligible usability participants | P01-P03 are not scheduled; no user result exists |
 
 ## DONE
 
@@ -60,6 +67,7 @@ No `v1.0.0` task is active. Future work requires post-release evidence and a new
 | R-003 | P0 | M6 | Publish reproducible GitHub Pages demo | HTTPS 200; 9 deployed assets matched verified source byte-for-byte |
 | R-004 | P0 | M6 | Complete open-source and portfolio packaging | README, screenshot, governance, test report, and interview review |
 | R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Annotated tag and GitHub Release on the verified final commit |
+| UV-001 | P0 | M7 | Define the consent, privacy, task, metric, severity, and synthesis protocol | `docs/research/`; internal dry run on 2026-07-13 does not count as user evidence |
 
 ## BLOCKED
 

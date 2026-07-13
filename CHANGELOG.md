@@ -4,6 +4,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Added
+
+- Added the M7 usability test plan, privacy-aware recruitment brief, session template, and evidence log for three external participant sessions.
+
 ## [1.0.0] - 2026-07-12
 
 ### Added
