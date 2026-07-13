@@ -32,6 +32,8 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Changed
 
+- Marked M7 real-user validation as skipped by owner policy, retained its bilingual materials as inactive optional templates, and removed them from required CI structure checks.
+- Clarified that engineering quality gates remain mandatory and that 0 user sessions support no usability, adoption, satisfaction, market-demand, or commercial claim.
 - Prepared the complete repository, demo, documentation, and governance surface for public release.
 
 ### Fixed

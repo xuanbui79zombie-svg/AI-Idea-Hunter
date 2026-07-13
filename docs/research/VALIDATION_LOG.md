@@ -2,9 +2,11 @@
 
 ## Current State / 当前状态
 
-M7 is **in progress**. The bilingual protocol is ready, but no external usability session has been completed. Therefore, there is no usability conclusion yet.
+M7 is **SKIPPED by owner policy** as of 2026-07-13. Real-user validation is opt-in and was not requested for this project. No external usability session was completed.
 
-M7 **正在进行中**。中英双语测试协议已就绪，但尚未完成任何外部可用性测试，因此目前没有可用性结论。
+截至 2026-07-13，负责人已决定 **跳过 M7**。真实用户验证为选择加入，本项目未提出启用要求，也未完成任何外部可用性测试。
+
+Evidence boundary / 证据边界：0 sessions / 0 次会话；0 participant findings / 0 条参与者问题；no usability, adoption, satisfaction, market-demand, product-market-fit, or commercial conclusion / 不存在可用性、采用率、满意度、市场需求、产品市场匹配或商业结论。
 
 ## Protocol Dry Run / 流程内部演练
 
@@ -20,9 +22,9 @@ The dry run checked the research procedure only. It did not evaluate product usa
 
 | Participant / 参与者 | Eligibility / 合格确认 | Consent / 同意确认 | Language / 语言 | Status / 状态 | Sanitized evidence / 脱敏证据 | Findings / 问题 |
 | --- | --- | --- | --- | --- | --- | --- |
-| P01 | Pending / 待确认 | Pending / 待确认 | Pending / 待确认 | Not scheduled / 未安排 | None / 无 | None / 无 |
-| P02 | Pending / 待确认 | Pending / 待确认 | Pending / 待确认 | Not scheduled / 未安排 | None / 无 | None / 无 |
-| P03 | Pending / 待确认 | Pending / 待确认 | Pending / 待确认 | Not scheduled / 未安排 | None / 无 | None / 无 |
+| P01 | Not applicable / 不适用 | Not collected / 未收集 | Not applicable / 不适用 | Skipped / 已跳过 | None / 无 | None / 无 |
+| P02 | Not applicable / 不适用 | Not collected / 未收集 | Not applicable / 不适用 | Skipped / 已跳过 | None / 无 | None / 无 |
+| P03 | Not applicable / 不适用 | Not collected / 未收集 | Not applicable / 不适用 | Skipped / 已跳过 | None / 无 | None / 无 |
 
 ## Findings Register / 问题登记
 
@@ -32,14 +34,14 @@ No participant finding has been recorded. Add only findings supported by an elig
 
 | Finding ID / 问题编号 | Sessions / 会话 | Observation / 观察 | Severity / 严重度 | Decision / 决定 | Linked work / 关联任务 |
 | --- | --- | --- | --- | --- | --- |
-| None / 无 | — | Awaiting participant evidence / 等待参与者证据 | — | — | — |
+| None / 无 | — | No participant evidence collected / 未收集参与者证据 | — | M7 skipped / M7 已跳过 | — |
 
 ## M7 Synthesis / M7 汇总
 
-Status: **Pending three completed sessions.**
+Status: **Not applicable; M7 skipped by owner policy.**
 
-状态：**等待完成三次会话。**
+状态：**不适用；负责人已决定跳过 M7。**
 
-Do not fill this section from expectations, automated tests, maintainer impressions, recruitment conversations, or incomplete sessions. When evidence is available, report task-level counts, comprehension results, recurring findings, divergent observations, limitations, and the resulting product decisions.
+The archived protocol may be reactivated only after an explicit owner request. Until then, do not create recruitment or session tasks and do not infer user outcomes from engineering tests or maintainer impressions.
 
-不得根据预期、自动化测试、维护者印象、招募交流或未完成会话填写本节。取得证据后，应报告任务级数量、理解结果、重复问题、差异观察、局限性和最终产品决策。
+只有负责人明确要求后，才能重新启用已归档的协议。在此之前，不得创建招募或会话任务，也不得根据工程测试或维护者印象推断用户结果。

@@ -22,10 +22,6 @@ const required = [
   "docs/ARCHITECTURE.md",
   "docs/DATABASE.md",
   "docs/API.md",
-  "docs/research/USABILITY_TEST_PLAN.md",
-  "docs/research/SESSION_TEMPLATE.md",
-  "docs/research/VALIDATION_LOG.md",
-  "docs/research/RECRUITMENT_BRIEF.md",
   "src/index.html",
   "src/styles.css",
   "src/favicon.svg",
@@ -65,19 +61,6 @@ for (const file of required) {
 const packageJson = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"));
 if (Object.keys(packageJson.dependencies ?? {}).length) errors.push("Production dependencies must remain empty for v1.0.0.");
 if (Object.keys(packageJson.devDependencies ?? {}).length) errors.push("Development dependencies must remain empty for v1.0.0.");
-
-const bilingualResearchFiles = [
-  "docs/research/USABILITY_TEST_PLAN.md",
-  "docs/research/SESSION_TEMPLATE.md",
-  "docs/research/VALIDATION_LOG.md",
-  "docs/research/RECRUITMENT_BRIEF.md",
-];
-for (const file of bilingualResearchFiles) {
-  const content = await readFile(path.join(root, file), "utf8");
-  if (!/[A-Za-z]/.test(content) || !/[\u3400-\u9fff]/u.test(content)) {
-    errors.push(`${file} must contain equivalent English and Chinese guidance.`);
-  }
-}
 
 const workflowFiles = [".github/workflows/quality.yml", ".github/workflows/pages.yml"];
 for (const workflowFile of workflowFiles) {

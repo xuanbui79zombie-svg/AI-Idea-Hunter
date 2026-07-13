@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.0.0` released / 已发布. Quality gates and GitHub Pages deployment are passing / 质量门禁与 GitHub Pages 部署均已通过. M7 external usability validation is in progress; no participant result is claimed yet / M7 外部可用性验证正在进行，尚未声明任何参与者结果.
+> Status / 状态: `v1.0.0` released / 已发布. Quality gates and GitHub Pages deployment are passing / 质量门禁与 GitHub Pages 部署均已通过. M7 real-user validation was skipped by owner policy on 2026-07-13; 0 sessions were run and no user result is claimed / 负责人于 2026-07-13 决定跳过 M7 真实用户验证；共执行 0 次会话，未声明任何用户结论.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -107,10 +107,10 @@ docs/                # product, architecture, schema, contracts, ADRs
 - [Release test report](docs/TEST_REPORT.md)
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Portfolio and interview review](docs/PORTFOLIO_REVIEW.md)
-- [M7 usability test plan / M7 可用性测试计划](docs/research/USABILITY_TEST_PLAN.md)
-- [M7 participant recruitment brief / M7 参与者招募说明](docs/research/RECRUITMENT_BRIEF.md)
-- [M7 session template / M7 会话模板](docs/research/SESSION_TEMPLATE.md)
-- [M7 validation log / M7 验证日志](docs/research/VALIDATION_LOG.md)
+- [Inactive optional M7 usability plan / 未启用的可选 M7 可用性计划](docs/research/USABILITY_TEST_PLAN.md)
+- [Inactive optional recruitment brief / 未启用的可选招募说明](docs/research/RECRUITMENT_BRIEF.md)
+- [Inactive optional session template / 未启用的可选会话模板](docs/research/SESSION_TEMPLATE.md)
+- [M7 skip decision and evidence log / M7 跳过决定与证据日志](docs/research/VALIDATION_LOG.md)
 - [Security policy](SECURITY.md)
 
 ## Contributing

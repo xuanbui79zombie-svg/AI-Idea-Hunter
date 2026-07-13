@@ -17,6 +17,7 @@ The product must remain local-first, explainable, static-hostable, and free of d
 5. Never use `innerHTML` with user content or add credentials, analytics, remote fonts, or third-party scripts.
 6. Keep the working tree scoped; do not overwrite unrelated user changes.
 7. Report product, data-loss, security, accessibility, deployment, and maintenance risks as soon as they are found.
+8. Real-user validation is opt-in. Do not recruit, contact, schedule, or collect data from participants unless the project owner explicitly requests it for this project.
 
 ## Development Flow
 
@@ -37,6 +38,8 @@ The product must remain local-first, explainable, static-hostable, and free of d
 - Import failure, storage failure, deletion, empty state, keyboard interaction, and narrow viewport behavior require explicit coverage.
 - Never delete, skip, or weaken a test to hide a failure.
 - If a check cannot run, document the exact reason and remaining risk.
+- Automated, functional, security, privacy, accessibility, compatibility, performance, and deployment checks remain required even when real-user validation is not requested.
+- Record skipped real-user validation as `SKIPPED`, never as passed or completed, and never infer adoption, usability, satisfaction, or market demand from its absence.
 
 ## Documentation Requirements
 

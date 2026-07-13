@@ -35,3 +35,5 @@
 - No schema change without migration behavior and tests.
 - No direct deployment from an unreviewed or failing branch.
 - No modification of core product direction or accepted major architecture without user approval.
+- No participant recruitment, outreach, user session, consent collection, or participant-data handling unless the project owner explicitly opts this project into real-user validation.
+- No skipped or unexecuted user validation described as passed, completed, or evidence of user or market outcomes.
