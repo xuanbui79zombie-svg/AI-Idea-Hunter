@@ -1,5 +1,7 @@
 # Usability Session Template / 可用性测试会话模板
 
+> **Inactive optional template / 未启用的可选模板:** No session is authorized or scheduled. Use only after an explicit owner request to reactivate real-user validation. / 当前未授权或安排任何会话。只有负责人明确要求重新启用真实用户验证后才能使用。
+
 Copy this file into private working notes for each session. Commit only a sanitized version after removing identity and confidential content.
 
 每次测试应把此模板复制到私有工作笔记中。删除身份和机密内容后，只能提交脱敏版本。

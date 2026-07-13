@@ -3,7 +3,7 @@
 ## Operating Rules
 
 - Priority: `P0` release blocker, `P1` important, `P2` valuable follow-up, `P3` optional.
-- State: `TODO`, `DOING`, `DONE`, or `BLOCKED`.
+- State: `TODO`, `DOING`, `DONE`, `BLOCKED`, or `SKIPPED`.
 - At most two implementation tasks may be `DOING` at once.
 - A task moves to `DONE` only with its acceptance evidence and documentation update.
 - Product or architecture scope changes must update the source document before implementation.
@@ -18,24 +18,20 @@
 | M4 Build | Complete P0/P1 application behavior | DONE | native web application, 24 automated tests, browser smoke test |
 | M5 Quality | Independent release evidence with no P0/P1 defects | DONE | `docs/TEST_REPORT.md`, 24 tests, 111 assertions, browser review |
 | M6 Release | Public demo, repository governance, and `v1.0.0` | DONE | GitHub Pages, protected main, quality checks, and GitHub Release |
-| M7 User validation / 用户验证 | Three consent-based sessions and evidence-backed product decisions / 三次知情同意会话及基于证据的产品决策 | DOING | Bilingual protocol ready; external sessions pending / 双语协议已就绪，等待外部会话 |
+| M7 User validation / 用户验证 | Optional external sessions / 可选外部会话 | SKIPPED | Skipped by owner policy on 2026-07-13; 0 sessions and no user conclusion / 负责人于 2026-07-13 决定跳过；0 次会话且无用户结论 |
 
 ## TODO
 
 | ID | Priority | Milestone | Task | Requirements | Depends on | Acceptance evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| F-001 | P2 | Future | Compare selected ideas side by side | FR-014 | Post-release validation | Reassess after usability evidence |
+| F-001 | P2 | Future | Compare selected ideas side by side | FR-014 | Explicit owner prioritization | Reassess from product scope and available evidence |
 | F-002 | P3 | Future | Evaluate secure server-side model critique | FR-015 | Explicit architecture approval | New PRD scope, threat model, cost analysis, and ADR required |
-| UV-002 | P0 | M7 | Recruit three eligible usability participants / 招募三名合格参与者 | UV-001 | Recruitment brief and eligibility record for P01-P03 / 招募说明及 P01-P03 合格记录 |
-| UV-003 | P0 | M7 | Run P01-P03 moderated usability sessions / 执行 P01-P03 主持式测试 | UV-002 | Three sanitized session records with task outcomes and consent confirmed / 三份含任务结果和同意确认的脱敏记录 |
-| UV-004 | P0 | M7 | Synthesize findings and prioritize responses / 汇总问题并确定处理优先级 | UV-003 | Task-level counts, finding severities, limitations, and linked decisions / 任务级数量、严重度、局限和关联决策 |
-| UV-005 | P0 | M7 | Close or continue the milestone from evidence / 根据证据结束或继续里程碑 | UV-004 | Threshold decision, required fixes verified, and docs updated / 阈值决定、必要修复验证及文档更新 |
 
 ## DOING
 
 | ID | Priority | Milestone | Task | Current evidence |
 | --- | --- | --- | --- | --- |
-| UV-002 | P0 | M7 | Recruit three eligible usability participants / 招募三名合格参与者 | P01-P03 are not scheduled; no user result exists / P01-P03 尚未安排，不存在用户结果 |
+| — | — | — | No active task | — |
 
 ## DONE
 
@@ -69,6 +65,15 @@
 | R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Annotated tag and GitHub Release on the verified final commit |
 | UV-001 | P0 | M7 | Define the bilingual consent, privacy, task, metric, severity, and synthesis protocol / 定义双语同意、隐私、任务、指标、严重度及汇总协议 | `docs/research/`; internal dry run on 2026-07-13 does not count as user evidence / 2026-07-13 内部演练不计入用户证据 |
 | L-001 | P1 | M7 | Add persistent English/Simplified Chinese interface switching / 添加持久化中英文界面切换 | FR-016; 30 automated tests; desktop and 390 × 844 browser regression; preference reload verified |
+
+## SKIPPED
+
+| ID | Former priority | Milestone | Task | Reason and evidence boundary |
+| --- | --- | --- | --- | --- |
+| UV-002 | P0 | M7 | Recruit three eligible usability participants / 招募三名合格参与者 | Owner policy decision on 2026-07-13; no recruitment or participant data collected / 负责人于 2026-07-13 决定跳过；未招募且未收集参与者数据 |
+| UV-003 | P0 | M7 | Run P01-P03 moderated usability sessions / 执行 P01-P03 主持式测试 | Not executed; 0 sessions and no usability result / 未执行；0 次会话且无可用性结论 |
+| UV-004 | P0 | M7 | Synthesize findings and prioritize responses / 汇总问题并确定处理优先级 | Not applicable because no participant evidence exists / 不适用，因为不存在参与者证据 |
+| UV-005 | P0 | M7 | Close or continue the milestone from evidence / 根据证据结束或继续里程碑 | Replaced by the explicit owner decision to skip M7 / 已由负责人明确跳过 M7 的决定取代 |
 
 ## BLOCKED
 

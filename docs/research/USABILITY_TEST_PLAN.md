@@ -1,5 +1,7 @@
 # M7 Usability Test Plan / M7 可用性测试计划
 
+> **Inactive optional template / 未启用的可选模板:** M7 was skipped by owner policy on 2026-07-13. Do not recruit or run sessions unless the owner explicitly reactivates real-user validation for this project. / 负责人于 2026-07-13 决定跳过 M7。除非负责人明确重新启用本项目的真实用户验证，否则不得招募或执行会话。
+
 This document is bilingual. The English and Chinese sections define the same protocol; neither language takes precedence over the evidence.
 
 本文档采用中英双语。英文与中文定义同一套测试协议，证据效力不因语言不同而改变。

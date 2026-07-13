@@ -4,7 +4,7 @@
 
 AI Idea Hunter is portfolio-ready as an independently delivered product and engineering case study. It demonstrates scope control, product reasoning, explainable domain logic, local-first architecture, safe data boundaries, accessible frontend work, automated testing, CI/CD, open-source governance, and release ownership.
 
-It does not yet prove external adoption, revenue, retention, or validated commercial demand. Those claims must wait for real evidence.
+It does not prove external adoption, revenue, retention, usability, satisfaction, or validated commercial demand. Real-user validation is opt-in and was skipped for this project; those claims remain out of scope unless real evidence is later requested and collected.
 
 ## Evidence Map
 
@@ -66,8 +66,9 @@ Released a reproducible `v1.0.0` application and public demo with passing qualit
 
 | Priority | Action | Acceptance evidence |
 | --- | --- | --- |
-| P0 | Run three consent-based usability sessions | Task notes, observed failures, and prioritized findings |
 | P1 | Verify current Firefox and Safari | Updated compatibility matrix with version and result |
-| P1 | Measure whether users can explain their ranking | Baseline result without invented improvement claims |
-| P2 | Add comparison only if users struggle with shortlist decisions | Accepted PRD change and new tests |
+| P1 | Keep portfolio claims aligned with current evidence | No adoption, usability, satisfaction, demand, or commercial claim without measured evidence |
+| P2 | Add comparison only if the owner prioritizes shortlist comparison | Accepted PRD change and new tests |
 | P3 | Evaluate model-assisted critique only after secure server approval | Threat model, cost model, privacy decision, and ADR |
+
+Real-user validation is not a standing evidence priority. Add it only after an explicit project-owner request.

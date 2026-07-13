@@ -4,6 +4,8 @@
 
 **Pass for release packaging with documented low-risk limitations.** No P0 or P1 functional, security, privacy, accessibility, data-loss, or deployment blocker is known in the tested scope.
 
+Real-user validation is not part of the required test scope and was skipped by owner policy on 2026-07-13. This does not reduce the engineering quality gates above, and this report makes no usability, adoption, satisfaction, market-demand, or commercial claim.
+
 Three P1 findings were discovered and resolved during review:
 
 1. Desktop radar art collapsed to zero width because the grid item had no explicit width.

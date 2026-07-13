@@ -8,12 +8,14 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: `v1.0.0` released; M7 external usability validation in progress
+- Product stage: `v1.0.0` released; M7 real-user validation skipped by owner policy on 2026-07-13
 - Current release: `v1.0.0`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
 - Unknown: whether external users will adopt the scoring model without customization.
 - Validation rule: user counts, time savings, conversion, and satisfaction must not be claimed until measured.
+- Real-user validation policy: opt-in only. No recruitment, session, or participant-data work may begin unless the owner explicitly requests it for this project.
+- Current evidence: 0 external sessions; no usability, adoption, satisfaction, market-demand, or commercial conclusion.
 
 ## Target Users and Jobs
 
@@ -112,7 +114,7 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | FR-011 | P1 | Seed an example | A deliberate demo action adds sample data; first launch does not silently add it |
 | FR-012 | P1 | Support light and dark themes | Theme follows system by default and can be toggled with a persisted preference |
 | FR-013 | P1 | Provide keyboard-efficient interaction | Dialogs, forms, controls, and navigation work without a pointer |
-| FR-014 | P2 | Compare selected ideas side by side | Deferred until ranking behavior is validated |
+| FR-014 | P2 | Compare selected ideas side by side | Deferred unless the owner prioritizes it with accepted scope and evidence |
 | FR-015 | P3 | Optional model-assisted brief critique | Deferred; requires a secure server-side integration and explicit architecture approval |
 | FR-016 | P1 | Switch between English and Simplified Chinese | Every application control, system message, scoring explanation, fictional example, and research-brief export uses the selected language; the preference persists locally and updates the document language without translating user-entered content |
 
@@ -138,8 +140,8 @@ These are release and validation targets, not measured outcomes.
 | Automated core-logic tests | 0 | At least 30 assertions | Node test report |
 | Critical accessibility defects | Unknown | 0 known | Automated and manual keyboard review |
 | Unhandled data-loss paths | Unknown | 0 known | Import, delete, storage, and recovery tests |
-| First external usability sessions | 0 | 3 after release | Consent-based notes; no fabricated results |
-| Users who can choose a top idea without help | Unknown | Establish baseline after release | Task-based usability session |
+| First external usability sessions | 0 | Not required unless explicitly requested | Owner opt-in followed by consent-based notes; no fabricated results |
+| Users who can choose a top idea without help | Unknown | Not measured | Remains unknown unless the owner explicitly requests a task-based session |
 
 ## MVP Release Acceptance
 
@@ -157,7 +159,7 @@ These are release and validation targets, not measured outcomes.
 
 | Type | Statement | Validation or response |
 | --- | --- | --- |
-| Assumption | Users accept explicit manual scoring | Observe three usability sessions and ask users to explain a ranking |
+| Assumption | Users accept explicit manual scoring | Keep as an unverified assumption unless the owner explicitly requests real-user validation |
 | Assumption | Local-only data is sufficient for an MVP | Track requests for sync without promising it |
 | Risk | A numeric score creates false confidence | Show inputs and caveats; require evidence; avoid predictive language |
 | Risk | Local storage can be cleared by the browser | Provide JSON export, clear warnings, and recovery guidance |
@@ -174,4 +176,4 @@ These are release and validation targets, not measured outcomes.
 | M4 Build | Complete local vertical slices | P0 features implemented and documented |
 | M5 Quality | Release evidence and resolved blockers | Automated checks and browser review pass |
 | M6 Release | Public, reproducible portfolio project | GitHub Pages, `v1.0.0`, release notes, and repository packaging complete |
-| M7 User validation | Evidence about independent task completion and score comprehension | Three eligible sessions synthesized; critical findings resolved or explicitly accepted |
+| M7 User validation | Optional evidence about independent task completion and score comprehension | Skipped by owner policy on 2026-07-13; may reopen only after an explicit owner request |

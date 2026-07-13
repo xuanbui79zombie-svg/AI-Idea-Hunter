@@ -1,5 +1,7 @@
 # M7 Participant Recruitment Brief / M7 参与者招募说明
 
+> **Inactive optional template / 未启用的可选模板:** Do not use this invitation or contact participants unless the owner explicitly reactivates real-user validation for this project. / 除非负责人明确重新启用本项目的真实用户验证，否则不得使用本邀请或联系参与者。
+
 ## Who We Need / 招募对象
 
 Three independent developers or product-focused builders who have chosen software side projects and did not help build AI Idea Hunter.
