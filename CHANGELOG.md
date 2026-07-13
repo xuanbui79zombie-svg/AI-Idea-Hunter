@@ -7,6 +7,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 ### Added
 
 - Added the M7 usability test plan, privacy-aware recruitment brief, session template, and evidence log for three external participant sessions.
+- Added equivalent English and Chinese guidance across all M7 research materials and public tracking entry points.
 
 ## [1.0.0] - 2026-07-12
 
