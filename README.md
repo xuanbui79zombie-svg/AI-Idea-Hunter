@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status: `v1.0.0` released. Quality gates and GitHub Pages deployment are passing. M7 external usability validation is in progress; no participant result is claimed yet.
+> Status / 状态: `v1.0.0` released / 已发布. Quality gates and GitHub Pages deployment are passing / 质量门禁与 GitHub Pages 部署均已通过. M7 external usability validation is in progress; no participant result is claimed yet / M7 外部可用性验证正在进行，尚未声明任何参与者结果.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -103,8 +103,10 @@ docs/                # product, architecture, schema, contracts, ADRs
 - [Release test report](docs/TEST_REPORT.md)
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Portfolio and interview review](docs/PORTFOLIO_REVIEW.md)
-- [M7 usability test plan](docs/research/USABILITY_TEST_PLAN.md)
-- [M7 validation log](docs/research/VALIDATION_LOG.md)
+- [M7 usability test plan / M7 可用性测试计划](docs/research/USABILITY_TEST_PLAN.md)
+- [M7 participant recruitment brief / M7 参与者招募说明](docs/research/RECRUITMENT_BRIEF.md)
+- [M7 session template / M7 会话模板](docs/research/SESSION_TEMPLATE.md)
+- [M7 validation log / M7 验证日志](docs/research/VALIDATION_LOG.md)
 - [Security policy](SECURITY.md)
 
 ## Contributing
