@@ -199,6 +199,82 @@ function createIdeaCard(idea) {
   return card;
 }
 
+function createDiscoveryCard(candidate) {
+  const score = calculateScore(candidate.scores);
+  const band = getScoreBand(score);
+  const card = element("article", { className: "discovery-card", attributes: { "data-band": band.key } });
+  const top = element("div", { className: "card-topline" });
+  top.append(
+    element("span", { className: "status-pill", text: t(`band.${band.key}.label`) }),
+    element("span", { className: "score-badge", text: String(score), attributes: { title: t("discovery.scoreCaveat") } }),
+  );
+  card.append(
+    top,
+    element("h3", { text: candidate.title }),
+    element("p", { className: "audience", text: candidate.audience }),
+    element("p", { className: "problem-excerpt", text: candidate.problem }),
+  );
+
+  const analysis = element("div", { className: "discovery-analysis" });
+  analysis.append(
+    element("strong", { text: t("discovery.reasoning") }),
+    element("p", { text: candidate.reasoning }),
+  );
+  if (candidate.uncertainties.length) {
+    analysis.append(element("strong", { text: t("discovery.uncertainties") }));
+    const list = element("ul");
+    for (const uncertainty of candidate.uncertainties) list.append(element("li", { text: uncertainty }));
+    analysis.append(list);
+  }
+  card.append(analysis);
+
+  const sources = element("div", { className: "discovery-sources" });
+  sources.append(element("strong", { text: t("discovery.sources") }));
+  for (const source of candidate.sources) {
+    const link = element("a", {
+      text: `${source.source === "github" ? "GitHub" : "Hacker News"}: ${source.title}`,
+      attributes: { href: source.url, target: "_blank", rel: "noopener noreferrer" },
+    });
+    sources.append(link);
+  }
+  card.append(sources);
+
+  const action = element("button", {
+    className: "button button-secondary discovery-save",
+    text: t("discovery.save"),
+    attributes: { type: "button", "data-candidate-id": candidate.id },
+  });
+  card.append(action);
+  return card;
+}
+
+function renderDiscovery(discovery) {
+  elements.discoveryGrid.replaceChildren();
+  if (discovery.status === "loading") {
+    elements.discoveryMode.textContent = t("discovery.loading");
+    elements.discoverySummary.textContent = "";
+    return;
+  }
+  if (discovery.status === "unavailable" || !discovery.feed) {
+    elements.discoveryMode.textContent = t("discovery.unavailable");
+    elements.discoverySummary.textContent = t("discovery.unavailableCopy");
+    return;
+  }
+  const { feed } = discovery;
+  elements.discoveryMode.textContent = t(`discovery.mode.${feed.analysisMode}`);
+  const readySources = feed.sourceSummary.filter((item) => item.status === "ready").length;
+  elements.discoverySummary.textContent = t("discovery.summary", {
+    count: feed.candidates.length,
+    sources: readySources,
+    date: formatDate(feed.generatedAt),
+  });
+  if (!feed.candidates.length) {
+    elements.discoveryGrid.append(element("p", { className: "discovery-empty", text: t("discovery.empty") }));
+    return;
+  }
+  elements.discoveryGrid.append(...feed.candidates.map(createDiscoveryCard));
+}
+
 function filteredIdeas(workspace, view) {
   const query = view.search.trim().toLowerCase();
   const ideas = workspace.ideas.filter((idea) => {
@@ -214,7 +290,7 @@ function filteredIdeas(workspace, view) {
   });
 }
 
-export function renderApp(workspace, view, warning = "") {
+export function renderApp(workspace, view, warning = "", discovery = { status: "loading", feed: null }) {
   const active = workspace.ideas.filter((idea) => idea.status !== "archived");
   const ranked = [...active].sort((a, b) => calculateScore(b.scores) - calculateScore(a.scores));
   const top = ranked[0];
@@ -246,6 +322,7 @@ export function renderApp(workspace, view, warning = "") {
 
   elements.storageWarning.hidden = !warning;
   elements.storageWarningText.textContent = warning;
+  renderDiscovery(discovery);
 }
 
 export function openIdeaDialog(idea) {
@@ -433,6 +510,9 @@ export function initUI(handlers) {
     confirmButton: byId("confirm-action-button"),
     importFile: byId("import-file"),
     toast: byId("toast"),
+    discoveryGrid: byId("discovery-grid"),
+    discoveryMode: byId("discovery-mode"),
+    discoverySummary: byId("discovery-summary"),
   });
 
   buildScoreEditor();
@@ -476,6 +556,12 @@ export function initUI(handlers) {
     const target = event.target.closest("[data-action]");
     if (!target) return;
     callbacks.onCardAction(target.dataset.action, target.dataset.ideaId);
+  });
+
+  elements.discoveryGrid.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-candidate-id]");
+    if (!target) return;
+    callbacks.onDiscoverySave(target.dataset.candidateId);
   });
 
   elements.importFile.addEventListener("change", async () => {

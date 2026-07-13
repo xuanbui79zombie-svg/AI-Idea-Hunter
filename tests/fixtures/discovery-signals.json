@@ -1,0 +1,26 @@
+{
+  "sourceSummary": [
+    { "source": "hackernews", "count": 1, "status": "ready" },
+    { "source": "github", "count": 1, "status": "ready" }
+  ],
+  "signals": [
+    {
+      "id": "hackernews:101",
+      "source": "hackernews",
+      "title": "Ask HN: How do you track repeated customer problems?",
+      "excerpt": "Teams lose repeated pain across notes and support threads.",
+      "url": "https://news.ycombinator.com/item?id=101",
+      "publishedAt": "2026-07-12T00:00:00.000Z",
+      "engagement": 42
+    },
+    {
+      "id": "github:202",
+      "source": "github",
+      "title": "Feature request: summarize recurring issue themes",
+      "excerpt": "Maintainers manually group similar requests every week.",
+      "url": "https://github.com/example/project/issues/202",
+      "publishedAt": "2026-07-11T00:00:00.000Z",
+      "engagement": 12
+    }
+  ]
+}

@@ -22,6 +22,7 @@ const required = [
   "docs/ARCHITECTURE.md",
   "docs/DATABASE.md",
   "docs/API.md",
+  "docs/adr/0002-build-time-automated-discovery.md",
   "src/index.html",
   "src/styles.css",
   "src/favicon.svg",
@@ -31,7 +32,9 @@ const required = [
   "src/js/scoring.js",
   "src/js/storage.js",
   "src/js/export.js",
+  "src/js/discovery.js",
   "src/js/i18n.js",
+  "src/data/opportunities.json",
 ];
 
 async function exists(file) {
@@ -92,12 +95,13 @@ const prohibitedJavaScript = [
 for (const file of jsFiles) {
   const text = await readFile(file, "utf8");
   for (const [pattern, label] of prohibitedJavaScript) {
+    if (label === "fetch" && path.relative(sourceRoot, file) === path.join("js", "discovery.js")) continue;
     if (pattern.test(text)) errors.push(`${path.relative(root, file)} uses prohibited runtime API: ${label}`);
   }
 }
 
 const html = await readFile(path.join(sourceRoot, "index.html"), "utf8");
-if (!html.includes("connect-src 'none'")) errors.push("Content Security Policy must block network connections.");
+if (!html.includes("connect-src 'self'")) errors.push("Content Security Policy must allow only same-origin candidate-feed connections.");
 if (!html.includes("<main")) errors.push("Application shell requires a main landmark.");
 if (!html.includes("aria-live")) errors.push("Application shell requires an ARIA live region.");
 if (/<(?:script|link|img)[^>]+(?:src|href)=["']https?:/i.test(html)) errors.push("Runtime assets must not load from external origins.");

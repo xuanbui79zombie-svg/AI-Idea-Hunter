@@ -20,6 +20,9 @@
 | Package manager | npm | Bundled with Node 24 | Reproducible commands | No production or development packages required |
 | CI/CD | GitHub Actions | Pinned SHAs | Checks and Pages deployment | Native repository integration |
 | Hosting | GitHub Pages | Managed | Static public demo | Free, reproducible, and appropriate for portfolio use |
+| Automated discovery | GitHub Actions schedule | Managed | Collect and analyze public signals before deployment | Keeps credentials and source access outside the browser |
+| AI inference | GitHub Models | Managed API | Structured candidate analysis | Uses ephemeral `GITHUB_TOKEN` with `models: read`; no browser key |
+| Public sources | Hacker News API and GitHub REST API | Public APIs | Bounded problem-signal collection | Documented provenance and no login-wall scraping |
 
 ## Runtime and Tooling
 
@@ -44,6 +47,9 @@ A proposed dependency requires an ADR when it changes production payload, data h
 | --- | --- | --- | --- |
 | GitHub Pages | Static application assets only | Public demo hosting | Last successful deployment remains available |
 | GitHub Actions | Repository source and test output | CI and deployment | Merge or release is blocked until fixed |
+| GitHub Models | Bounded public source excerpts only | Build-time candidate analysis | Deterministic fallback feed; local workspace is unaffected |
+| Hacker News API | No data sent; public items are read | Build-time public signal collection | Source is skipped and coverage recorded |
+| GitHub REST API | Search query and ephemeral token | Build-time public Issue collection | Source is skipped and coverage recorded |
 
 Workspace content is not sent to either service by application code.
 

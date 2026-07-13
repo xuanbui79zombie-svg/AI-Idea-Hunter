@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#111a17">
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'"
     >
     <title>AI Idea Hunter — Find the signal worth building</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -51,7 +51,7 @@
             <button class="button button-primary button-large" id="hero-add-button" type="button" data-i18n="hero.capture">Capture an opportunity</button>
             <button class="button button-secondary button-large" id="example-button" type="button" data-i18n="hero.examples">Explore fictional examples</button>
           </div>
-          <p class="privacy-note"><span aria-hidden="true">●</span> <span data-i18n="hero.privacy">Local by default. No account, analytics, or external AI call.</span></p>
+          <p class="privacy-note"><span aria-hidden="true">●</span> <span data-i18n="hero.privacy">Your workspace stays local. Public discovery runs during deployment.</span></p>
         </div>
         <div class="signal-visual" aria-label="A visual model showing evidence becoming a prioritized signal" data-i18n-aria="visual.aria">
           <div class="radar-ring ring-one"></div>
@@ -102,6 +102,21 @@
             <span class="metric-detail" data-i18n="dashboard.gapsDetail">ideas with no strong evidence</span>
           </article>
         </div>
+      </section>
+
+      <section class="discovery" id="discovery" aria-labelledby="discovery-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="discovery.kicker">Automated public-signal discovery</p>
+            <h2 id="discovery-title" data-i18n="discovery.title">Review what the hunter found.</h2>
+          </div>
+          <p data-i18n="discovery.copy">Public Hacker News and GitHub Issue signals are analyzed during deployment. Nothing from your local workspace is uploaded.</p>
+        </div>
+        <div class="discovery-status" id="discovery-status" role="status" aria-live="polite">
+          <span class="status-pill" id="discovery-mode" data-i18n="discovery.loading">Loading candidate feed…</span>
+          <span id="discovery-summary"></span>
+        </div>
+        <div class="discovery-grid" id="discovery-grid"></div>
       </section>
 
       <section class="workspace" id="workspace" aria-labelledby="workspace-title">

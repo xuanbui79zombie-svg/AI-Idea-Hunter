@@ -1,4 +1,5 @@
 import { buildResearchBrief, downloadText, parseWorkspaceFile, safeFilename, serializeWorkspace } from "./export.js";
+import { candidateToIdeaInput, loadDiscoveryFeed } from "./discovery.js";
 import { getLanguage, setLanguage, t } from "./i18n.js";
 import { createExampleWorkspace, createIdea, MAX_IMPORT_BYTES, THEMES, updateIdea, ValidationError, validateWorkspace } from "./model.js";
 import { loadLanguage, loadWorkspace, saveLanguage, saveWorkspace } from "./storage.js";
@@ -10,9 +11,10 @@ let workspace = loaded.workspace;
 let storageWarning = loaded.warning;
 let storageWarningCode = loaded.warningCode;
 let view = { search: "", status: "all", sort: "score" };
+let discovery = { status: "loading", feed: null };
 
 function render() {
-  renderApp(workspace, view, storageWarningCode ? t(storageWarningCode) : storageWarning);
+  renderApp(workspace, view, storageWarningCode ? t(storageWarningCode) : storageWarning, discovery);
   applyTheme(workspace.preferences.theme);
 }
 
@@ -127,6 +129,21 @@ function saveIdea(input) {
   }
 }
 
+function saveDiscoveredCandidate(id) {
+  const candidate = discovery.feed?.candidates.find((item) => item.id === id);
+  if (!candidate) {
+    showToast(t("discovery.missing"));
+    return;
+  }
+  try {
+    const saved = createIdea(candidateToIdeaInput(candidate));
+    const persisted = persist({ ...workspace, ideas: [saved, ...workspace.ideas] });
+    showToast(t(persisted ? "discovery.saved" : "idea.memoryOnly", { title: saved.title }));
+  } catch {
+    showToast(t("idea.saveFailed"));
+  }
+}
+
 function changeTheme() {
   const current = workspace.preferences.theme;
   const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
@@ -149,6 +166,7 @@ initUI({
   onImportFile: importFile,
   onThemeToggle: changeTheme,
   onLanguageToggle: changeLanguage,
+  onDiscoverySave: saveDiscoveredCandidate,
   onViewChange: (patch) => {
     view = { ...view, ...patch };
     render();
@@ -160,3 +178,8 @@ globalThis.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("chan
 });
 
 render();
+
+loadDiscoveryFeed().then((result) => {
+  discovery = result;
+  render();
+});
