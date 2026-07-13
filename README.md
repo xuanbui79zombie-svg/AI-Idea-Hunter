@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.1.0` automated discovery is ready for release / 自动发现功能已准备发布. Public Hacker News and GitHub Issue signals are analyzed during deployment; candidates remain provisional and require explicit local saving / 部署时自动分析 Hacker News 与 GitHub Issue 公开信号；候选结果仅供参考，需用户明确保存到本地工作区. Real-user validation remains opt-in / 真实用户验证仍为按需启用.
+> Status / 状态: `v1.1.0` automated discovery released / 自动发现功能已发布. Quality checks, public collection, GitHub Models analysis, and GitHub Pages deployment are passing / 质量检查、公开数据采集、GitHub Models 分析和 GitHub Pages 部署均已通过. Candidates remain provisional and require explicit local saving; real-user validation remains opt-in / 候选结果仅供参考，需明确保存到本地；真实用户验证仍为按需启用.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 

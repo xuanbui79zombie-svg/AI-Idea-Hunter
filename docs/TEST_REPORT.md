@@ -46,6 +46,8 @@ FR-017 through FR-020 passed release-candidate validation:
 - At 390 × 844, all 8 candidate cards and the discovery region had zero horizontal overflow.
 - Browser logs contained no warning or error.
 - The committed feed is an empty seed; collection and analysis happen during Pages deployment so stale test output is not published as source data.
+- GitHub Quality run `29231096482` and Pages run `29231125036` passed; the production page and feed returned HTTPS 200.
+- The deployed feed reported `ai` mode, `openai/gpt-4o`, 8 candidates, 5 ready Hacker News signals, 10 ready GitHub Issue signals, and HTTPS provenance for every candidate source.
 
 Real-user validation was intentionally not performed and no market-demand conclusion is claimed from public signals or model output.
 
@@ -135,4 +137,4 @@ M6 release evidence passed:
 - Private vulnerability reporting, secret scanning, push protection, Dependabot alerts, and security updates are enabled.
 - `main` requires pull requests and the `Test and validate` status check and blocks force pushes and deletion.
 
-The project is approved for `v1.1.0` publication after required GitHub checks and the Pages discovery workflow pass, with the cross-browser and native-file-picker limitations already documented above.
+The project is approved and published as `v1.1.0`; required GitHub checks and the Pages discovery workflow passed, with the cross-browser and native-file-picker limitations already documented above.
