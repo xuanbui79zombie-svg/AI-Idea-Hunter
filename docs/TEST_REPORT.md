@@ -12,6 +12,23 @@ Three P1 findings were discovered and resolved during review:
 
 Additional review fixed duplicate dialog landmarks, restored imported theme preferences with the complete workspace, and delayed Blob URL cleanup to avoid a cross-browser download race.
 
+## Post-release M7 Language Regression Addendum
+
+Date: 2026-07-13.
+
+FR-016 English/Simplified Chinese switching passed post-release regression:
+
+- 30 automated tests passed with 0 failures, skips, or todos.
+- English and Chinese expose the same translation-key contract.
+- Locale normalization, placeholder interpolation, preference isolation, storage failure, Chinese fictional examples, and Chinese Markdown export have deterministic coverage.
+- The interface language, document title, root `lang`, static copy, dynamic cards, filters, scoring guidance, dates, dialogs, notifications, and accessibility labels changed together.
+- The selected language persisted after reload without changing the workspace JSON.
+- Desktop and 390 × 844 Chinese layouts had no horizontal page overflow.
+- The 390 px idea dialog and its scroll body had no horizontal overflow.
+- Browser logs contained no warning or error.
+
+The review found and fixed one P1 accessibility regression before publication: the compact mobile “new idea” control lost its accessible name when the visible text was hidden.
+
 ## Test Scope and Environment
 
 - Date: 2026-07-12

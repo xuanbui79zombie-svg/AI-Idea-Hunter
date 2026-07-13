@@ -32,6 +32,7 @@ src/index.html
     +-- js/scoring.js -------- pure weighted score calculation and guidance
     +-- js/storage.js -------- localStorage adapter and recovery behavior
     +-- js/export.js --------- JSON import/export and Markdown brief generation
+    +-- js/i18n.js ----------- pure locale state, translation resources, interpolation
     `-- styles.css ----------- tokens, responsive layout, themes, states
 ```
 
@@ -61,8 +62,16 @@ Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules n
 
 1. The selected idea is validated.
 2. `scoring.js` returns a factor breakdown.
-3. `export.js` escapes Markdown control characters and builds plain text.
+3. `export.js` escapes Markdown control characters and builds English or Simplified Chinese plain text from the selected locale.
 4. The browser downloads a user-selected `.md` file.
+
+### Switch interface language
+
+1. `storage.js` loads the language preference from a key separate from the workspace document.
+2. `i18n.js` normalizes the locale and resolves static and dynamic translation keys.
+3. `ui.js` updates visible text, placeholders, accessibility names, date formatting, the document title, and the root `lang` attribute.
+4. `app.js` re-renders derived labels without modifying user-entered idea content.
+5. New fictional examples and Markdown briefs use the language selected when they are created or exported.
 
 ## Quality Attributes
 
@@ -71,6 +80,7 @@ Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules n
 - No production dependencies or build step.
 - Pure domain modules have deterministic Node tests.
 - Browser adapters are thin and replaceable.
+- Translation resources have identical key contracts and are checked by tests and static validation.
 - Schema version and migrations are explicit.
 - CSS uses tokens and component/state classes rather than inline styles.
 

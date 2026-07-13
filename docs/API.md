@@ -10,7 +10,7 @@ AI Idea Hunter has no HTTP API in `v1.0.0`. This document defines stable interna
 | `createIdea(input, now?)` | form-shaped object | normalized `Idea` | throws `ValidationError` |
 | `updateIdea(existing, patch, now?)` | idea and allowed fields | normalized updated `Idea` | throws `ValidationError` |
 | `validateWorkspace(value)` | unknown | normalized workspace | throws `ValidationError` with field issues |
-| `createExampleWorkspace()` | none | deterministic demonstration workspace | none |
+| `createExampleWorkspace(language?)` | optional supported locale | deterministic localized demonstration workspace | none |
 
 Validation errors contain safe field identifiers and human-readable messages. They never include full imported content.
 
@@ -22,6 +22,7 @@ Validation errors contain safe field identifiers and human-readable messages. Th
 | `getScoreBreakdown(scores)` | score object | factor labels, values, weights, and contributions |
 | `getScoreBand(score)` | 20–100 integer | `explore`, `promising`, or `priority` descriptor |
 | `getEvidenceGap(idea)` | valid idea | plain-language next evidence recommendation |
+| `getEvidenceGapKey(idea)` | valid idea | locale-independent recommendation key |
 
 Scoring functions are pure and must not read storage, time, locale, or the DOM.
 
@@ -32,6 +33,8 @@ Scoring functions are pure and must not read storage, time, locale, or the DOM.
 | `loadWorkspace(storage?)` | returns `{ workspace, warning }`; quarantines malformed stored JSON when possible |
 | `saveWorkspace(workspace, storage?)` | validates then writes; returns `{ saved, warning }` without hiding storage failure |
 | `clearWorkspace(storage?)` | removes only the application workspace key |
+| `loadLanguage(storage?, browserLanguage?)` | returns a normalized persisted or browser-derived locale |
+| `saveLanguage(language, storage?)` | writes the separate locale preference and reports failure without blocking the UI |
 
 The optional storage argument enables deterministic tests with an in-memory adapter.
 
@@ -41,13 +44,23 @@ The optional storage argument enables deterministic tests with an in-memory adap
 | --- | --- |
 | `serializeWorkspace(workspace)` | returns formatted, versioned JSON from validated data |
 | `parseWorkspaceFile(text)` | enforces text and schema bounds before returning normalized data |
-| `buildResearchBrief(idea)` | returns Markdown with score breakdown, evidence, assumptions, and next step |
+| `buildResearchBrief(idea, language?)` | returns localized Markdown with score breakdown, evidence, assumptions, and next step |
 | `safeFilename(value)` | returns a lowercase portable filename segment |
 | `downloadText(name, text, type)` | browser adapter that downloads a Blob and revokes the object URL |
 
 ## `ui.js`
 
-`ui.js` owns DOM queries, view rendering, dialogs, focus management, form serialization, errors, and live-region announcements. It accepts state and callbacks from `app.js`; it does not access localStorage.
+`ui.js` owns DOM queries, view rendering, dialogs, focus management, form serialization, language application, errors, and live-region announcements. It accepts state and callbacks from `app.js`; it does not access localStorage.
+
+## `i18n.js`
+
+| Export | Behavior |
+| --- | --- |
+| `normalizeLanguage(language)` | maps Chinese locale variants to `zh-CN` and unsupported values to `en` |
+| `setLanguage(language)` / `getLanguage()` | manage the in-memory interface locale |
+| `t(key, variables?)` | resolves and interpolates a key in the current locale |
+| `translateFor(language, key, variables?)` | resolves a key for an explicit locale without changing state |
+| `translationKeys(language?)` | exposes the deterministic contract used by quality checks |
 
 ## `app.js`
 

@@ -48,3 +48,14 @@ test("research brief escapes Markdown control characters in user fields", () => 
   assert.match(brief, /\\#heading/);
   assert.match(brief, /\\\(link\\\)/);
 });
+
+test("research brief follows the selected interface language", () => {
+  const [idea] = createExampleWorkspace("zh-CN").ideas;
+  const brief = buildResearchBrief(idea, "zh-CN");
+  assert.match(brief, /机会研究简报/);
+  assert.match(brief, /## 问题/);
+  assert.match(brief, /机会评分/);
+  assert.match(brief, /不代表市场需求已经得到验证/);
+  assert.match(brief, /痛点严重度/);
+  assert.match(brief, /分享前请核实每一项主张/);
+});

@@ -1,15 +1,18 @@
 import { buildResearchBrief, downloadText, parseWorkspaceFile, safeFilename, serializeWorkspace } from "./export.js";
+import { getLanguage, setLanguage, t } from "./i18n.js";
 import { createExampleWorkspace, createIdea, MAX_IMPORT_BYTES, THEMES, updateIdea, ValidationError, validateWorkspace } from "./model.js";
-import { loadWorkspace, saveWorkspace } from "./storage.js";
-import { closeIdeaDialog, confirmAction, initUI, openIdeaDialog, renderApp, setTheme, showFormError, showToast } from "./ui.js";
+import { loadLanguage, loadWorkspace, saveLanguage, saveWorkspace } from "./storage.js";
+import { closeIdeaDialog, confirmAction, initUI, openIdeaDialog, renderApp, setInterfaceLanguage, setTheme, showFormError, showToast } from "./ui.js";
 
+setLanguage(loadLanguage());
 const loaded = loadWorkspace();
 let workspace = loaded.workspace;
 let storageWarning = loaded.warning;
+let storageWarningCode = loaded.warningCode;
 let view = { search: "", status: "all", sort: "score" };
 
 function render() {
-  renderApp(workspace, view, storageWarning);
+  renderApp(workspace, view, storageWarningCode ? t(storageWarningCode) : storageWarning);
   applyTheme(workspace.preferences.theme);
 }
 
@@ -18,6 +21,7 @@ function persist(nextWorkspace) {
   workspace = normalized;
   const result = saveWorkspace(normalized);
   storageWarning = result.warning;
+  storageWarningCode = result.warningCode;
   if (result.saved) workspace = result.workspace;
   render();
   return result.saved;
@@ -36,67 +40,67 @@ function applyTheme(theme) {
 
 async function deleteIdea(idea) {
   const confirmed = await confirmAction({
-    title: "Delete this opportunity?",
-    message: `“${idea.title}” and its ${idea.evidence.length} evidence note${idea.evidence.length === 1 ? "" : "s"} will be removed from this browser. Export a backup first if you may need it.`,
-    confirmLabel: "Delete idea",
+    title: t("delete.title"),
+    message: t(idea.evidence.length === 1 ? "delete.message.one" : "delete.message.many", { title: idea.title, count: idea.evidence.length }),
+    confirmLabel: t("delete.confirm"),
     danger: true,
   });
   if (!confirmed) return;
   persist({ ...workspace, ideas: workspace.ideas.filter((item) => item.id !== idea.id) });
-  showToast("Opportunity deleted.");
+  showToast(t("delete.done"));
 }
 
 function exportIdea(idea) {
-  downloadText(`${safeFilename(idea.title)}-opportunity-brief.md`, buildResearchBrief(idea), "text/markdown;charset=utf-8");
-  showToast("Research brief exported.");
+  downloadText(`${safeFilename(idea.title)}-opportunity-brief.md`, buildResearchBrief(idea, getLanguage()), "text/markdown;charset=utf-8");
+  showToast(t("export.briefDone"));
 }
 
 async function loadExample() {
   if (workspace.ideas.length > 0) {
     const confirmed = await confirmAction({
-      title: "Replace the current workspace?",
-      message: "Loading the fictional examples will replace the ideas currently stored in this browser. Export a backup first if needed.",
-      confirmLabel: "Load examples",
+      title: t("examples.replaceTitle"),
+      message: t("examples.replaceMessage"),
+      confirmLabel: t("examples.confirm"),
       danger: true,
     });
     if (!confirmed) return;
   }
-  const example = createExampleWorkspace();
+  const example = createExampleWorkspace(getLanguage());
   persist({ ...example, preferences: workspace.preferences });
-  showToast("Fictional examples loaded. They are not market evidence.");
+  showToast(t("examples.loaded"));
 }
 
 function exportAll() {
   const date = new Date().toISOString().slice(0, 10);
   downloadText(`ai-idea-hunter-${date}.json`, serializeWorkspace(workspace), "application/json;charset=utf-8");
-  showToast("Workspace backup exported.");
+  showToast(t("backup.done"));
 }
 
 async function importFile(file) {
   if (file.size > MAX_IMPORT_BYTES) {
-    showToast("Import file exceeds the 1 MiB limit.");
+    showToast(t("import.tooLarge"));
     return;
   }
   try {
     const imported = parseWorkspaceFile(await file.text());
     const confirmed = await confirmAction({
-      title: "Restore this workspace?",
-      message: `The file contains ${imported.ideas.length} idea${imported.ideas.length === 1 ? "" : "s"}. A valid import replaces the current browser workspace only after you confirm.`,
-      confirmLabel: "Restore backup",
+      title: t("import.title"),
+      message: t(imported.ideas.length === 1 ? "import.message.one" : "import.message.many", { count: imported.ideas.length }),
+      confirmLabel: t("import.confirm"),
       danger: workspace.ideas.length > 0,
     });
     if (!confirmed) return;
     persist(imported);
-    showToast("Workspace restored from JSON.");
+    showToast(t("import.done"));
   } catch (error) {
-    showToast(error?.message ?? "The selected file could not be imported.");
+    showToast(getLanguage() === "en" ? (error?.message ?? t("import.failed")) : t("import.failed"));
   }
 }
 
 async function cardAction(action, id) {
   const idea = workspace.ideas.find((item) => item.id === id);
   if (!idea) {
-    showToast("That opportunity no longer exists.");
+    showToast(t("idea.missing"));
     return;
   }
   if (action === "edit") openIdeaDialog(idea);
@@ -113,13 +117,13 @@ function saveIdea(input) {
       : [saved, ...workspace.ideas];
     const persisted = persist({ ...workspace, ideas });
     closeIdeaDialog();
-    showToast(persisted ? `“${saved.title}” saved.` : `“${saved.title}” is available in this tab but not browser storage.`);
+    showToast(t(persisted ? "idea.saved" : "idea.memoryOnly", { title: saved.title }));
   } catch (error) {
     if (error instanceof ValidationError) {
       showFormError(error);
       return;
     }
-    showToast("The opportunity could not be saved.");
+    showToast(t("idea.saveFailed"));
   }
 }
 
@@ -129,6 +133,14 @@ function changeTheme() {
   persist({ ...workspace, preferences: { ...workspace.preferences, theme: next } });
 }
 
+function changeLanguage() {
+  const next = getLanguage() === "en" ? "zh-CN" : "en";
+  saveLanguage(next);
+  setInterfaceLanguage(next);
+  render();
+  showToast(t(`language.changed.${next}`));
+}
+
 initUI({
   onSaveIdea: saveIdea,
   onCardAction: cardAction,
@@ -136,6 +148,7 @@ initUI({
   onExportAll: exportAll,
   onImportFile: importFile,
   onThemeToggle: changeTheme,
+  onLanguageToggle: changeLanguage,
   onViewChange: (patch) => {
     view = { ...view, ...patch };
     render();

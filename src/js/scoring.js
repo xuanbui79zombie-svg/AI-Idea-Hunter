@@ -78,24 +78,35 @@ export function getScoreBand(score) {
   return { key: "explore", label: "Explore", description: "Important assumptions remain unresolved." };
 }
 
-export function getEvidenceGap(idea) {
+export function getEvidenceGapKey(idea) {
   const evidence = Array.isArray(idea?.evidence) ? idea.evidence : [];
   if (evidence.length === 0) {
-    return "Add the first direct observation before increasing confidence.";
+    return "none";
   }
 
   const strongCount = evidence.filter((item) => item.strength === "strong").length;
   if (strongCount === 0) {
-    return "Seek a direct behavioral, budget, or repeated workflow signal.";
+    return "strong";
   }
 
   if (idea.scores?.evidenceConfidence < 4) {
-    return "Reconcile the evidence notes with the confidence score.";
+    return "confidence";
   }
 
   if (!idea.nextStep?.trim()) {
-    return "Define the smallest next validation action.";
+    return "nextStep";
   }
 
-  return "Evidence is ready for the documented next validation step.";
+  return "ready";
+}
+
+export function getEvidenceGap(idea) {
+  const messages = {
+    none: "Add the first direct observation before increasing confidence.",
+    strong: "Seek a direct behavioral, budget, or repeated workflow signal.",
+    confidence: "Reconcile the evidence notes with the confidence score.",
+    nextStep: "Define the smallest next validation action.",
+    ready: "Evidence is ready for the documented next validation step.",
+  };
+  return messages[getEvidenceGapKey(idea)];
 }

@@ -28,6 +28,7 @@ The resulting score organizes work; it does not claim market demand, revenue, or
 - Back up and restore the full workspace as versioned JSON.
 - Load clearly labelled fictional examples on demand.
 - Use system, light, or dark themes on desktop and mobile.
+- Switch the complete interface, fictional examples, system messages, and research-brief exports between English and Simplified Chinese with a locally persisted preference.
 - Work without an account, server, analytics tracker, or model API key.
 
 ## Quick Start
@@ -40,6 +41,8 @@ npm run dev
 ```
 
 Open `http://127.0.0.1:4173`.
+
+Use the `中文` / `EN` control in the header to change the interface language. The application never translates or transmits user-entered content.
 
 There are no production or development packages; `npm install` verifies metadata and the lockfile. Any static HTTP server can serve `src/`.
 
@@ -85,7 +88,8 @@ src/
     ├── model.js     # entities, validation, limits, examples
     ├── scoring.js   # pure transparent scoring
     ├── storage.js   # localStorage adapter and recovery
-    └── export.js    # JSON and Markdown boundaries
+    ├── export.js    # JSON and localized Markdown boundaries
+    └── i18n.js      # English and Simplified Chinese resources
 tests/               # Node built-in test suite
 scripts/             # static checks and local server
 docs/                # product, architecture, schema, contracts, ADRs

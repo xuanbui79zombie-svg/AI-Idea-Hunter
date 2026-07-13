@@ -309,6 +309,13 @@ h1 {
   text-transform: uppercase;
 }
 
+:lang(zh-CN) h1,
+:lang(zh-CN) h2 {
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-transform: none;
+}
+
 h2 {
   margin-bottom: 10px;
   font-family: var(--font-display);
@@ -1193,7 +1200,7 @@ dialog::backdrop {
 @media (max-width: 780px) {
   .topbar { min-height: 64px; padding-inline: 16px; }
   .top-actions { gap: 2px; }
-  .top-actions .button-quiet:not(#theme-toggle) { display: none; }
+  .top-actions .button-quiet:not(#theme-toggle):not(#language-toggle) { display: none; }
   .hero, .dashboard, .workspace, .method, footer, .warning-banner { width: min(calc(100% - 32px), var(--content)); }
   .hero { grid-template-columns: 1fr; min-height: auto; padding: 64px 0 84px; }
   .signal-visual { width: min(88vw, 430px); }
@@ -1213,7 +1220,8 @@ dialog::backdrop {
 
 @media (max-width: 560px) {
   .hide-small { display: none; }
-  .top-actions #theme-toggle { width: 38px; padding: 6px; }
+  .top-actions #theme-toggle,
+  .top-actions #language-toggle { min-width: 38px; padding: 6px; }
   .button-large { width: 100%; }
   .hero-actions, .empty-actions { align-items: stretch; flex-direction: column; }
   h1 { font-size: clamp(3rem, 16vw, 5rem); }

@@ -1,4 +1,5 @@
 import { SCORE_FACTORS } from "./scoring.js";
+import { translateFor } from "./i18n.js";
 
 export const SCHEMA_VERSION = 1;
 export const MAX_IDEAS = 500;
@@ -209,20 +210,20 @@ export function validateWorkspace(value) {
   return { schemaVersion: SCHEMA_VERSION, ideas, preferences: { theme } };
 }
 
-export function createExampleWorkspace() {
+export function createExampleWorkspace(language = "en") {
   return validateWorkspace({
     schemaVersion: SCHEMA_VERSION,
     preferences: { theme: "system" },
     ideas: [
       {
         id: "idea-example-support-signal",
-        title: "Support Signal Miner",
-        audience: "Small SaaS support teams",
-        problem: "Repeated customer pain is buried across support conversations, so product teams miss patterns and prioritize from anecdotes.",
-        context: "Fictional demonstration data for learning the workflow. It is not market evidence.",
-        outcome: "Group recurring support pain into evidence-linked opportunity briefs for product review.",
+        title: translateFor(language, "example.support.title"),
+        audience: translateFor(language, "example.support.audience"),
+        problem: translateFor(language, "example.support.problem"),
+        context: translateFor(language, "example.support.context"),
+        outcome: translateFor(language, "example.support.outcome"),
         status: "researching",
-        nextStep: "Interview three support leads about their current tagging and review workflow.",
+        nextStep: translateFor(language, "example.support.nextStep"),
         scores: {
           pain: 4,
           frequency: 4,
@@ -235,8 +236,8 @@ export function createExampleWorkspace() {
         evidence: [
           {
             id: "evidence-example-1",
-            source: "Fictional support lead note",
-            observation: "Weekly review requires manually copying themes from several channels.",
+            source: translateFor(language, "example.support.source"),
+            observation: translateFor(language, "example.support.observation"),
             strength: "weak",
             observedAt: "2026-07-01",
           },
@@ -246,13 +247,13 @@ export function createExampleWorkspace() {
       },
       {
         id: "idea-example-compliance-brief",
-        title: "AI Compliance Brief Builder",
-        audience: "Consultants preparing early AI governance reviews",
-        problem: "Initial AI system assessments start from inconsistent questionnaires and lose traceability between evidence, risk, and recommendation.",
-        context: "Fictional demonstration data; validate legal and regional requirements before building.",
-        outcome: "Turn structured interview notes into a traceable first-pass review brief.",
+        title: translateFor(language, "example.compliance.title"),
+        audience: translateFor(language, "example.compliance.audience"),
+        problem: translateFor(language, "example.compliance.problem"),
+        context: translateFor(language, "example.compliance.context"),
+        outcome: translateFor(language, "example.compliance.outcome"),
         status: "inbox",
-        nextStep: "Map the existing alternatives and identify one narrow jurisdiction-independent workflow.",
+        nextStep: translateFor(language, "example.compliance.nextStep"),
         scores: {
           pain: 4,
           frequency: 3,

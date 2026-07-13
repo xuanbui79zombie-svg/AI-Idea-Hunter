@@ -8,6 +8,11 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 - Added the M7 usability test plan, privacy-aware recruitment brief, session template, and evidence log for three external participant sessions.
 - Added equivalent English and Chinese guidance across all M7 research materials and public tracking entry points.
+- Added persistent English/Simplified Chinese interface switching across static content, dynamic cards, dialogs, scoring guidance, system messages, fictional examples, accessibility labels, and Markdown brief exports.
+
+### Fixed
+
+- Preserved an accessible name for the compact mobile “new idea” button after its visible label is hidden.
 
 ## [1.0.0] - 2026-07-12
 

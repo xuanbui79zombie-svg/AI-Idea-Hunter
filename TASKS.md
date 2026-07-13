@@ -68,6 +68,7 @@
 | R-004 | P0 | M6 | Complete open-source and portfolio packaging | README, screenshot, governance, test report, and interview review |
 | R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Annotated tag and GitHub Release on the verified final commit |
 | UV-001 | P0 | M7 | Define the bilingual consent, privacy, task, metric, severity, and synthesis protocol / 定义双语同意、隐私、任务、指标、严重度及汇总协议 | `docs/research/`; internal dry run on 2026-07-13 does not count as user evidence / 2026-07-13 内部演练不计入用户证据 |
+| L-001 | P1 | M7 | Add persistent English/Simplified Chinese interface switching / 添加持久化中英文界面切换 | FR-016; 30 automated tests; desktop and 390 × 844 browser regression; preference reload verified |
 
 ## BLOCKED
 
@@ -82,6 +83,7 @@ None.
 | Portfolio navigation and dashboard | B-007 | Q-003, Q-004 |
 | Persistence, backup, and recovery | B-004, B-008 | Q-002, Q-003 |
 | Example and themes | B-009, B-010 | Q-003, Q-004 |
+| Interface language | L-001 | Automated i18n, persistence, export, desktop, and mobile browser evidence |
 | Keyboard and accessibility | B-001, B-011 | Q-004 |
 | Security, privacy, and performance | Q-001, Q-005 | Q-006 |
 | Publication | R-001..R-005 | GitHub checks, Pages, Release |
