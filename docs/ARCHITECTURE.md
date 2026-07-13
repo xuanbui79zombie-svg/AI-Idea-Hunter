@@ -2,7 +2,7 @@
 
 ## Summary
 
-AI Idea Hunter is a static, local-first single-page application built with semantic HTML, CSS, and native ES modules. It has no application server, runtime dependency, account system, analytics, or external API call.
+AI Idea Hunter is a static, local-first single-page application built with semantic HTML, CSS, and native ES modules. A scheduled GitHub Actions build-time pipeline collects bounded public signals and uses GitHub Models to publish a source-linked candidate feed with the Pages artifact. The browser still has no application server, account system, analytics, or exposed model credential.
 
 The architecture deliberately separates pure opportunity logic from browser adapters and DOM rendering. GitHub Pages hosts immutable static assets; the browser is the application runtime and trust boundary.
 
@@ -19,7 +19,21 @@ AI Idea Hunter in browser
   +---------------------> GitHub Pages (static asset download only)
 ```
 
-Workspace content does not leave the browser unless the user explicitly exports a file.
+Workspace content does not leave the browser unless the user explicitly exports a file. The browser downloads only the same-origin public candidate feed; collection and model analysis cannot access localStorage.
+
+```text
+Approved public APIs ---> GitHub Actions collector ---> GitHub Models
+        |                         |                         |
+        `---------------- untrusted public text -----------'
+                                  |
+                         validated candidate JSON
+                                  |
+                            GitHub Pages artifact
+                                  |
+                        browser read-only candidate feed
+                                  |
+                         explicit save to localStorage
+```
 
 ## Component Boundaries
 
@@ -32,11 +46,14 @@ src/index.html
     +-- js/scoring.js -------- pure weighted score calculation and guidance
     +-- js/storage.js -------- localStorage adapter and recovery behavior
     +-- js/export.js --------- JSON import/export and Markdown brief generation
+    +-- js/discovery.js ------ candidate-feed validation, loading, and local idea mapping
     +-- js/i18n.js ----------- pure locale state, translation resources, interpolation
     `-- styles.css ----------- tokens, responsive layout, themes, states
 ```
 
 Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules never import the DOM or browser storage. No module may write directly to storage except `storage.js`.
+
+Build-time modules under `scripts/discovery/` own public source adapters, normalization, prompt construction, model response validation, fallback analysis, and feed serialization. They never import browser storage or UI modules.
 
 ## Key Data Flows
 
@@ -73,11 +90,21 @@ Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules n
 4. `app.js` re-renders derived labels without modifying user-entered idea content.
 5. New fictional examples and Markdown briefs use the language selected when they are created or exported.
 
+### Refresh and review discovered candidates
+
+1. A daily or manually triggered Pages workflow requests a bounded set of public Hacker News items and public GitHub Issues.
+2. Source adapters reduce responses to plain-text identifiers, titles, excerpts, timestamps, and canonical HTTPS URLs.
+3. GitHub Models receives untrusted public text inside an explicit data boundary and returns JSON candidates; the collector validates every field, score, source ID, and URL.
+4. If AI inference fails, deterministic fallback analysis produces clearly labelled provisional candidates instead of fabricating AI success.
+5. The validated feed is generated only in the deployment workspace and included in the immutable Pages artifact; it is not committed to `main`.
+6. The browser fetches the same-origin feed, validates it again, and renders content with safe DOM properties.
+7. Saving a candidate maps it to the existing `Idea` input and passes through `createIdea` plus complete workspace validation before local persistence.
+
 ## Quality Attributes
 
 ### Maintainability
 
-- No production dependencies or build step.
+- No production dependencies; deployment adds a zero-dependency data-generation step.
 - Pure domain modules have deterministic Node tests.
 - Browser adapters are thin and replaceable.
 - Translation resources have identical key contracts and are checked by tests and static validation.
@@ -95,7 +122,10 @@ Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules n
 
 - User content is rendered with `textContent` or safe DOM properties, never injected with `innerHTML`.
 - Content Security Policy restricts sources to the application origin and disallows object embedding.
-- No credentials, model keys, trackers, remote fonts, or third-party scripts.
+- No credentials, model keys, trackers, remote fonts, or third-party scripts are shipped to the browser.
+- The build job uses the ephemeral `GITHUB_TOKEN` with `models: read`; Pages deployment retains only the existing minimum deployment permissions.
+- Source text is untrusted prompt data, never instructions. Model output is untrusted and schema-validated before publication.
+- Browser network access is restricted by CSP to same-origin assets, including the generated candidate feed.
 - Imported data is untrusted and bounded by size, count, length, enum, and schema checks.
 - GitHub Actions use minimum permissions and immutable action SHAs.
 
@@ -135,12 +165,17 @@ The product has no telemetry in `v1.0.0`. User-facing status messages report sav
 | Stored JSON invalid | Invalid value is quarantined; an empty workspace opens with warning | Import a known-good backup or clear corrupted data |
 | Invalid import | Current workspace is unchanged | Correct the file or select another backup |
 | Pages deployment failure | Last successful deployment remains available | Fix the workflow and redeploy from `main` |
+| Public source unavailable | Other sources continue; coverage is recorded in the feed | Retry on the next schedule or manual workflow dispatch |
+| GitHub Models unavailable or invalid | Feed is labelled `fallback` and uses bounded deterministic analysis | Inspect workflow logs and rerun without affecting the local workspace |
+| Candidate feed unavailable or invalid | Discovery section shows an unavailable state | Continue using all local workspace features |
 | Browser data cleared | Local workspace is lost | Restore from an exported JSON backup |
 
 ## Evolution Rules
 
 - A server, authentication, cloud sync, remote AI model, telemetry, or shared workspace changes the trust boundary and requires explicit approval plus a new ADR.
+- New collection sources require an approved API/access review, bounded fields and volume, provenance, failure behavior, and an ADR update when the trust boundary changes.
 - Schema changes require a migration, backward-compatibility tests, and a version increment.
 - New lifecycle states or score factors require product acceptance criteria and score migration behavior.
 
 See [ADR-0001](adr/0001-local-first-native-web.md) for the primary architecture decision.
+See [ADR-0002](adr/0002-build-time-automated-discovery.md) for the automated discovery boundary.

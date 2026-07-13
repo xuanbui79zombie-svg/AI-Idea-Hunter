@@ -6,12 +6,12 @@ This file defines the working contract for Codex and other automated development
 
 Help an independent developer turn observed problems into evidence-backed, comparable AI software opportunities through transparent scoring and exportable research briefs.
 
-The product must remain local-first, explainable, static-hostable, and free of default external data transfer in `v1.0.0`.
+The product must remain local-first, explainable, and static-hostable. ADR-0002 permits build-time collection of approved public signals and model analysis, while private workspace content must never leave the browser.
 
 ## Codex Working Rules
 
 1. Map every implementation task to an accepted requirement and task ID.
-2. Preserve the product non-goals and ADR-0001 unless the user approves a major architecture change.
+2. Preserve the product non-goals, ADR-0001, and ADR-0002 unless the user approves a major architecture change.
 3. Prefer pure domain functions and existing browser standards over new dependencies.
 4. Treat imported files, stored values, and all user strings as untrusted data.
 5. Never use `innerHTML` with user content or add credentials, analytics, remote fonts, or third-party scripts.

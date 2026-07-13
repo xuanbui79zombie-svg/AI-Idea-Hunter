@@ -8,7 +8,7 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: `v1.0.0` released; M7 real-user validation skipped by owner policy on 2026-07-13
+- Product stage: `v1.0.0` released; `v1.1.0` automated discovery ready for release
 - Current release: `v1.0.0`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
@@ -50,10 +50,12 @@ For independent developers who have more ideas than delivery capacity, AI Idea H
 - Keep all default data on the user's device and support complete JSON export and import.
 - Produce a Markdown brief suitable for discovery interviews, a project issue, or AI-assisted research.
 - Deliver a responsive and keyboard-usable experience without account creation.
+- Refresh a source-linked candidate pool from approved public APIs and explain every AI-generated assessment.
 
 ## Non-Goals
 
 - Generating unlimited ideas from trends or scraping external sources.
+- Crawling login-protected pages, bypassing access controls, collecting private data, or running arbitrary user-supplied scraping targets.
 - Claiming market validation, revenue potential, or product-market fit from a score.
 - Multi-user collaboration, authentication, cloud sync, or a hosted database.
 - Calling a paid model API or asking users to expose an API key in the browser.
@@ -70,6 +72,7 @@ For independent developers who have more ideas than delivery capacity, AI Idea H
 6. The user filters or sorts the portfolio and opens the strongest candidate.
 7. The user updates its lifecycle stage or exports a Markdown research brief.
 8. The user can export the full workspace to JSON and restore it later.
+9. The user reviews a read-only feed of automatically collected public problem signals, inspects provenance and AI reasoning, and explicitly saves a candidate into the local workspace.
 
 ## Lifecycle
 
@@ -117,6 +120,10 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | FR-014 | P2 | Compare selected ideas side by side | Deferred unless the owner prioritizes it with accepted scope and evidence |
 | FR-015 | P3 | Optional model-assisted brief critique | Deferred; requires a secure server-side integration and explicit architecture approval |
 | FR-016 | P1 | Switch between English and Simplified Chinese | Every application control, system message, scoring explanation, fictional example, and research-brief export uses the selected language; the preference persists locally and updates the document language without translating user-entered content |
+| FR-017 | P1 | Collect approved public problem signals automatically | A scheduled GitHub Actions job reads bounded Hacker News and public GitHub Issue data without login-wall scraping or private data |
+| FR-018 | P1 | Analyze collected signals with AI | GitHub Models returns bounded structured candidates with visible reasoning, uncertainty, source references, and seven provisional factor scores |
+| FR-019 | P1 | Review and save a discovered candidate | The browser shows source-linked candidates and saves one only after an explicit user action; saved data enters the existing validated local workspace boundary |
+| FR-020 | P1 | Expose freshness and failure state | The feed shows generation time, source coverage, analysis mode, and honest unavailable/degraded states without inventing results |
 
 ## Non-Functional Requirements
 
@@ -124,7 +131,7 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | --- | --- | --- |
 | Performance | Fast startup and immediate local interactions | Initial application assets under 250 KB uncompressed; input response under 100 ms on a typical laptop |
 | Reliability | User actions must not corrupt stored data | Schema validation, atomic import, deterministic score tests, recoverable empty state |
-| Privacy | No default network transfer of workspace content | No analytics, trackers, remote fonts, or external runtime requests |
+| Privacy | No transfer of private workspace content | The browser fetches only the same-origin public candidate feed; workspace content stays local and is never sent to collection or model services |
 | Security | Treat imported content as untrusted | No `innerHTML` for user content; file size limit; validated schema; no secrets |
 | Accessibility | Support keyboard and assistive technology | Semantic landmarks, visible focus, labelled controls, status announcements, contrast-conscious palette |
 | Compatibility | Work as a static site | Current stable Chrome, Edge, Firefox, and Safari; responsive from 360 px width |
@@ -140,6 +147,8 @@ These are release and validation targets, not measured outcomes.
 | Automated core-logic tests | 0 | At least 30 assertions | Node test report |
 | Critical accessibility defects | Unknown | 0 known | Automated and manual keyboard review |
 | Unhandled data-loss paths | Unknown | 0 known | Import, delete, storage, and recovery tests |
+| Automated discovery pipeline | 0 sources | 2 approved public source types | Deterministic fixture test plus scheduled workflow evidence |
+| Candidate provenance | 0% | 100% | Every generated candidate links to at least one collected source |
 | First external usability sessions | 0 | Not required unless explicitly requested | Owner opt-in followed by consent-based notes; no fabricated results |
 | Users who can choose a top idea without help | Unknown | Not measured | Remains unknown unless the owner explicitly requests a task-based session |
 
@@ -165,6 +174,8 @@ These are release and validation targets, not measured outcomes.
 | Risk | Local storage can be cleared by the browser | Provide JSON export, clear warnings, and recovery guidance |
 | Risk | Rich features turn the product into project management | Enforce non-goals and keep lifecycle deliberately small |
 | Risk | Future model integration exposes secrets or user data | Require a server-side trust boundary and a new ADR before implementation |
+| Risk | Public source text contains prompt injection or unsafe markup | Treat all source text as untrusted data, constrain the prompt and schema, render plain text, and preserve source links for review |
+| Risk | Model or source API is unavailable or rate limited | Publish an explicit degraded/empty feed and keep the local workspace fully usable |
 
 ## Milestones
 
@@ -177,3 +188,4 @@ These are release and validation targets, not measured outcomes.
 | M5 Quality | Release evidence and resolved blockers | Automated checks and browser review pass |
 | M6 Release | Public, reproducible portfolio project | GitHub Pages, `v1.0.0`, release notes, and repository packaging complete |
 | M7 User validation | Optional evidence about independent task completion and score comprehension | Skipped by owner policy on 2026-07-13; may reopen only after an explicit owner request |
+| M8 Automated discovery | Approved public sources become explainable, reviewable candidates without exposing workspace data or secrets | Scheduled collection, GitHub Models analysis, provenance UI, local-save flow, tests, and Pages deployment pass |

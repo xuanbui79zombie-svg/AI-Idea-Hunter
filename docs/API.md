@@ -66,6 +66,18 @@ The optional storage argument enables deterministic tests with an in-memory adap
 
 `app.js` is the composition root. It owns in-memory state, routes user intents to pure modules or adapters, persists successful changes, and asks `ui.js` to render. No business rule should exist only inside an event handler.
 
+## `discovery.js`
+
+| Export | Behavior |
+| --- | --- |
+| `validateDiscoveryFeed(value)` | returns a bounded normalized public feed or throws a safe validation error |
+| `loadDiscoveryFeed(url?)` | fetches only a same-origin JSON feed and returns an explicit `ready`, `empty`, or `unavailable` result |
+| `candidateToIdeaInput(candidate)` | maps one validated public candidate to an `inbox` idea input with weak/moderate source evidence |
+
+## Build-Time Discovery Modules
+
+Modules under `scripts/discovery/` expose pure normalization, deduplication, model-prompt, response-validation, fallback-analysis, and feed-building functions. Network adapters accept injected `fetch` implementations for deterministic tests. The command entry point writes only the configured deployment output.
+
 ## Compatibility
 
 Internal exports are not a public package API, but tests and documentation treat them as stable within a minor release. Breaking changes require updated tests, docs, and changelog entries.

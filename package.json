@@ -1,6 +1,6 @@
 {
   "name": "ai-idea-hunter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "A local-first opportunity workspace for evidence-backed AI software ideas.",
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "check": "node scripts/check.mjs",
+    "discovery:fixture": "node scripts/collect-opportunities.mjs --fixture tests/fixtures/discovery-signals.json --output .tmp/discovery.json --no-ai",
     "dev": "node scripts/dev-server.mjs",
     "test": "node --test",
     "test:all": "npm run check && npm test"

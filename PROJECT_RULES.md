@@ -6,7 +6,7 @@
 - `app.js` is the composition root; `ui.js` owns DOM behavior; `storage.js` is the only localStorage adapter.
 - Persist source inputs, not derived opportunity scores.
 - Preserve the versioned workspace boundary and validate before every import or write.
-- A backend, authentication, cloud sync, telemetry, or model API requires user approval and a new ADR.
+- A backend, authentication, cloud sync, telemetry, or model API requires user approval and a new ADR. The approved build-time GitHub Models exception is defined by ADR-0002; browser-side model calls remain prohibited.
 
 ## Code Rules
 

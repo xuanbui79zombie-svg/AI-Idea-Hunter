@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.0.0` released / 已发布. Quality gates and GitHub Pages deployment are passing / 质量门禁与 GitHub Pages 部署均已通过. M7 real-user validation was skipped by owner policy on 2026-07-13; 0 sessions were run and no user result is claimed / 负责人于 2026-07-13 决定跳过 M7 真实用户验证；共执行 0 次会话，未声明任何用户结论.
+> Status / 状态: `v1.1.0` automated discovery is ready for release / 自动发现功能已准备发布. Public Hacker News and GitHub Issue signals are analyzed during deployment; candidates remain provisional and require explicit local saving / 部署时自动分析 Hacker News 与 GitHub Issue 公开信号；候选结果仅供参考，需用户明确保存到本地工作区. Real-user validation remains opt-in / 真实用户验证仍为按需启用.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -29,6 +29,9 @@ The resulting score organizes work; it does not claim market demand, revenue, or
 - Load clearly labelled fictional examples on demand.
 - Use system, light, or dark themes on desktop and mobile.
 - Switch the complete interface, fictional examples, system messages, and research-brief exports between English and Simplified Chinese with a locally persisted preference.
+- Review a daily, source-linked candidate feed collected from approved public Hacker News and GitHub APIs.
+- Inspect AI reasoning, uncertainty, freshness, source coverage, and provisional factor scores before saving a candidate.
+- Keep working when a source or model is unavailable through explicit degraded and deterministic fallback states.
 - Work without an account, server, analytics tracker, or model API key.
 
 ## Quick Start
@@ -54,7 +57,7 @@ npm test
 npm run test:all
 ```
 
-The current suite covers model validation, weighted scoring, evidence guidance, storage failure and recovery, JSON round-trip, import rejection, portable filenames, and Markdown output.
+The current suite covers workspace and discovery-feed validation, source normalization, prompt boundaries, fallback analysis, weighted scoring, storage failure and recovery, JSON round-trip, import rejection, portable filenames, and Markdown output.
 
 ## How the Score Works
 
@@ -72,7 +75,9 @@ Each input uses a 1–5 scale. The normalized score is `round(sum(value × weigh
 
 ## Privacy and Recovery
 
-Workspace content stays in browser localStorage unless the user explicitly downloads a JSON or Markdown file. The application makes no runtime network request, loads no third-party script or font, and contains no analytics.
+Workspace content stays in browser localStorage unless the user explicitly downloads a JSON or Markdown file. The browser requests only the same-origin public candidate feed; it never sends workspace content to collectors or models. The application loads no third-party script or font and contains no analytics.
+
+Public collection and GitHub Models analysis run in GitHub Actions with an ephemeral workflow token. The deployed feed contains public-source excerpts and links only; no browser API key or repository secret is exposed.
 
 Browser clearing or private-browsing behavior can remove data. Export JSON backups regularly. Invalid imports do not mutate the active workspace, and malformed stored data opens a safe empty workspace with a visible warning.
 
@@ -82,6 +87,7 @@ Browser clearing or private-browsing behavior can remove data. Export JSON backu
 src/
 ├── index.html       # semantic application shell
 ├── styles.css       # responsive design system and themes
+├── data/            # generated, same-origin public candidate feed
 └── js/
     ├── app.js       # composition and user-intent orchestration
     ├── ui.js        # safe DOM rendering and interaction
@@ -89,9 +95,10 @@ src/
     ├── scoring.js   # pure transparent scoring
     ├── storage.js   # localStorage adapter and recovery
     ├── export.js    # JSON and localized Markdown boundaries
+    ├── discovery.js # candidate-feed validation and local conversion
     └── i18n.js      # English and Simplified Chinese resources
 tests/               # Node built-in test suite
-scripts/             # static checks and local server
+scripts/             # checks, local server, and discovery collector
 docs/                # product, architecture, schema, contracts, ADRs
 ```
 
@@ -102,6 +109,7 @@ docs/                # product, architecture, schema, contracts, ADRs
 - [Data model](docs/DATABASE.md)
 - [Module contracts](docs/API.md)
 - [ADR-0001: local-first native web](docs/adr/0001-local-first-native-web.md)
+- [ADR-0002: build-time automated discovery](docs/adr/0002-build-time-automated-discovery.md)
 - [Delivery tasks](TASKS.md)
 - [Technology choices](TECH_STACK.md)
 - [Release test report](docs/TEST_REPORT.md)

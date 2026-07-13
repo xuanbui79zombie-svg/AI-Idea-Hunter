@@ -19,6 +19,7 @@
 | M5 Quality | Independent release evidence with no P0/P1 defects | DONE | `docs/TEST_REPORT.md`, 24 tests, 111 assertions, browser review |
 | M6 Release | Public demo, repository governance, and `v1.0.0` | DONE | GitHub Pages, protected main, quality checks, and GitHub Release |
 | M7 User validation / 用户验证 | Optional external sessions / 可选外部会话 | SKIPPED | Skipped by owner policy on 2026-07-13; 0 sessions and no user conclusion / 负责人于 2026-07-13 决定跳过；0 次会话且无用户结论 |
+| M8 Automated discovery / 自动发现 | Scheduled public-signal collection, AI analysis, and local candidate review / 定时采集公开信号、AI 分析和本地候选审核 | DONE | 36 automated tests; live public-source and GitHub Models run; bilingual desktop/mobile save flow / 36 项自动化测试；公开来源与 GitHub Models 实测；双语桌面/移动端保存流程 |
 
 ## TODO
 
@@ -29,9 +30,7 @@
 
 ## DOING
 
-| ID | Priority | Milestone | Task | Current evidence |
-| --- | --- | --- | --- | --- |
-| — | — | — | No active task | — |
+None.
 
 ## DONE
 
@@ -65,6 +64,11 @@
 | R-005 | P0 | M6 | Publish signed-off `v1.0.0` GitHub Release | Annotated tag and GitHub Release on the verified final commit |
 | UV-001 | P0 | M7 | Define the bilingual consent, privacy, task, metric, severity, and synthesis protocol / 定义双语同意、隐私、任务、指标、严重度及汇总协议 | `docs/research/`; internal dry run on 2026-07-13 does not count as user evidence / 2026-07-13 内部演练不计入用户证据 |
 | L-001 | P1 | M7 | Add persistent English/Simplified Chinese interface switching / 添加持久化中英文界面切换 | FR-016; 30 automated tests; desktop and 390 × 844 browser regression; preference reload verified |
+| AD-001 | P0 | M8 | Define automated discovery product and architecture boundary | Approved owner direction, `docs/PRODUCT.md`, ADR-0002, and architecture contracts |
+| AD-002 | P1 | M8 | Implement bounded Hacker News and GitHub Issues collection | Official public APIs, bounded normalization, deterministic fixtures, and source failure states |
+| AD-003 | P1 | M8 | Add GitHub Models structured analysis with safe fallback | Structured schema validation, prompt-injection boundary, live model run, and deterministic fallback tests |
+| AD-004 | P1 | M8 | Publish scheduled candidate feed through GitHub Pages | Scheduled/manual Pages workflow, ephemeral token, and same-origin JSON artifact |
+| AD-005 | P1 | M8 | Build bilingual discovery feed and save-to-workspace flow | English/Chinese desktop regression, 390 × 844 no-overflow check, empty browser logs, and local persistence save test |
 
 ## SKIPPED
 
@@ -89,6 +93,7 @@ None.
 | Persistence, backup, and recovery | B-004, B-008 | Q-002, Q-003 |
 | Example and themes | B-009, B-010 | Q-003, Q-004 |
 | Interface language | L-001 | Automated i18n, persistence, export, desktop, and mobile browser evidence |
+| Automated discovery | AD-001..AD-005 | Deterministic pipeline tests, live source/model run, bilingual browser save, mobile no-overflow, Pages workflow |
 | Keyboard and accessibility | B-001, B-011 | Q-004 |
 | Security, privacy, and performance | Q-001, Q-005 | Q-006 |
 | Publication | R-001..R-005 | GitHub checks, Pages, Release |

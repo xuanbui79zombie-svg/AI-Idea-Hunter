@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
+  models: read
 
 concurrency:
   group: pages
@@ -33,6 +36,12 @@ jobs:
 
       - name: Run quality gate
         run: npm run test:all
+
+      - name: Collect and analyze public opportunity signals
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCOVERY_MODEL: openai/gpt-4o
+        run: node scripts/collect-opportunities.mjs
 
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0

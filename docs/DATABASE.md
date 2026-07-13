@@ -102,3 +102,9 @@ JavaScript is single-threaded per tab, but two tabs can overwrite each other. Mu
 ## Privacy
 
 The application sends no workspace data to a server. Users remain responsible for removing confidential information before sharing exported JSON or Markdown files.
+
+## Public Discovery Feed
+
+Automated discovery uses a separate read-only `schemaVersion: 1` JSON document deployed at `data/opportunities.json`. It contains generation metadata, source coverage, analysis mode, and at most 12 source-linked candidates. It is not part of the workspace schema, is never written to localStorage automatically, and cannot overwrite user ideas.
+
+Each candidate contains bounded plain-text product fields, seven provisional 1–5 scores, reasoning, uncertainties, and one or more canonical HTTPS source references. The browser validates the complete feed before rendering or mapping a candidate into an `Idea` input.

@@ -6,6 +6,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Added
 
+- Added scheduled, bounded collection from the official Hacker News API and public GitHub Issues search.
+- Added GitHub Models structured candidate analysis with source provenance, visible reasoning, uncertainty, provisional scores, and a deterministic fallback.
+- Added a bilingual discovery feed with freshness and source states plus explicit one-click saving into the existing local workspace.
+- Added automated discovery schema, source, prompt-boundary, fallback, and browser regression coverage.
 - Added the M7 usability test plan, privacy-aware recruitment brief, session template, and evidence log for three external participant sessions.
 - Added equivalent English and Chinese guidance across all M7 research materials and public tracking entry points.
 - Added persistent English/Simplified Chinese interface switching across static content, dynamic cards, dialogs, scoring guidance, system messages, fictional examples, accessibility labels, and Markdown brief exports.
@@ -13,6 +17,10 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 ### Fixed
 
 - Preserved an accessible name for the compact mobile “new idea” button after its visible label is hidden.
+
+### Security
+
+- Kept model credentials in GitHub Actions, restricted browser connections to the same origin, and treated all public-source text as untrusted data.
 
 ## [1.0.0] - 2026-07-12
 
