@@ -4,6 +4,14 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-07-14
+
+### Changed
+
+- Made AI-generated candidate titles, audiences, problems, reasoning, uncertainties, outcomes, and next steps switch naturally between English and Simplified Chinese.
+- Saved discovered candidates in the language currently displayed while preserving original source evidence and URLs.
+- Versioned the public discovery feed to schema 2 and retained read compatibility with schema 1 feeds.
+
 ## [1.1.0] - 2026-07-13
 
 ### Added

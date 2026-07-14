@@ -72,7 +72,8 @@ The optional storage argument enables deterministic tests with an in-memory adap
 | --- | --- |
 | `validateDiscoveryFeed(value)` | returns a bounded normalized public feed or throws a safe validation error |
 | `loadDiscoveryFeed(url?)` | fetches only a same-origin JSON feed and returns an explicit `ready`, `empty`, or `unavailable` result |
-| `candidateToIdeaInput(candidate)` | maps one validated public candidate to an `inbox` idea input with weak/moderate source evidence |
+| `localizeCandidate(candidate, language?)` | selects validated English or Simplified Chinese product fields while preserving shared scores and original source evidence |
+| `candidateToIdeaInput(candidate, language?)` | maps the selected candidate locale to an `inbox` idea input with weak/moderate original-source evidence |
 
 ## Build-Time Discovery Modules
 

@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.1.0` automated discovery released / 自动发现功能已发布. Quality checks, public collection, GitHub Models analysis, and GitHub Pages deployment are passing / 质量检查、公开数据采集、GitHub Models 分析和 GitHub Pages 部署均已通过. Candidates remain provisional and require explicit local saving; real-user validation remains opt-in / 候选结果仅供参考，需明确保存到本地；真实用户验证仍为按需启用.
+> Status / 状态: `v1.1.1` bilingual discovery refinement released / `v1.1.1` 双语候选体验优化已发布. AI candidate content now switches naturally with the interface language and saves in the language currently displayed / AI 候选内容现可随界面语言自然切换，并按当前显示语言保存. Candidates remain provisional; real-user validation remains opt-in / 候选结果仍仅供参考；真实用户验证仍为按需启用.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -28,7 +28,7 @@ The resulting score organizes work; it does not claim market demand, revenue, or
 - Back up and restore the full workspace as versioned JSON.
 - Load clearly labelled fictional examples on demand.
 - Use system, light, or dark themes on desktop and mobile.
-- Switch the complete interface, fictional examples, system messages, and research-brief exports between English and Simplified Chinese with a locally persisted preference.
+- Switch the complete interface, fictional examples, AI-generated candidate content, system messages, and research-brief exports between English and Simplified Chinese with a locally persisted preference.
 - Review a daily, source-linked candidate feed collected from approved public Hacker News and GitHub APIs.
 - Inspect AI reasoning, uncertainty, freshness, source coverage, and provisional factor scores before saving a candidate.
 - Keep working when a source or model is unavailable through explicit degraded and deterministic fallback states.
@@ -45,7 +45,7 @@ npm run dev
 
 Open `http://127.0.0.1:4173`.
 
-Use the `中文` / `EN` control in the header to change the interface language. The application never translates or transmits user-entered content.
+Use the `中文` / `EN` control in the header to change the interface language. AI-generated candidates switch between validated English and Simplified Chinese fields; original source quotations and user-entered content are never silently translated or transmitted.
 
 There are no production or development packages; `npm install` verifies metadata and the lockfile. Any static HTTP server can serve `src/`.
 

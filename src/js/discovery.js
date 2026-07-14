@@ -4,6 +4,10 @@ export const DISCOVERY_FEED_PATH = "data/opportunities.json";
 export const MAX_DISCOVERY_CANDIDATES = 12;
 const MAX_CANDIDATE_SOURCES = 4;
 const SCORE_KEYS = Object.freeze(SCORE_FACTORS.map((factor) => factor.key));
+const CONTENT_LIMITS = Object.freeze({
+  title: 80, audience: 120, problem: 600, context: 400,
+  outcome: 400, nextStep: 240, reasoning: 600,
+});
 
 function text(value, maximum, field, required = true) {
   const normalized = String(value ?? "").trim();
@@ -45,31 +49,44 @@ function validateSource(value, index) {
   });
 }
 
-function validateCandidate(value, index) {
+function validateContent(value, prefix, requireComplete = false) {
+  const uncertainties = Array.isArray(value?.uncertainties)
+    ? value.uncertainties.slice(0, 4).map((item, itemIndex) => text(item, 240, `${prefix}.uncertainties.${itemIndex}`))
+    : [];
+  return Object.freeze({
+    title: text(value?.title, CONTENT_LIMITS.title, `${prefix}.title`),
+    audience: text(value?.audience, CONTENT_LIMITS.audience, `${prefix}.audience`),
+    problem: text(value?.problem, CONTENT_LIMITS.problem, `${prefix}.problem`),
+    context: text(value?.context, CONTENT_LIMITS.context, `${prefix}.context`, requireComplete),
+    outcome: text(value?.outcome, CONTENT_LIMITS.outcome, `${prefix}.outcome`),
+    nextStep: text(value?.nextStep, CONTENT_LIMITS.nextStep, `${prefix}.nextStep`, requireComplete),
+    reasoning: text(value?.reasoning, CONTENT_LIMITS.reasoning, `${prefix}.reasoning`),
+    uncertainties: Object.freeze(uncertainties),
+  });
+}
+
+function validateCandidate(value, index, requireChinese = false) {
   if (!Array.isArray(value?.sources) || value.sources.length < 1 || value.sources.length > MAX_CANDIDATE_SOURCES) {
     throw new TypeError(`Invalid discovery sources: candidates.${index}`);
   }
   const scores = Object.fromEntries(SCORE_KEYS.map((key) => [key, score(value?.scores?.[key], `${index}.${key}`)]));
-  const uncertainties = Array.isArray(value?.uncertainties)
-    ? value.uncertainties.slice(0, 4).map((item, itemIndex) => text(item, 240, `${index}.uncertainties.${itemIndex}`))
-    : [];
+  const content = validateContent(value, `${index}`, requireChinese);
+  const chineseValue = value?.localizations?.["zh-CN"];
+  if (requireChinese && !chineseValue) throw new TypeError(`Missing Simplified Chinese discovery content: candidates.${index}`);
+  const localizations = chineseValue
+    ? Object.freeze({ "zh-CN": validateContent(chineseValue, `${index}.localizations.zh-CN`, requireChinese) })
+    : Object.freeze({});
   return Object.freeze({
     id: text(value?.id, 120, `${index}.id`),
-    title: text(value?.title, 80, `${index}.title`),
-    audience: text(value?.audience, 120, `${index}.audience`),
-    problem: text(value?.problem, 600, `${index}.problem`),
-    context: text(value?.context, 400, `${index}.context`, false),
-    outcome: text(value?.outcome, 400, `${index}.outcome`),
-    nextStep: text(value?.nextStep, 240, `${index}.nextStep`, false),
-    reasoning: text(value?.reasoning, 600, `${index}.reasoning`),
-    uncertainties: Object.freeze(uncertainties),
+    ...content,
+    localizations,
     scores: Object.freeze(scores),
     sources: Object.freeze(value.sources.map(validateSource)),
   });
 }
 
 export function validateDiscoveryFeed(value) {
-  if (value?.schemaVersion !== 1) throw new TypeError("Unsupported discovery feed version");
+  if (![1, 2].includes(value?.schemaVersion)) throw new TypeError("Unsupported discovery feed version");
   if (!Array.isArray(value?.candidates) || value.candidates.length > MAX_DISCOVERY_CANDIDATES) {
     throw new TypeError("Invalid discovery candidate collection");
   }
@@ -83,12 +100,12 @@ export function validateDiscoveryFeed(value) {
     }))
     : [];
   return Object.freeze({
-    schemaVersion: 1,
+    schemaVersion: value.schemaVersion,
     generatedAt: iso(value?.generatedAt, "generatedAt"),
     analysisMode: mode,
     model: text(value?.model, 100, "model", false),
     sourceSummary: Object.freeze(sourceSummary),
-    candidates: Object.freeze(value.candidates.map(validateCandidate)),
+    candidates: Object.freeze(value.candidates.map((candidate, index) => validateCandidate(candidate, index, value.schemaVersion >= 2))),
   });
 }
 
@@ -106,8 +123,15 @@ export async function loadDiscoveryFeed(path = DISCOVERY_FEED_PATH, fetchImpl = 
   }
 }
 
-export function candidateToIdeaInput(candidate) {
+export function localizeCandidate(candidate, language = "en") {
   const normalized = validateCandidate(candidate, 0);
+  const localized = String(language).toLowerCase().startsWith("zh") ? normalized.localizations["zh-CN"] : null;
+  return Object.freeze(localized ? { ...normalized, ...localized } : normalized);
+}
+
+export function candidateToIdeaInput(candidate, language = "en") {
+  const normalized = localizeCandidate(candidate, language);
+  const sourceWord = String(language).toLowerCase().startsWith("zh") ? "来源" : "Source";
   return {
     title: normalized.title,
     audience: normalized.audience,
@@ -119,7 +143,7 @@ export function candidateToIdeaInput(candidate) {
     scores: { ...normalized.scores },
     evidence: normalized.sources.map((source) => ({
       source: `${source.source}: ${source.title}`.slice(0, 120),
-      observation: `${source.excerpt || source.title} Source: ${source.url}`.slice(0, 500),
+      observation: `${source.excerpt || source.title} ${sourceWord}: ${source.url}`.slice(0, 500),
       strength: normalized.sources.length > 1 ? "moderate" : "weak",
       observedAt: source.publishedAt.slice(0, 10),
     })),

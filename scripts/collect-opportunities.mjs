@@ -14,7 +14,7 @@ async function analyzeWithGitHubModels(signals, token, model) {
   const response = await fetch("https://models.github.ai/inference/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model, messages: buildModelMessages(signals), temperature: 0.2, max_tokens: 3500 }),
+    body: JSON.stringify({ model, messages: buildModelMessages(signals), temperature: 0.2, max_tokens: 6000 }),
   });
   if (!response.ok) throw new Error(`GitHub Models returned ${response.status}`);
   const payload = await response.json();
