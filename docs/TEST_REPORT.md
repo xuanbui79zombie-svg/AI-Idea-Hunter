@@ -2,9 +2,21 @@
 
 ## Quality Conclusion
 
-**Pass for `v1.1.2` release packaging with documented low-risk limitations.** No P0 or P1 functional, security, privacy, accessibility, data-loss, or deployment blocker is known in the tested scope.
+**Pass for `v1.2.0` release packaging with documented low-risk limitations.** No P0 or P1 functional, security, privacy, accessibility, data-loss, or deployment blocker is known in the tested scope.
 
 Real-user validation is not part of the required test scope and was skipped by owner policy on 2026-07-13. This does not reduce the engineering quality gates above, and this report makes no usability, adoption, satisfaction, market-demand, or commercial claim.
+
+## v1.2.0 Interactive Score Analysis Addendum
+
+Date: 2026-07-14.
+
+- 40 automated tests passed with 0 failures, skips, or todos, including deterministic seven-axis SVG geometry and invalid-input coverage.
+- Clicking a saved-idea score opened a native dialog with seven axes, seven plotted points, seven localized labels, and seven detail cards.
+- The tested 67-point example exposed contributions of 16, 12, 9, 6, 12, 6, and 6 points, matching the documented weighted total.
+- English and Simplified Chinese titles, factor labels, rating criteria, formula, scale, weights, and contribution labels rendered from the same data.
+- Escape closed the analysis and restored focus to its originating score button.
+- At 360 × 800, the page, dialog, and scroll body had zero horizontal overflow; the radar remained visible at 244 px wide.
+- Browser logs contained no warning or error.
 
 ## v1.1.2 Hero Layout Regression Addendum
 
@@ -93,8 +105,8 @@ The project is approved for `v1.1.1` publication after the required GitHub Quali
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Static repository checks | PASS | 27 required files, 12 application assets, 136,371 bytes |
-| Node test runner | PASS | 37 tests, 0 failures/skips/todos |
+| Static repository checks | PASS | 28 required files, 13 application assets, 152,263 bytes |
+| Node test runner | PASS | 40 tests, 0 failures/skips/todos |
 | Dependency audit | PASS | 0 packages with vulnerabilities; production and development dependencies remain empty |
 | Secret pattern scan | PASS | No GitHub, OpenAI, AWS, or private-key pattern found |
 | Unsafe runtime API scan | PASS | No `innerHTML`, `eval`, `Function`, XHR, WebSocket, or beacon use; `fetch` is isolated to the validated same-origin discovery adapter |
@@ -164,4 +176,4 @@ M6 release evidence passed:
 - Private vulnerability reporting, secret scanning, push protection, Dependabot alerts, and security updates are enabled.
 - `main` requires pull requests and the `Test and validate` status check and blocks force pushes and deletion.
 
-The project is approved for `v1.1.2` publication; required GitHub checks and the Pages discovery workflow must pass, with the cross-browser and native-file-picker limitations already documented above.
+The project is approved for `v1.2.0` publication; required GitHub checks and the Pages discovery workflow must pass, with the cross-browser and native-file-picker limitations already documented above.

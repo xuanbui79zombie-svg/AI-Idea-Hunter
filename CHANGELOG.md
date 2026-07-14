@@ -4,6 +4,14 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-14
+
+### Added
+
+- Made every saved-idea score an accessible button that opens a complete seven-factor scoring analysis.
+- Added a responsive radar chart plus bilingual value, weight, contribution, and rating-criterion details for every factor.
+- Added keyboard close and focus restoration behavior plus pure, zero-dependency radar geometry tests.
+
 ## [1.1.2] - 2026-07-14
 
 ### Fixed

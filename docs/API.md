@@ -26,6 +26,15 @@ Validation errors contain safe field identifiers and human-readable messages. Th
 
 Scoring functions are pure and must not read storage, time, locale, or the DOM.
 
+## `radar.js`
+
+| Export | Input | Output | Failure |
+| --- | --- | --- | --- |
+| `buildRadarPoints(values, options?)` | at least three finite values plus optional center, radius, and maximum | frozen `{ x, y }` coordinates starting at the top and proceeding clockwise | throws for invalid dimensions or out-of-range values |
+| `toSvgPoints(points)` | at least three coordinates | safe SVG `points` attribute string | throws for an invalid polygon |
+
+Radar geometry is pure, locale-independent, and has no DOM or SVG dependency. `ui.js` owns element creation and accessible chart labels.
+
 ## `storage.js`
 
 | Export | Behavior |

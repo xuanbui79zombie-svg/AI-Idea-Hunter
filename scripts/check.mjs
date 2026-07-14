@@ -30,6 +30,7 @@ const required = [
   "src/js/ui.js",
   "src/js/model.js",
   "src/js/scoring.js",
+  "src/js/radar.js",
   "src/js/storage.js",
   "src/js/export.js",
   "src/js/discovery.js",
