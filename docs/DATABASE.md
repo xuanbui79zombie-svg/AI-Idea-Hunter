@@ -105,6 +105,6 @@ The application sends no workspace data to a server. Users remain responsible fo
 
 ## Public Discovery Feed
 
-Automated discovery uses a separate read-only `schemaVersion: 1` JSON document deployed at `data/opportunities.json`. It contains generation metadata, source coverage, analysis mode, and at most 12 source-linked candidates. It is not part of the workspace schema, is never written to localStorage automatically, and cannot overwrite user ideas.
+Automated discovery uses a separate read-only `schemaVersion: 2` JSON document deployed at `data/opportunities.json`. It contains generation metadata, source coverage, analysis mode, and at most 12 source-linked candidates. Version 2 requires validated Simplified Chinese localizations alongside the English base product fields; the browser remains read-compatible with version 1 feeds during deployment transitions. The feed is not part of the workspace schema, is never written to localStorage automatically, and cannot overwrite user ideas.
 
-Each candidate contains bounded plain-text product fields, seven provisional 1–5 scores, reasoning, uncertainties, and one or more canonical HTTPS source references. The browser validates the complete feed before rendering or mapping a candidate into an `Idea` input.
+Each candidate contains bounded plain-text English product fields, a bounded `localizations["zh-CN"]` object with the same content contract, seven shared provisional 1–5 scores, and one or more canonical HTTPS source references. Original source titles, excerpts, dates, and URLs are not translated. The browser validates the complete feed before rendering or mapping the currently displayed locale into an `Idea` input.

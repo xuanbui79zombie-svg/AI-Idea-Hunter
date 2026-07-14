@@ -1,5 +1,6 @@
 import { EVIDENCE_STRENGTHS, STATUSES } from "./model.js";
 import { getLanguage, setLanguage, t } from "./i18n.js";
+import { localizeCandidate } from "./discovery.js";
 import { calculateScore, getEvidenceGapKey, getScoreBand, getScoreBreakdown, SCORE_FACTORS } from "./scoring.js";
 
 const elements = {};
@@ -200,7 +201,8 @@ function createIdeaCard(idea) {
 }
 
 function createDiscoveryCard(candidate) {
-  const score = calculateScore(candidate.scores);
+  const content = localizeCandidate(candidate, getLanguage());
+  const score = calculateScore(content.scores);
   const band = getScoreBand(score);
   const card = element("article", { className: "discovery-card", attributes: { "data-band": band.key } });
   const top = element("div", { className: "card-topline" });
@@ -210,27 +212,27 @@ function createDiscoveryCard(candidate) {
   );
   card.append(
     top,
-    element("h3", { text: candidate.title }),
-    element("p", { className: "audience", text: candidate.audience }),
-    element("p", { className: "problem-excerpt", text: candidate.problem }),
+    element("h3", { text: content.title }),
+    element("p", { className: "audience", text: content.audience }),
+    element("p", { className: "problem-excerpt", text: content.problem }),
   );
 
   const analysis = element("div", { className: "discovery-analysis" });
   analysis.append(
     element("strong", { text: t("discovery.reasoning") }),
-    element("p", { text: candidate.reasoning }),
+    element("p", { text: content.reasoning }),
   );
-  if (candidate.uncertainties.length) {
+  if (content.uncertainties.length) {
     analysis.append(element("strong", { text: t("discovery.uncertainties") }));
     const list = element("ul");
-    for (const uncertainty of candidate.uncertainties) list.append(element("li", { text: uncertainty }));
+    for (const uncertainty of content.uncertainties) list.append(element("li", { text: uncertainty }));
     analysis.append(list);
   }
   card.append(analysis);
 
   const sources = element("div", { className: "discovery-sources" });
   sources.append(element("strong", { text: t("discovery.sources") }));
-  for (const source of candidate.sources) {
+  for (const source of content.sources) {
     const link = element("a", {
       text: `${source.source === "github" ? "GitHub" : "Hacker News"}: ${source.title}`,
       attributes: { href: source.url, target: "_blank", rel: "noopener noreferrer" },
@@ -242,7 +244,7 @@ function createDiscoveryCard(candidate) {
   const action = element("button", {
     className: "button button-secondary discovery-save",
     text: t("discovery.save"),
-    attributes: { type: "button", "data-candidate-id": candidate.id },
+    attributes: { type: "button", "data-candidate-id": content.id },
   });
   card.append(action);
   return card;

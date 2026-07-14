@@ -136,7 +136,7 @@ function saveDiscoveredCandidate(id) {
     return;
   }
   try {
-    const saved = createIdea(candidateToIdeaInput(candidate));
+    const saved = createIdea(candidateToIdeaInput(candidate, getLanguage()));
     const persisted = persist({ ...workspace, ideas: [saved, ...workspace.ideas] });
     showToast(t(persisted ? "discovery.saved" : "idea.memoryOnly", { title: saved.title }));
   } catch {

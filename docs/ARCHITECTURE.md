@@ -87,14 +87,15 @@ Build-time modules under `scripts/discovery/` own public source adapters, normal
 1. `storage.js` loads the language preference from a key separate from the workspace document.
 2. `i18n.js` normalizes the locale and resolves static and dynamic translation keys.
 3. `ui.js` updates visible text, placeholders, accessibility names, date formatting, the document title, and the root `lang` attribute.
-4. `app.js` re-renders derived labels without modifying user-entered idea content.
-5. New fictional examples and Markdown briefs use the language selected when they are created or exported.
+4. `discovery.js` selects the validated English base or Simplified Chinese localization for every generated candidate while preserving original source quotations and URLs.
+5. `app.js` re-renders derived labels and discovered content without modifying user-entered idea content.
+6. New fictional examples, saved discovered candidates, and Markdown briefs use the language selected when they are created, saved, or exported.
 
 ### Refresh and review discovered candidates
 
 1. A daily or manually triggered Pages workflow requests a bounded set of public Hacker News items and public GitHub Issues.
 2. Source adapters reduce responses to plain-text identifiers, titles, excerpts, timestamps, and canonical HTTPS URLs.
-3. GitHub Models receives untrusted public text inside an explicit data boundary and returns JSON candidates; the collector validates every field, score, source ID, and URL.
+3. GitHub Models receives untrusted public text inside an explicit data boundary and returns English plus natural Simplified Chinese candidate fields; the collector validates every localized field, score, source ID, and URL.
 4. If AI inference fails, deterministic fallback analysis produces clearly labelled provisional candidates instead of fabricating AI success.
 5. The validated feed is generated only in the deployment workspace and included in the immutable Pages artifact; it is not committed to `main`.
 6. The browser fetches the same-origin feed, validates it again, and renders content with safe DOM properties.

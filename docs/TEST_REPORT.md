@@ -51,6 +51,24 @@ FR-017 through FR-020 passed release-candidate validation:
 
 Real-user validation was intentionally not performed and no market-demand conclusion is claimed from public signals or model output.
 
+## M9 Bilingual Discovery Refinement Addendum
+
+Date: 2026-07-14.
+
+FR-016 and FR-021 passed release-candidate validation:
+
+- 37 automated tests passed with 0 failures, skips, or todos.
+- Discovery feed schema 2 requires complete bounded Simplified Chinese product content alongside the English base fields; schema 1 feeds remain readable and fall back safely to English.
+- A live GitHub Models fixture run returned `ai` mode with distinct professional English and natural Simplified Chinese candidate content.
+- Candidate title, audience, problem, reasoning, uncertainties, outcome, and next step switched with the interface language while source titles, excerpts, dates, and HTTPS URLs remained original evidence.
+- Saving in English created `Recurring Customer Issue Tracker`; saving the same candidate in Chinese created `重复客户问题追踪器`, with localized success feedback and the existing workspace validation boundary.
+- At 390 × 844, the Chinese discovery card and section had zero horizontal overflow.
+- Browser logs contained no warning or error.
+
+No user-entered content was translated or transmitted, and no real-user validation was performed.
+
+The project is approved for `v1.1.1` publication after the required GitHub Quality and Pages checks pass.
+
 ## Test Scope and Environment
 
 - Date: 2026-07-12

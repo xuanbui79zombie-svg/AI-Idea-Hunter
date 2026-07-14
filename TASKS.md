@@ -20,6 +20,7 @@
 | M6 Release | Public demo, repository governance, and `v1.0.0` | DONE | GitHub Pages, protected main, quality checks, and GitHub Release |
 | M7 User validation / 用户验证 | Optional external sessions / 可选外部会话 | SKIPPED | Skipped by owner policy on 2026-07-13; 0 sessions and no user conclusion / 负责人于 2026-07-13 决定跳过；0 次会话且无用户结论 |
 | M8 Automated discovery / 自动发现 | Scheduled public-signal collection, AI analysis, and local candidate review / 定时采集公开信号、AI 分析和本地候选审核 | DONE | 36 automated tests; live public-source and GitHub Models run; bilingual desktop/mobile save flow / 36 项自动化测试；公开来源与 GitHub Models 实测；双语桌面/移动端保存流程 |
+| M9 Bilingual discovery refinement / 双语候选体验优化 | Candidate titles, analysis, uncertainties, and saved content switch naturally between English and Chinese / 候选标题、分析、不确定项及保存内容可自然切换中英文 | DONE | Feed schema 2, legacy compatibility, live model output, 37 tests, bilingual save, and mobile browser evidence / Feed schema 2、旧版兼容、模型实测、37 项测试、双语保存及移动端证据 |
 
 ## TODO
 
@@ -69,6 +70,7 @@ None.
 | AD-003 | P1 | M8 | Add GitHub Models structured analysis with safe fallback | Structured schema validation, prompt-injection boundary, live model run, and deterministic fallback tests |
 | AD-004 | P1 | M8 | Publish scheduled candidate feed through GitHub Pages | Scheduled/manual Pages workflow, ephemeral token, and same-origin JSON artifact |
 | AD-005 | P1 | M8 | Build bilingual discovery feed and save-to-workspace flow | English/Chinese desktop regression, 390 × 844 no-overflow check, empty browser logs, and local persistence save test |
+| L-002 | P1 | M9 | Add versioned bilingual candidate content and locale-aware saving / 增加版本化双语候选内容及按当前语言保存 | FR-016, FR-021; schema 2 and version 1 compatibility tests; live bilingual GitHub Models output; English/Chinese render and save; 390 × 844 no-overflow; empty browser logs |
 
 ## SKIPPED
 
@@ -94,6 +96,7 @@ None.
 | Example and themes | B-009, B-010 | Q-003, Q-004 |
 | Interface language | L-001 | Automated i18n, persistence, export, desktop, and mobile browser evidence |
 | Automated discovery | AD-001..AD-005 | Deterministic pipeline tests, live source/model run, bilingual browser save, mobile no-overflow, Pages workflow |
+| Bilingual discovered content | L-002 | Versioned feed tests, legacy fallback, English/Chinese render and save assertions, desktop/mobile browser evidence |
 | Keyboard and accessibility | B-001, B-011 | Q-004 |
 | Security, privacy, and performance | Q-001, Q-005 | Q-006 |
 | Publication | R-001..R-005 | GitHub checks, Pages, Release |
