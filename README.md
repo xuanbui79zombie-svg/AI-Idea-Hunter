@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.2.0` interactive score analysis ready / `v1.2.0` 交互式评分分析已完成. Click any saved-idea score to inspect its bilingual seven-factor radar chart and complete scoring criteria / 点击任意已保存创意的分数，即可查看双语七维雷达图与完整评分细则. Candidates remain provisional; real-user validation remains opt-in / 候选结果仍仅供参考；真实用户验证仍为按需启用.
+> Status / 状态: `v1.2.1` candidate score analysis ready / `v1.2.1` 候选评分分析已完成. Click any saved-idea or automatically discovered candidate score to inspect its bilingual seven-factor radar chart and complete scoring criteria / 点击任意已保存创意或自动抓取候选的分数，即可查看双语七维雷达图与完整评分细则. Candidate scores remain provisional; real-user validation remains opt-in / 候选评分仍仅供参考；真实用户验证仍为按需启用.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
@@ -24,6 +24,7 @@ The resulting score organizes work; it does not claim market demand, revenue, or
 - Attach dated evidence notes with explicit signal strength.
 - Score seven visible factors with a documented weighted formula.
 - Click a saved-idea score to inspect a bilingual seven-axis radar chart, factor values, weights, contributions, and rating criteria.
+- Inspect automatically discovered candidate scores through the same chart while retaining an explicit provisional-score warning.
 - Search, filter, sort, and inspect dashboard signals.
 - Export a single idea as a Markdown research brief.
 - Back up and restore the full workspace as versioned JSON.

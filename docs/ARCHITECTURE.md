@@ -109,6 +109,7 @@ Build-time modules under `scripts/discovery/` own public source adapters, normal
 5. The validated feed is generated only in the deployment workspace and included in the immutable Pages artifact; it is not committed to `main`.
 6. The browser fetches the same-origin feed, validates it again, and renders content with safe DOM properties.
 7. Saving a candidate maps it to the existing `Idea` input and passes through `createIdea` plus complete workspace validation before local persistence.
+8. Selecting a candidate score localizes that candidate and opens the shared score-analysis dialog with an explicit provisional public-signal warning; it does not save or mutate the candidate.
 
 ## Quality Attributes
 

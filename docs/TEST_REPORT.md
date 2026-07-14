@@ -2,9 +2,20 @@
 
 ## Quality Conclusion
 
-**Pass for `v1.2.0` release packaging with documented low-risk limitations.** No P0 or P1 functional, security, privacy, accessibility, data-loss, or deployment blocker is known in the tested scope.
+**Pass for `v1.2.1` release packaging with documented low-risk limitations.** No P0 or P1 functional, security, privacy, accessibility, data-loss, or deployment blocker is known in the tested scope.
 
 Real-user validation is not part of the required test scope and was skipped by owner policy on 2026-07-13. This does not reduce the engineering quality gates above, and this report makes no usability, adoption, satisfaction, market-demand, or commercial claim.
+
+## v1.2.1 Candidate Score Analysis Addendum
+
+Date: 2026-07-14.
+
+- A deterministic two-candidate public feed exposed a score-analysis button on both automatically discovered cards.
+- Selecting a candidate score rendered the shared seven-axis chart, seven plotted points, seven detail cards, total, band, factor criteria, weights, and contributions.
+- English and Simplified Chinese both displayed a candidate-specific warning that the score is inferred from public signals and does not validate market demand.
+- Escape closed the dialog and restored focus to the originating candidate score.
+- At 360 × 800, the page, dialog, and scroll body had zero horizontal overflow; the chart remained 244 px wide.
+- 40 automated tests passed, dependency audit reported zero vulnerabilities, and browser logs contained no application warning or error.
 
 ## v1.2.0 Interactive Score Analysis Addendum
 
@@ -176,4 +187,4 @@ M6 release evidence passed:
 - Private vulnerability reporting, secret scanning, push protection, Dependabot alerts, and security updates are enabled.
 - `main` requires pull requests and the `Test and validate` status check and blocks force pushes and deletion.
 
-The project is approved for `v1.2.0` publication; required GitHub checks and the Pages discovery workflow must pass, with the cross-browser and native-file-picker limitations already documented above.
+The project is approved for `v1.2.1` publication; required GitHub checks and the Pages discovery workflow must pass, with the cross-browser and native-file-picker limitations already documented above.

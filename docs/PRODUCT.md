@@ -8,8 +8,8 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: `v1.2.0` interactive score analysis ready for publication
-- Current release candidate: `v1.2.0`
+- Product stage: `v1.2.1` automatic-candidate score analysis ready for publication
+- Current release candidate: `v1.2.1`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
 - Unknown: whether external users will adopt the scoring model without customization.
@@ -121,7 +121,7 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | FR-015 | P3 | Optional model-assisted brief critique | Deferred; requires a secure server-side integration and explicit architecture approval |
 | FR-016 | P1 | Switch between English and Simplified Chinese | Every application control, system message, scoring explanation, fictional example, AI-generated candidate field, and research-brief export uses the selected language; the preference persists locally and updates the document language without translating user-entered content or original source quotations |
 | FR-017 | P1 | Collect approved public problem signals automatically | A scheduled GitHub Actions job reads bounded Hacker News and public GitHub Issue data without login-wall scraping or private data |
-| FR-018 | P1 | Analyze collected signals with AI | GitHub Models returns bounded structured candidates with visible reasoning, uncertainty, source references, and seven provisional factor scores |
+| FR-018 | P1 | Analyze collected signals with AI | GitHub Models returns bounded structured candidates with visible reasoning, uncertainty, source references, and seven provisional factor scores; selecting a candidate score opens the same seven-axis value, weight, contribution, and criterion analysis used by saved ideas while retaining the provisional-score warning |
 | FR-019 | P1 | Review and save a discovered candidate | The browser shows source-linked candidates and saves one only after an explicit user action; saved data enters the existing validated local workspace boundary |
 | FR-020 | P1 | Expose freshness and failure state | The feed shows generation time, source coverage, analysis mode, and honest unavailable/degraded states without inventing results |
 | FR-021 | P1 | Preserve candidate language when saving | Saving a discovered candidate writes the currently displayed English or Simplified Chinese product fields into the local workspace while preserving original public-source titles, excerpts, URLs, and dates as evidence |
@@ -191,4 +191,4 @@ These are release and validation targets, not measured outcomes.
 | M7 User validation | Optional evidence about independent task completion and score comprehension | Skipped by owner policy on 2026-07-13; may reopen only after an explicit owner request |
 | M8 Automated discovery | Approved public sources become explainable, reviewable candidates without exposing workspace data or secrets | Scheduled collection, GitHub Models analysis, provenance UI, local-save flow, tests, and Pages deployment pass |
 | M9 Bilingual discovery refinement | AI candidate content switches naturally with the interface language and saves in the chosen language | Versioned bilingual feed, legacy compatibility, automated tests, desktop/mobile browser regression, and Pages deployment pass |
-| M11 Interactive score analysis | Portfolio scores reveal a bilingual, accessible seven-factor analysis without changing the scoring model | Click and keyboard flow, chart/table parity, automated scoring coverage, responsive browser regression, and Pages deployment pass |
+| M11 Interactive score analysis | Saved-idea and automatically discovered candidate scores reveal a bilingual, accessible seven-factor analysis without changing the scoring model | Click and keyboard flow, chart/detail parity, provisional candidate caveat, automated scoring coverage, responsive browser regression, and Pages deployment pass |

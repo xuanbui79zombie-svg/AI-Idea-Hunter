@@ -223,7 +223,16 @@ function createDiscoveryCard(candidate) {
   const top = element("div", { className: "card-topline" });
   top.append(
     element("span", { className: "status-pill", text: t(`band.${band.key}.label`) }),
-    element("span", { className: "score-badge", text: String(score), attributes: { title: t("discovery.scoreCaveat") } }),
+    element("button", {
+      className: "score-badge score-trigger",
+      text: String(score),
+      attributes: {
+        type: "button",
+        "data-candidate-score-id": content.id,
+        title: t("discovery.scoreCaveat"),
+        "aria-label": t("card.openScore", { title: content.title, score }),
+      },
+    }),
   );
   card.append(
     top,
@@ -464,13 +473,14 @@ function renderScoreBreakdown(breakdown) {
   elements.scoreBreakdownList.replaceChildren(...rows);
 }
 
-export function openScoreDialog(idea) {
+export function openScoreDialog(idea, { provisional = false } = {}) {
   const score = calculateScore(idea.scores);
   const band = getScoreBand(score);
   const breakdown = getScoreBreakdown(idea.scores);
   elements.scoreDialogTitle.textContent = t("scoreDialog.title", { title: idea.title });
   elements.scoreDialogValue.textContent = String(score);
   elements.scoreDialogBand.textContent = t(`band.${band.key}.label`);
+  elements.scoreDialogExplanation.textContent = t(provisional ? "scoreDialog.explanationProvisional" : "scoreDialog.explanation");
   renderScoreRadar(breakdown, score, idea.title);
   renderScoreBreakdown(breakdown);
   scoreDialogFocusedElement = document.activeElement;
@@ -638,6 +648,7 @@ export function initUI(handlers) {
     scoreDialogTitle: byId("score-dialog-title"),
     scoreDialogValue: byId("score-dialog-value"),
     scoreDialogBand: byId("score-dialog-band"),
+    scoreDialogExplanation: byId("score-dialog-explanation"),
     scoreRadar: byId("score-radar"),
     scoreBreakdownList: byId("score-breakdown-list"),
     closeScoreDialog: byId("close-score-dialog"),
@@ -694,6 +705,11 @@ export function initUI(handlers) {
   });
 
   elements.discoveryGrid.addEventListener("click", (event) => {
+    const scoreTarget = event.target.closest("[data-candidate-score-id]");
+    if (scoreTarget) {
+      callbacks.onDiscoveryScore(scoreTarget.dataset.candidateScoreId);
+      return;
+    }
     const target = event.target.closest("[data-candidate-id]");
     if (!target) return;
     callbacks.onDiscoverySave(target.dataset.candidateId);
