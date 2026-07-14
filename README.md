@@ -6,7 +6,7 @@
 
 AI Idea Hunter is a local-first opportunity workspace for independent developers. It turns scattered observations into evidence-backed AI software ideas that can be scored transparently, compared consistently, and exported as research briefs.
 
-> Status / 状态: `v1.1.1` bilingual discovery refinement released / `v1.1.1` 双语候选体验优化已发布. AI candidate content now switches naturally with the interface language and saves in the language currently displayed / AI 候选内容现可随界面语言自然切换，并按当前显示语言保存. Candidates remain provisional; real-user validation remains opt-in / 候选结果仍仅供参考；真实用户验证仍为按需启用.
+> Status / 状态: `v1.1.2` Hero layout fix released / `v1.1.2` 首页布局修复已发布. English and Simplified Chinese Hero copy now remains readable at desktop and narrow viewports / 中英文首页文案现可在桌面与窄屏视口正常显示. Candidates remain provisional; real-user validation remains opt-in / 候选结果仍仅供参考；真实用户验证仍为按需启用.
 
 **[Open the live demo](https://xuanbui79zombie-svg.github.io/AI-Idea-Hunter/)**
 
