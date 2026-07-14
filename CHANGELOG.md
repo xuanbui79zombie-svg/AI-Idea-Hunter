@@ -4,6 +4,13 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-07-14
+
+### Added
+
+- Extended the shared bilingual seven-factor radar analysis to automatically discovered candidate scores.
+- Added a candidate-specific warning that public-signal scores are provisional estimates rather than validated market demand.
+
 ## [1.2.0] - 2026-07-14
 
 ### Added

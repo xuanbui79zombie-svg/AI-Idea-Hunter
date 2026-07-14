@@ -1,5 +1,5 @@
 import { buildResearchBrief, downloadText, parseWorkspaceFile, safeFilename, serializeWorkspace } from "./export.js";
-import { candidateToIdeaInput, loadDiscoveryFeed } from "./discovery.js";
+import { candidateToIdeaInput, loadDiscoveryFeed, localizeCandidate } from "./discovery.js";
 import { getLanguage, setLanguage, t } from "./i18n.js";
 import { createExampleWorkspace, createIdea, MAX_IMPORT_BYTES, THEMES, updateIdea, ValidationError, validateWorkspace } from "./model.js";
 import { loadLanguage, loadWorkspace, saveLanguage, saveWorkspace } from "./storage.js";
@@ -145,6 +145,15 @@ function saveDiscoveredCandidate(id) {
   }
 }
 
+function openDiscoveredScore(id) {
+  const candidate = discovery.feed?.candidates.find((item) => item.id === id);
+  if (!candidate) {
+    showToast(t("discovery.missing"));
+    return;
+  }
+  openScoreDialog(localizeCandidate(candidate, getLanguage()), { provisional: true });
+}
+
 function changeTheme() {
   const current = workspace.preferences.theme;
   const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
@@ -168,6 +177,7 @@ initUI({
   onThemeToggle: changeTheme,
   onLanguageToggle: changeLanguage,
   onDiscoverySave: saveDiscoveredCandidate,
+  onDiscoveryScore: openDiscoveredScore,
   onViewChange: (patch) => {
     view = { ...view, ...patch };
     render();

@@ -23,7 +23,7 @@
 | M9 Bilingual discovery refinement / 双语候选体验优化 | Candidate titles, analysis, uncertainties, and saved content switch naturally between English and Chinese / 候选标题、分析、不确定项及保存内容可自然切换中英文 | DONE | Feed schema 2, legacy compatibility, live model output, 37 tests, bilingual save, and mobile browser evidence / Feed schema 2、旧版兼容、模型实测、37 项测试、双语保存及移动端证据 |
 
 | M10 Hero layout repair | Hero eyebrow and heading remain readable without overlap in both languages | DONE | Dedicated marker selector, static regression contract, desktop and narrow browser evidence |
-| M11 Interactive score analysis | Portfolio scores reveal a bilingual seven-factor chart and complete scoring criteria | DONE | Seven-axis chart, complete bilingual breakdown, 40 tests, keyboard focus recovery, 360 px no-overflow evidence, and empty browser logs |
+| M11 Interactive score analysis | Saved-idea and automatically discovered candidate scores reveal a bilingual seven-factor chart and complete scoring criteria | DONE | Shared seven-axis analysis, complete bilingual breakdown, provisional warning, 40 tests, keyboard focus recovery, 360 px no-overflow evidence, and empty browser logs |
 
 ## TODO
 
@@ -40,6 +40,7 @@ None.
 
 | ID | Priority | Milestone | Task | Evidence |
 | --- | --- | --- | --- | --- |
+| UI-003 | P1 | M11 | Extend score analysis to automatically discovered candidates | Two deterministic feed candidates exposed score buttons; both locales rendered seven axes and details plus the provisional warning; Escape restored candidate-score focus; 360 × 800 page, dialog, and body had zero horizontal overflow; browser logs empty |
 | UI-002 | P1 | M11 | Add interactive score analysis dialog | Seven SVG axes and points; seven bilingual factor details; correct weighted contributions; Escape restores the score-button focus; 360 × 800 page, dialog, and body have zero horizontal overflow; browser logs empty |
 | UI-001 | P1 | M10 | Repair Hero eyebrow text overlap | Decorative marker has an isolated selector; English and Chinese eyebrow/headline boxes do not intersect; narrow layout has no horizontal overflow |
 | P-001 | P0 | M1 | Define users, problem, value, scope, requirements, scoring, and release criteria | `docs/PRODUCT.md`, `d8589bd` |
