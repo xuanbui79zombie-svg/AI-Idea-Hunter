@@ -8,8 +8,8 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: `v1.1.2` Hero layout fix released
-- Current release: `v1.1.2`
+- Product stage: `v1.2.0` interactive score analysis ready for publication
+- Current release candidate: `v1.2.0`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
 - Unknown: whether external users will adopt the scoring model without customization.
@@ -106,7 +106,7 @@ The result ranges from 20 to 100. The interface must show the formula, factor va
 | --- | --- | --- | --- |
 | FR-001 | P0 | Create an idea | Required fields are validated; a saved idea appears immediately in the portfolio |
 | FR-002 | P0 | Edit and delete an idea | Changes persist after reload; deletion requires explicit confirmation |
-| FR-003 | P0 | Score an idea | Seven factors accept 1–5; the score and explanation update deterministically |
+| FR-003 | P0 | Score an idea | Seven factors accept 1–5; the score updates deterministically; selecting a portfolio score opens a seven-axis analysis chart with every value, weight, contribution, and plain-language criterion |
 | FR-004 | P0 | Manage evidence notes | Notes include source/context, observation, strength, and date; notes can be removed |
 | FR-005 | P0 | Browse the portfolio | Users can search, filter by lifecycle, and sort by score or update time |
 | FR-006 | P0 | View an opportunity dashboard | Counts, average score, top candidate, and evidence gaps reflect current data |
@@ -191,3 +191,4 @@ These are release and validation targets, not measured outcomes.
 | M7 User validation | Optional evidence about independent task completion and score comprehension | Skipped by owner policy on 2026-07-13; may reopen only after an explicit owner request |
 | M8 Automated discovery | Approved public sources become explainable, reviewable candidates without exposing workspace data or secrets | Scheduled collection, GitHub Models analysis, provenance UI, local-save flow, tests, and Pages deployment pass |
 | M9 Bilingual discovery refinement | AI candidate content switches naturally with the interface language and saves in the chosen language | Versioned bilingual feed, legacy compatibility, automated tests, desktop/mobile browser regression, and Pages deployment pass |
+| M11 Interactive score analysis | Portfolio scores reveal a bilingual, accessible seven-factor analysis without changing the scoring model | Click and keyboard flow, chart/table parity, automated scoring coverage, responsive browser regression, and Pages deployment pass |

@@ -259,6 +259,43 @@
       </form>
     </dialog>
 
+    <dialog class="score-dialog" id="score-dialog" aria-labelledby="score-dialog-title">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow" data-i18n="scoreDialog.kicker">Score analysis</p>
+          <h2 id="score-dialog-title"></h2>
+        </div>
+        <button class="icon-button" id="close-score-dialog" type="button" data-i18n-aria="scoreDialog.close" aria-label="Close score analysis">×</button>
+      </div>
+      <div class="score-dialog-body">
+        <section class="score-dialog-summary" aria-labelledby="score-summary-title">
+          <div class="score-dialog-total">
+            <span id="score-summary-title" data-i18n="scoreDialog.total">Opportunity score</span>
+            <strong id="score-dialog-value"></strong>
+            <small id="score-dialog-band"></small>
+          </div>
+          <div class="score-dialog-explanation">
+            <p data-i18n="scoreDialog.explanation">The score combines seven product signals. The chart shows the shape of the opportunity, while the weighted contribution shows how each factor affects the total.</p>
+            <p class="score-formula" data-i18n="scoreDialog.formula">Formula: factor value ÷ 5 × factor weight × 100.</p>
+          </div>
+        </section>
+        <div class="score-analysis-grid">
+          <figure class="score-radar-panel">
+            <svg id="score-radar" class="score-radar" viewBox="0 0 360 360" role="img" aria-labelledby="score-radar-title score-radar-description"></svg>
+            <figcaption data-i18n="scoreDialog.chartCaption">Each axis uses the same 1–5 scale. A wider shape is stronger, but evidence should still be verified.</figcaption>
+          </figure>
+          <section class="score-breakdown" aria-labelledby="score-breakdown-title">
+            <h3 id="score-breakdown-title" data-i18n="scoreDialog.details">Scoring details</h3>
+            <div id="score-breakdown-list" class="score-breakdown-list"></div>
+          </section>
+        </div>
+      </div>
+      <div class="dialog-footer score-dialog-footer">
+        <p data-i18n="scoreDialog.scale">Scale: 1 is weak or unverified; 5 is strong or well supported.</p>
+        <button class="button button-primary" id="score-dialog-done" type="button" data-i18n="action.close">Close</button>
+      </div>
+    </dialog>
+
     <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
       <form method="dialog">
         <span class="confirm-icon" aria-hidden="true">!</span>

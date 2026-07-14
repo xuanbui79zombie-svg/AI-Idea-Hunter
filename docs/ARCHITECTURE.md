@@ -44,6 +44,7 @@ src/index.html
     +-- js/ui.js ------------- DOM rendering and accessible interaction
     +-- js/model.js ---------- entities, defaults, normalization, validation
     +-- js/scoring.js -------- pure weighted score calculation and guidance
+    +-- js/radar.js ---------- pure SVG point geometry for score visualization
     +-- js/storage.js -------- localStorage adapter and recovery behavior
     +-- js/export.js --------- JSON import/export and Markdown brief generation
     +-- js/discovery.js ------ candidate-feed validation, loading, and local idea mapping
@@ -51,7 +52,7 @@ src/index.html
     `-- styles.css ----------- tokens, responsive layout, themes, states
 ```
 
-Dependency direction is `app/ui -> model/scoring/storage/export`. Pure modules never import the DOM or browser storage. No module may write directly to storage except `storage.js`.
+Dependency direction is `app/ui -> model/scoring/radar/storage/export`. Pure modules never import the DOM or browser storage. No module may write directly to storage except `storage.js`.
 
 Build-time modules under `scripts/discovery/` own public source adapters, normalization, prompt construction, model response validation, fallback analysis, and feed serialization. They never import browser storage or UI modules.
 
@@ -81,6 +82,14 @@ Build-time modules under `scripts/discovery/` own public source adapters, normal
 2. `scoring.js` returns a factor breakdown.
 3. `export.js` escapes Markdown control characters and builds English or Simplified Chinese plain text from the selected locale.
 4. The browser downloads a user-selected `.md` file.
+
+### Inspect a score
+
+1. A saved-idea score button sends the selected idea ID to `app.js`.
+2. `scoring.js` returns the same seven-factor breakdown used by exports and card summaries.
+3. `radar.js` converts the validated 1–5 values into deterministic SVG polygon coordinates.
+4. `ui.js` renders localized SVG labels and seven semantic detail cards using safe DOM APIs.
+5. The native dialog traps focus; Escape or either close control restores focus to the originating score button.
 
 ### Switch interface language
 

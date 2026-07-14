@@ -3,7 +3,7 @@ import { candidateToIdeaInput, loadDiscoveryFeed } from "./discovery.js";
 import { getLanguage, setLanguage, t } from "./i18n.js";
 import { createExampleWorkspace, createIdea, MAX_IMPORT_BYTES, THEMES, updateIdea, ValidationError, validateWorkspace } from "./model.js";
 import { loadLanguage, loadWorkspace, saveLanguage, saveWorkspace } from "./storage.js";
-import { closeIdeaDialog, confirmAction, initUI, openIdeaDialog, renderApp, setInterfaceLanguage, setTheme, showFormError, showToast } from "./ui.js";
+import { closeIdeaDialog, confirmAction, initUI, openIdeaDialog, openScoreDialog, renderApp, setInterfaceLanguage, setTheme, showFormError, showToast } from "./ui.js";
 
 setLanguage(loadLanguage());
 const loaded = loadWorkspace();
@@ -106,6 +106,7 @@ async function cardAction(action, id) {
     return;
   }
   if (action === "edit") openIdeaDialog(idea);
+  if (action === "score") openScoreDialog(idea);
   if (action === "export") exportIdea(idea);
   if (action === "delete") await deleteIdea(idea);
 }

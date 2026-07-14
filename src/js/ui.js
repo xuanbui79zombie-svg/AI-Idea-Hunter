@@ -2,11 +2,14 @@ import { EVIDENCE_STRENGTHS, STATUSES } from "./model.js";
 import { getLanguage, setLanguage, t } from "./i18n.js";
 import { localizeCandidate } from "./discovery.js";
 import { calculateScore, getEvidenceGapKey, getScoreBand, getScoreBreakdown, SCORE_FACTORS } from "./scoring.js";
+import { buildRadarPoints, toSvgPoints } from "./radar.js";
 
 const elements = {};
+const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 let callbacks = {};
 let evidenceDraft = [];
 let lastFocusedElement = null;
+let scoreDialogFocusedElement = null;
 let toastTimer = null;
 
 function byId(id) {
@@ -22,6 +25,12 @@ function element(tag, { className, text, attributes } = {}) {
       node.setAttribute(name, String(value));
     }
   }
+  return node;
+}
+
+function svgElement(tag, attributes = {}) {
+  const node = document.createElementNS(SVG_NAMESPACE, tag);
+  for (const [name, value] of Object.entries(attributes)) node.setAttribute(name, String(value));
   return node;
 }
 
@@ -157,10 +166,16 @@ function createIdeaCard(idea) {
   const top = element("div", { className: "card-topline" });
   top.append(
     element("span", { className: "status-pill", text: statusLabel(idea.status) }),
-    element("span", {
-      className: "score-badge",
+    element("button", {
+      className: "score-badge score-trigger",
       text: String(score),
-      attributes: { title: t("card.scoreTitle", { score, band: t(`band.${band.key}.label`) }) },
+      attributes: {
+        type: "button",
+        "data-action": "score",
+        "data-idea-id": idea.id,
+        title: t("card.scoreTitle", { score, band: t(`band.${band.key}.label`) }),
+        "aria-label": t("card.openScore", { title: idea.title, score }),
+      },
     }),
   );
 
@@ -359,6 +374,115 @@ export function closeIdeaDialog() {
   if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
 }
 
+function renderScoreRadar(breakdown, score, title) {
+  const values = breakdown.map((factor) => factor.value);
+  const radar = elements.scoreRadar;
+  radar.replaceChildren();
+
+  const svgTitle = svgElement("title", { id: "score-radar-title" });
+  svgTitle.textContent = t("scoreDialog.chartTitle", { title });
+  const description = svgElement("desc", { id: "score-radar-description" });
+  description.textContent = t("scoreDialog.chartDescription", { score });
+  radar.append(svgTitle, description);
+
+  for (let level = 1; level <= 5; level += 1) {
+    radar.append(svgElement("polygon", {
+      class: "score-radar-grid",
+      points: toSvgPoints(buildRadarPoints(Array(values.length).fill(level))),
+    }));
+  }
+
+  const axisPoints = buildRadarPoints(Array(values.length).fill(5));
+  for (const point of axisPoints) {
+    radar.append(svgElement("line", {
+      class: "score-radar-axis",
+      x1: 180,
+      y1: 180,
+      x2: point.x,
+      y2: point.y,
+    }));
+  }
+
+  const dataPoints = buildRadarPoints(values);
+  radar.append(svgElement("polygon", {
+    class: "score-radar-shape",
+    points: toSvgPoints(dataPoints),
+  }));
+  for (const point of dataPoints) {
+    radar.append(svgElement("circle", {
+      class: "score-radar-point",
+      cx: point.x,
+      cy: point.y,
+      r: 4,
+    }));
+  }
+
+  const labelPoints = buildRadarPoints(Array(values.length).fill(5), { radius: 148 });
+  breakdown.forEach((factor, index) => {
+    const point = labelPoints[index];
+    const label = svgElement("text", {
+      class: "score-radar-label",
+      x: point.x,
+      y: point.y,
+      "text-anchor": point.x < 176 ? "start" : point.x > 184 ? "end" : "middle",
+      "dominant-baseline": "middle",
+    });
+    label.textContent = `${t(`factor.${factor.key}.short`)} · ${factor.value}`;
+    radar.append(label);
+  });
+}
+
+function renderScoreBreakdown(breakdown) {
+  const rows = breakdown.map((factor) => {
+    const row = element("article", { className: "score-detail" });
+    const heading = element("div", { className: "score-detail-heading" });
+    heading.append(
+      element("strong", { text: t(`factor.${factor.key}.label`) }),
+      element("span", { text: t("scoreDialog.valueOutOfFive", { value: factor.value }) }),
+    );
+    const track = element("div", { className: "score-detail-track", attributes: { "aria-hidden": "true" } });
+    const fill = element("span");
+    fill.style.width = `${factor.value * 20}%`;
+    track.append(fill);
+    const metrics = element("dl", { className: "score-detail-metrics" });
+    for (const [label, value] of [
+      [t("scoreDialog.weight"), `${Math.round(factor.weight * 100)}%`],
+      [t("scoreDialog.contribution"), t("scoreDialog.points", { points: factor.contribution })],
+    ]) {
+      const group = element("div");
+      group.append(element("dt", { text: label }), element("dd", { text: value }));
+      metrics.append(group);
+    }
+    row.append(
+      heading,
+      track,
+      metrics,
+      element("p", { className: "score-detail-guidance", text: t(`guidance.${factor.key}.${factor.value - 1}`) }),
+    );
+    return row;
+  });
+  elements.scoreBreakdownList.replaceChildren(...rows);
+}
+
+export function openScoreDialog(idea) {
+  const score = calculateScore(idea.scores);
+  const band = getScoreBand(score);
+  const breakdown = getScoreBreakdown(idea.scores);
+  elements.scoreDialogTitle.textContent = t("scoreDialog.title", { title: idea.title });
+  elements.scoreDialogValue.textContent = String(score);
+  elements.scoreDialogBand.textContent = t(`band.${band.key}.label`);
+  renderScoreRadar(breakdown, score, idea.title);
+  renderScoreBreakdown(breakdown);
+  scoreDialogFocusedElement = document.activeElement;
+  elements.scoreDialog.showModal();
+  elements.closeScoreDialog.focus();
+}
+
+export function closeScoreDialog() {
+  if (elements.scoreDialog.open) elements.scoreDialog.close();
+  if (scoreDialogFocusedElement instanceof HTMLElement) scoreDialogFocusedElement.focus();
+}
+
 export function readIdeaForm() {
   const data = new FormData(elements.ideaForm);
   return {
@@ -510,6 +634,13 @@ export function initUI(handlers) {
     confirmTitle: byId("confirm-title"),
     confirmMessage: byId("confirm-message"),
     confirmButton: byId("confirm-action-button"),
+    scoreDialog: byId("score-dialog"),
+    scoreDialogTitle: byId("score-dialog-title"),
+    scoreDialogValue: byId("score-dialog-value"),
+    scoreDialogBand: byId("score-dialog-band"),
+    scoreRadar: byId("score-radar"),
+    scoreBreakdownList: byId("score-breakdown-list"),
+    closeScoreDialog: byId("close-score-dialog"),
     importFile: byId("import-file"),
     toast: byId("toast"),
     discoveryGrid: byId("discovery-grid"),
@@ -529,6 +660,8 @@ export function initUI(handlers) {
   }
   byId("close-idea-dialog").addEventListener("click", closeIdeaDialog);
   byId("cancel-idea-dialog").addEventListener("click", closeIdeaDialog);
+  elements.closeScoreDialog.addEventListener("click", closeScoreDialog);
+  byId("score-dialog-done").addEventListener("click", closeScoreDialog);
   byId("add-evidence-button").addEventListener("click", addEvidenceFromComposer);
   elements.themeToggle.addEventListener("click", () => callbacks.onThemeToggle());
   elements.languageToggle.addEventListener("click", () => callbacks.onLanguageToggle());
@@ -581,6 +714,16 @@ export function initUI(handlers) {
     if (event.key === "Escape") {
       event.preventDefault();
       closeIdeaDialog();
+    }
+  });
+  elements.scoreDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeScoreDialog();
+  });
+  elements.scoreDialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeScoreDialog();
     }
   });
 }
