@@ -279,7 +279,8 @@ footer {
   gap: 9px;
 }
 
-.hero .eyebrow span {
+.hero .eyebrow-mark {
+  flex: 0 0 26px;
   width: 26px;
   height: 2px;
   background: var(--coral-strong);

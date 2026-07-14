@@ -8,8 +8,8 @@ The first release optimizes for decision quality, not idea volume. It does not c
 
 ## Status and Evidence Boundary
 
-- Product stage: `v1.1.1` bilingual discovery refinement released
-- Current release: `v1.1.1`
+- Product stage: `v1.1.2` Hero layout fix released
+- Current release: `v1.1.2`
 - Confirmed fact: independent developers need a repeatable way to organize and compare ideas in this project context.
 - Working assumption: structured evidence and explicit scoring reduce impulsive project selection.
 - Unknown: whether external users will adopt the scoring model without customization.

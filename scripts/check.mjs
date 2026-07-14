@@ -101,10 +101,14 @@ for (const file of jsFiles) {
 }
 
 const html = await readFile(path.join(sourceRoot, "index.html"), "utf8");
+const css = await readFile(path.join(sourceRoot, "styles.css"), "utf8");
 if (!html.includes("connect-src 'self'")) errors.push("Content Security Policy must allow only same-origin candidate-feed connections.");
 if (!html.includes("<main")) errors.push("Application shell requires a main landmark.");
 if (!html.includes("aria-live")) errors.push("Application shell requires an ARIA live region.");
 if (/<(?:script|link|img)[^>]+(?:src|href)=["']https?:/i.test(html)) errors.push("Runtime assets must not load from external origins.");
+if (!html.includes('class="eyebrow-mark"')) errors.push("Hero eyebrow requires a dedicated decorative marker class.");
+if (!/\.hero\s+\.eyebrow-mark\s*\{/.test(css)) errors.push("Hero eyebrow marker styles must target only the decorative element.");
+if (/\.hero\s+\.eyebrow\s+span\s*\{/.test(css)) errors.push("Hero eyebrow styles must not collapse every text span.");
 const knownTranslationKeys = new Set(translationKeys("en"));
 for (const match of html.matchAll(/data-i18n(?:-placeholder|-aria)?="([^"]+)"/g)) {
   if (!knownTranslationKeys.has(match[1])) errors.push(`index.html references an unknown translation key: ${match[1]}`);

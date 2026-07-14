@@ -4,6 +4,12 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-07-14
+
+### Fixed
+
+- Prevented the Hero eyebrow text from collapsing into the decorative line and being covered by the oversized heading in both English and Simplified Chinese.
+
 ## [1.1.1] - 2026-07-14
 
 ### Changed

@@ -22,6 +22,8 @@
 | M8 Automated discovery / 自动发现 | Scheduled public-signal collection, AI analysis, and local candidate review / 定时采集公开信号、AI 分析和本地候选审核 | DONE | 36 automated tests; live public-source and GitHub Models run; bilingual desktop/mobile save flow / 36 项自动化测试；公开来源与 GitHub Models 实测；双语桌面/移动端保存流程 |
 | M9 Bilingual discovery refinement / 双语候选体验优化 | Candidate titles, analysis, uncertainties, and saved content switch naturally between English and Chinese / 候选标题、分析、不确定项及保存内容可自然切换中英文 | DONE | Feed schema 2, legacy compatibility, live model output, 37 tests, bilingual save, and mobile browser evidence / Feed schema 2、旧版兼容、模型实测、37 项测试、双语保存及移动端证据 |
 
+| M10 Hero layout repair | Hero eyebrow and heading remain readable without overlap in both languages | DONE | Dedicated marker selector, static regression contract, desktop and narrow browser evidence |
+
 ## TODO
 
 | ID | Priority | Milestone | Task | Requirements | Depends on | Acceptance evidence |
@@ -37,6 +39,7 @@ None.
 
 | ID | Priority | Milestone | Task | Evidence |
 | --- | --- | --- | --- | --- |
+| UI-001 | P1 | M10 | Repair Hero eyebrow text overlap | Decorative marker has an isolated selector; English and Chinese eyebrow/headline boxes do not intersect; narrow layout has no horizontal overflow |
 | P-001 | P0 | M1 | Define users, problem, value, scope, requirements, scoring, and release criteria | `docs/PRODUCT.md`, `d8589bd` |
 | A-001 | P0 | M2 | Define local-first native web architecture and data trust boundary | `docs/ARCHITECTURE.md`, ADR-0001, `a339e7e` |
 | A-002 | P0 | M2 | Define schema, module contracts, tooling, security, and deployment | `docs/DATABASE.md`, `docs/API.md`, `TECH_STACK.md` |
